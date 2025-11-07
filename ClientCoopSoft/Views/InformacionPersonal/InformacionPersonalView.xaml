@@ -1,0 +1,361 @@
+﻿<UserControl
+    x:Class="ClientCoopSoft.Views.InformacionPersonal.InformacionPersonalView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:conv="clr-namespace:ClientCoopSoft.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:ClientCoopSoft.Views.InformacionPersonal"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <conv:BoolToGeneroConverter x:Key="BoolToGeneroConverter" />
+    </UserControl.Resources>
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock
+            Grid.Row="0"
+            Grid.Column="0"
+            Margin="0,0,0,20"
+            FontSize="24"
+            FontWeight="SemiBold"
+            Text="Mi información personal" />
+        <Ellipse
+            Grid.RowSpan="2"
+            Grid.ColumnSpan="2"
+            Width="300"
+            Height="300">
+            <Ellipse.Fill>
+                <ImageBrush ImageSource="{Binding FotoBytes}" Stretch="UniformToFill" />
+            </Ellipse.Fill>
+        </Ellipse>
+
+        <!--  Primer Nombre  -->
+        <StackPanel
+            Grid.Row="2"
+            Grid.Column="0"
+            Margin="0,0,0,35"
+            HorizontalAlignment="Center"
+            Orientation="Vertical">
+            <TextBlock
+                Margin="2,0,0,3"
+                FontSize="11"
+                Foreground="#666"
+                Text="Ingrese el primer nombre:" />
+            <TextBox
+                Width="250"
+                Margin="0,5,0,0"
+                md:HintAssist.Hint=""
+                md:HintAssist.HintPaddingBrush="Transparent"
+                md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                md:TextFieldAssist.UnderlineBrush="#0078D7"
+                BorderBrush="Gray"
+                BorderThickness="0.3"
+                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                Text="{Binding PrimerNombre, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+
+        <!--  Segundo Nombre  -->
+        <StackPanel
+            Grid.Row="2"
+            Grid.Column="1"
+            Margin="0,0,0,35"
+            HorizontalAlignment="Center"
+            Orientation="Vertical">
+            <TextBlock
+                Margin="2,0,0,3"
+                FontSize="11"
+                Foreground="#666"
+                Text="Ingrese el segundo nombre (opcional):" />
+            <TextBox
+                Width="250"
+                Margin="0,5,0,0"
+                md:HintAssist.Hint=""
+                md:HintAssist.HintPaddingBrush="Transparent"
+                md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                md:TextFieldAssist.UnderlineBrush="#0078D7"
+                BorderBrush="Gray"
+                BorderThickness="0.3"
+                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                Text="{Binding SegundoNombre, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+
+        <!--  Apellido Paterno  -->
+        <StackPanel
+            Grid.Row="3"
+            Grid.Column="0"
+            Margin="0,0,0,35"
+            HorizontalAlignment="Center"
+            Orientation="Vertical">
+            <TextBlock
+                Margin="2,0,0,3"
+                FontSize="11"
+                Foreground="#666"
+                Text="Ingrese el apellido paterno:" />
+            <TextBox
+                Width="250"
+                Margin="0,5,0,0"
+                md:HintAssist.Hint=""
+                md:HintAssist.HintPaddingBrush="Transparent"
+                md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                md:TextFieldAssist.UnderlineBrush="#0078D7"
+                BorderBrush="Gray"
+                BorderThickness="0.3"
+                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                Text="{Binding ApellidoPaterno, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+
+        <!--  Apellido Materno  -->
+        <StackPanel
+            Grid.Row="3"
+            Grid.Column="1"
+            Margin="0,0,0,35"
+            HorizontalAlignment="Center"
+            Orientation="Vertical">
+            <TextBlock
+                Margin="2,0,0,3"
+                FontSize="11"
+                Foreground="#666"
+                Text="Ingrese el apellido materno:" />
+            <TextBox
+                Width="250"
+                Margin="0,5,0,0"
+                md:HintAssist.Hint=""
+                md:HintAssist.HintPaddingBrush="Transparent"
+                md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                md:TextFieldAssist.UnderlineBrush="#0078D7"
+                BorderBrush="Gray"
+                BorderThickness="0.3"
+                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                Text="{Binding ApellidoMaterno, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+
+        <!--  Direccion  -->
+        <StackPanel
+            Grid.Row="4"
+            Grid.ColumnSpan="2"
+            Margin="0,0,0,35"
+            HorizontalAlignment="Center"
+            Orientation="Vertical">
+            <TextBlock
+                Margin="2,0,0,3"
+                FontSize="11"
+                Foreground="#666"
+                Text="Dirección:" />
+            <TextBox
+                Width="499"
+                Margin="0,5,0,0"
+                md:HintAssist.Hint=""
+                md:HintAssist.HintPaddingBrush="Transparent"
+                md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                md:TextFieldAssist.UnderlineBrush="#0078D7"
+                BorderBrush="Gray"
+                BorderThickness="0.3"
+                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                Text="{Binding Direccion, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+
+        <!--  Telefono  -->
+        <StackPanel
+            Grid.Row="5"
+            Grid.Column="0"
+            Margin="0,0,0,35"
+            HorizontalAlignment="Center"
+            Orientation="Vertical">
+            <TextBlock
+                Margin="2,0,0,3"
+                FontSize="11"
+                Foreground="#666"
+                Text="Telefono/Celular:" />
+            <TextBox
+                Width="250"
+                Margin="0,5,0,0"
+                md:HintAssist.Hint=""
+                md:HintAssist.HintPaddingBrush="Transparent"
+                md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                md:TextFieldAssist.UnderlineBrush="#0078D7"
+                BorderBrush="Gray"
+                BorderThickness="0.3"
+                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                Text="{Binding Telefono, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+
+        <!--  Generos  -->
+        <StackPanel
+            Grid.Row="5"
+            Grid.Column="1"
+            Margin="0,0,0,35"
+            HorizontalAlignment="Center"
+            Orientation="Vertical">
+
+            <TextBlock
+                Margin="2,0,0,3"
+                FontSize="11"
+                Foreground="#666"
+                Text="Genero:" />
+
+            <ComboBox
+                Width="250"
+                Height="auto"
+                Margin="0,5,0,0"
+                md:HintAssist.Foreground="Transparent"
+                md:HintAssist.Hint=""
+                md:HintAssist.HintPaddingBrush="Transparent"
+                md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                Background="Transparent"
+                BorderBrush="#CCC"
+                BorderThickness="1"
+                ItemsSource="{Binding Generos}"
+                SelectedItem="{Binding GeneroSeleccionado}"
+                Style="{StaticResource MaterialDesignOutlinedComboBox}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Converter={StaticResource BoolToGeneroConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </StackPanel>
+
+        <!--  Carnet Identidad  -->
+        <StackPanel
+            Grid.Row="1"
+            Grid.Column="2 "
+            Margin="20,0,10,35"
+            HorizontalAlignment="Center"
+            Orientation="Vertical">
+            <TextBlock
+                Margin="2,0,0,3"
+                FontSize="11"
+                Foreground="#666"
+                Text="Carnet de Identidad:" />
+            <TextBox
+                Width="250"
+                Margin="0,5,0,0"
+                md:HintAssist.Hint=""
+                md:HintAssist.HintPaddingBrush="Transparent"
+                md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                md:TextFieldAssist.UnderlineBrush="#0078D7"
+                BorderBrush="Gray"
+                BorderThickness="0.3"
+                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                Text="{Binding CarnetIdentidad, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+
+        <!--  Fecha Nacimiento  -->
+        <StackPanel
+            Grid.Row="1"
+            Grid.Column="3"
+            Margin="0,0,0,35"
+            HorizontalAlignment="Center"
+            Orientation="Vertical">
+            <TextBlock
+                Margin="2,0,0,3"
+                FontSize="11"
+                Foreground="#666"
+                Text="Fecha de Nacimiento:" />
+            <DatePicker
+                Width="250"
+                Margin="0,5,0,0"
+                md:HintAssist.Hint=""
+                md:HintAssist.HintPaddingBrush="Transparent"
+                BorderBrush="#CCC"
+                BorderThickness="1"
+                SelectedDate="{Binding FechaNacimiento, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Style="{StaticResource MaterialDesignOutlinedDatePicker}" />
+        </StackPanel>
+
+        <!--  Direccion  -->
+        <StackPanel
+            Grid.Row="2"
+            Grid.Column="2"
+            Margin="20,0,10,35"
+            HorizontalAlignment="Center"
+            Orientation="Vertical">
+            <TextBlock
+                Margin="2,0,0,3"
+                FontSize="11"
+                Foreground="#666"
+                Text="Dirección:" />
+            <TextBox
+                Width="250"
+                Margin="0,5,0,0"
+                md:HintAssist.Hint=""
+                md:HintAssist.HintPaddingBrush="Transparent"
+                md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                md:TextFieldAssist.UnderlineBrush="#0078D7"
+                BorderBrush="Gray"
+                BorderThickness="0.3"
+                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                Text="{Binding Direccion, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+
+        <!--  Nacionalidad  -->
+        <StackPanel
+            Grid.Row="2"
+            Grid.Column="3"
+            Margin="0,0,0,35"
+            HorizontalAlignment="Center"
+            Orientation="Vertical">
+
+            <TextBlock
+                Margin="2,0,0,3"
+                FontSize="11"
+                Foreground="#666"
+                Text="Nacionalidad:" />
+
+            <ComboBox
+                Width="250"
+                Height="auto"
+                Margin="0,5,0,0"
+                md:HintAssist.Foreground="Transparent"
+                md:HintAssist.Hint=""
+                md:HintAssist.HintPaddingBrush="Transparent"
+                md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                Background="Transparent"
+                BorderBrush="#CCC"
+                BorderThickness="1"
+                DisplayMemberPath="ValorCategoria"
+                ItemsSource="{Binding Nacionalidades}"
+                SelectedItem="{Binding NacionalidadSeleccionada}"
+                Style="{StaticResource MaterialDesignOutlinedComboBox}" />
+        </StackPanel>
+
+        <Button
+            Grid.Row="3"
+            Grid.Column="2"
+            Width="90"
+            Margin="0,0,6,0"
+            Background="#1DA143"
+            BorderBrush="Transparent"
+            BorderThickness="0"
+            Command="{Binding GuardarCommand}"
+            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+            Content="Guardar"
+            Foreground="White" />
+        <Button
+            Grid.Row="3"
+            Grid.Column="3"
+            Width="120"
+            Background="#0078D7"
+            BorderBrush="Transparent"
+            BorderThickness="0"
+            Command="{Binding SubirFotoCommand}"
+            Content="Subir Foto"
+            Foreground="White" />
+    </Grid>
+</UserControl>

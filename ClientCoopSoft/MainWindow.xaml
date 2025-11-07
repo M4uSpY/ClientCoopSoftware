@@ -1,0 +1,168 @@
+﻿<Window
+    x:Class="ClientCoopSoft.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:ClientCoopSoft"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    Title="MainWindow"
+    Width="800"
+    Height="450"
+    AllowsTransparency="True"
+    Background="Transparent"
+    Icon="/Assets/Logo_Cooperativa.png"
+    Style="{StaticResource MaterialDesignWindow}"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
+    mc:Ignorable="d">
+    <Border Background="#2A2D30" CornerRadius="5">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="400" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+
+            <!--  Lado izquierdo  -->
+            <StackPanel
+                Grid.Row="1"
+                Grid.Column="0"
+                Background="White"
+                Orientation="Vertical">
+                <StackPanel
+                    Margin="0,20,0,0"
+                    HorizontalAlignment="Center"
+                    Orientation="Horizontal">
+                    <Image
+                        Width="120"
+                        Height="auto"
+                        Margin="0,0,20,0"
+                        Source="/Assets/Logo_Cooperativa.png" />
+                    <Image
+                        Width="100"
+                        Height="auto"
+                        Source="/Assets/iconSoft.png" />
+                </StackPanel>
+                <TextBlock
+                    Margin="0,10,0,20"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontFamily="Berlin Sans FB"
+                    FontSize="50"
+                    FontWeight="DemiBold"
+                    Foreground="#343A40"
+                    Text="EthereumAccess" />
+                <StackPanel
+                    Width="300"
+                    Margin="0,0,0,10"
+                    HorizontalAlignment="Center"
+                    Orientation="Horizontal">
+                    <Image
+                        Width="30"
+                        Height="30"
+                        Margin="0,0,18,0"
+                        Source="/Assets/iconAccount.png" />
+                    <TextBox
+                        Width="249"
+                        Height="auto"
+                        md:HintAssist.Hint="Ingrese su nombre de usuario"
+                        md:HintAssist.HintPaddingBrush="White"
+                        BorderBrush="#7F7F7F"
+                        BorderThickness="0.3"
+                        Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}">
+                        <TextBox.Style>
+                            <Style BasedOn="{StaticResource MaterialDesignOutlinedTextBox}" TargetType="TextBox">
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="BorderBrush" Value="#7F7F7F" />
+                                        <Setter Property="BorderThickness" Value="0.8" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
+                </StackPanel>
+                <StackPanel
+                    Width="300"
+                    HorizontalAlignment="Center"
+                    Orientation="Horizontal">
+                    <Image
+                        Width="30"
+                        Height="30"
+                        Margin="0,0,18,0"
+                        Source="/Assets/iconPassword.png" />
+                    <PasswordBox
+                        x:Name="pwdBox"
+                        Width="249"
+                        Height="auto"
+                        md:HintAssist.Hint="Ingrese su contraseña"
+                        md:HintAssist.HintPaddingBrush="White"
+                        BorderThickness="0.3"
+                        PasswordChanged="pwdBox_PasswordChanged">
+                        <PasswordBox.Style>
+                            <Style BasedOn="{StaticResource MaterialDesignOutlinedRevealPasswordBox}" TargetType="PasswordBox">
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True" />
+                                </Style.Triggers>
+                            </Style>
+                        </PasswordBox.Style>
+                    </PasswordBox>
+
+
+                </StackPanel>
+
+                <Button
+                    x:Name="btnLogin"
+                    Width="164"
+                    Height="50"
+                    Margin="0,10,0,0"
+                    HorizontalAlignment="Center"
+                    md:ButtonAssist.CornerRadius="10"
+                    Background="#343A40"
+                    BorderBrush="Transparent"
+                    BorderThickness="0"
+                    Command="{Binding LoginCommand}"
+                    Content="Iniciar Sesión"
+                    FontSize="16"
+                    FontWeight="SemiBold"
+                    Foreground="#FBBF24">
+                    <Button.Resources>
+                        <Style BasedOn="{StaticResource MaterialDesignOutlinedButton}" TargetType="Button">
+                            <Setter Property="Background" Value="#343A40" />
+                            <Setter Property="Foreground" Value="#FBBF24" />
+                            <Style.Triggers>
+                                <!--  Hover (cuando pasa el mouse)  -->
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#FBBF24" />
+                                    <!--  Fondo al pasar el mouse  -->
+                                    <Setter Property="Foreground" Value="#343A40" />
+                                    <!--  Texto al pasar el mouse  -->
+                                </Trigger>
+
+                                <!--  Estado presionado  -->
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Background" Value="#E5A500" />
+                                    <Setter Property="Foreground" Value="White" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+                <TextBlock Foreground="Red" Text="{Binding ErrorMessage}" />
+
+
+            </StackPanel>
+            <!--  Lado derecho  -->
+            <Image
+                Grid.Row="1"
+                Grid.Column="1"
+                Height="450"
+                Source="/Assets/WallMain.png"
+                Stretch="Fill" />
+        </Grid>
+    </Border>
+</Window>

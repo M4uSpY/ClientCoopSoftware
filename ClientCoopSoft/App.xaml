@@ -1,0 +1,49 @@
+﻿<Application
+    x:Class="ClientCoopSoft.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:ClientCoopSoft"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    Startup="Application_Startup">
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <materialDesign:BundledTheme
+                    BaseTheme="Light"
+                    PrimaryColor="Teal"
+                    SecondaryColor="Lime" />
+
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <!--  Mapea UsuariosViewModel a UsuariosView  -->
+            <DataTemplate
+                xmlns:views="clr-namespace:ClientCoopSoft.Views"
+                xmlns:vm="clr-namespace:ClientCoopSoft.ViewModels"
+                DataType="{x:Type vm:UsuariosViewModel}">
+                <views:UsuariosView />
+            </DataTemplate>
+
+            <!--  Mapea UsuariosViewModel a UsuariosView  -->
+            <DataTemplate
+                xmlns:views="clr-namespace:ClientCoopSoft.Views"
+                xmlns:vm="clr-namespace:ClientCoopSoft.ViewModels"
+                DataType="{x:Type vm:PersonasViewModel}">
+                <views:PersonasView />
+            </DataTemplate>
+
+            <!--  Mapea InfPersonalViewModel a InformacionPersonalView  -->
+            <DataTemplate
+                xmlns:views="clr-namespace:ClientCoopSoft.Views.InformacionPersonal"
+                xmlns:vm="clr-namespace:ClientCoopSoft.ViewModels.InformacionPersonal"
+                DataType="{x:Type vm:InfPersonalViewModel}">
+                <views:InformacionPersonalView />
+            </DataTemplate>
+
+
+
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

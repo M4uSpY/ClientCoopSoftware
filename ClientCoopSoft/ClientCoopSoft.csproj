@@ -1,0 +1,93 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\maude\.nuget\packages\materialdesignthemes\5.3.0\contentFiles\any\net8.0-windows7.0\Resources\Noto\NotoSans-Bold.ttf" />
+    <Content Remove="C:\Users\maude\.nuget\packages\materialdesignthemes\5.3.0\contentFiles\any\net8.0-windows7.0\Resources\Noto\NotoSans-BoldItalic.ttf" />
+    <Content Remove="C:\Users\maude\.nuget\packages\materialdesignthemes\5.3.0\contentFiles\any\net8.0-windows7.0\Resources\Noto\NotoSans-Italic.ttf" />
+    <Content Remove="C:\Users\maude\.nuget\packages\materialdesignthemes\5.3.0\contentFiles\any\net8.0-windows7.0\Resources\Noto\NotoSans-Regular.ttf" />
+    <Content Remove="C:\Users\maude\.nuget\packages\materialdesignthemes\5.3.0\contentFiles\any\net8.0-windows7.0\Resources\Roboto\Roboto-Black.ttf" />
+    <Content Remove="C:\Users\maude\.nuget\packages\materialdesignthemes\5.3.0\contentFiles\any\net8.0-windows7.0\Resources\Roboto\Roboto-BlackItalic.ttf" />
+    <Content Remove="C:\Users\maude\.nuget\packages\materialdesignthemes\5.3.0\contentFiles\any\net8.0-windows7.0\Resources\Roboto\Roboto-Bold.ttf" />
+    <Content Remove="C:\Users\maude\.nuget\packages\materialdesignthemes\5.3.0\contentFiles\any\net8.0-windows7.0\Resources\Roboto\Roboto-BoldItalic.ttf" />
+    <Content Remove="C:\Users\maude\.nuget\packages\materialdesignthemes\5.3.0\contentFiles\any\net8.0-windows7.0\Resources\Roboto\Roboto-Italic.ttf" />
+    <Content Remove="C:\Users\maude\.nuget\packages\materialdesignthemes\5.3.0\contentFiles\any\net8.0-windows7.0\Resources\Roboto\Roboto-Light.ttf" />
+    <Content Remove="C:\Users\maude\.nuget\packages\materialdesignthemes\5.3.0\contentFiles\any\net8.0-windows7.0\Resources\Roboto\Roboto-LightItalic.ttf" />
+    <Content Remove="C:\Users\maude\.nuget\packages\materialdesignthemes\5.3.0\contentFiles\any\net8.0-windows7.0\Resources\Roboto\Roboto-Medium.ttf" />
+    <Content Remove="C:\Users\maude\.nuget\packages\materialdesignthemes\5.3.0\contentFiles\any\net8.0-windows7.0\Resources\Roboto\Roboto-MediumItalic.ttf" />
+    <Content Remove="C:\Users\maude\.nuget\packages\materialdesignthemes\5.3.0\contentFiles\any\net8.0-windows7.0\Resources\Roboto\Roboto-Regular.ttf" />
+    <Content Remove="C:\Users\maude\.nuget\packages\materialdesignthemes\5.3.0\contentFiles\any\net8.0-windows7.0\Resources\Roboto\Roboto-Thin.ttf" />
+    <Content Remove="C:\Users\maude\.nuget\packages\materialdesignthemes\5.3.0\contentFiles\any\net8.0-windows7.0\Resources\Roboto\Roboto-ThinItalic.ttf" />
+    <Content Remove="C:\Users\maude\.nuget\packages\materialdesignthemes\5.3.0\contentFiles\any\net8.0-windows7.0\Resources\Roboto\RobotoCondensed-Bold.ttf" />
+    <Content Remove="C:\Users\maude\.nuget\packages\materialdesignthemes\5.3.0\contentFiles\any\net8.0-windows7.0\Resources\Roboto\RobotoCondensed-BoldItalic.ttf" />
+    <Content Remove="C:\Users\maude\.nuget\packages\materialdesignthemes\5.3.0\contentFiles\any\net8.0-windows7.0\Resources\Roboto\RobotoCondensed-Italic.ttf" />
+    <Content Remove="C:\Users\maude\.nuget\packages\materialdesignthemes\5.3.0\contentFiles\any\net8.0-windows7.0\Resources\Roboto\RobotoCondensed-Light.ttf" />
+    <Content Remove="C:\Users\maude\.nuget\packages\materialdesignthemes\5.3.0\contentFiles\any\net8.0-windows7.0\Resources\Roboto\RobotoCondensed-LightItalic.ttf" />
+    <Content Remove="C:\Users\maude\.nuget\packages\materialdesignthemes\5.3.0\contentFiles\any\net8.0-windows7.0\Resources\Roboto\RobotoCondensed-Regular.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\foto.jpg" />
+    <None Remove="Assets\fotoIcon.png" />
+    <None Remove="Assets\huella.jpg" />
+    <None Remove="Assets\iconAccount.png" />
+    <None Remove="Assets\IconosDashboard\asistenciaIcon.png" />
+    <None Remove="Assets\IconosDashboard\boletasPagoIcon.png" />
+    <None Remove="Assets\IconosDashboard\calendarioIcon.png" />
+    <None Remove="Assets\IconosDashboard\faltasIcon.png" />
+    <None Remove="Assets\IconosDashboard\informacionPersonal.png" />
+    <None Remove="Assets\IconosDashboard\personasIcon.png" />
+    <None Remove="Assets\IconosDashboard\planillasIcon.png" />
+    <None Remove="Assets\IconosDashboard\reportesIcon.png" />
+    <None Remove="Assets\IconosDashboard\salirIcon.png" />
+    <None Remove="Assets\IconosDashboard\trabajadoresIcon.png" />
+    <None Remove="Assets\IconosDashboard\usuriosIcon.png" />
+    <None Remove="Assets\iconPassword.png" />
+    <None Remove="Assets\iconSoft.png" />
+    <None Remove="Assets\Login_Fondo.png" />
+    <None Remove="Assets\Logo_Cooperativa.png" />
+    <None Remove="Assets\sujeto.jpg" />
+    <None Remove="Assets\WallMain.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ClosedXML" Version="0.105.0" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="DocumentFormat.OpenXml" Version="3.3.0" />
+    <PackageReference Include="MaterialDesignThemes" Version="5.3.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+    <PackageReference Include="PdfSharpCore" Version="1.3.67" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\foto.jpg" />
+    <Resource Include="Assets\fotoIcon.png" />
+    <Resource Include="Assets\huella.jpg" />
+    <Resource Include="Assets\iconAccount.png" />
+    <Resource Include="Assets\IconosDashboard\asistenciaIcon.png" />
+    <Resource Include="Assets\IconosDashboard\boletasPagoIcon.png" />
+    <Resource Include="Assets\IconosDashboard\calendarioIcon.png" />
+    <Resource Include="Assets\IconosDashboard\faltasIcon.png" />
+    <Resource Include="Assets\IconosDashboard\informacionPersonal.png" />
+    <Resource Include="Assets\IconosDashboard\personasIcon.png" />
+    <Resource Include="Assets\IconosDashboard\planillasIcon.png" />
+    <Resource Include="Assets\IconosDashboard\reportesIcon.png" />
+    <Resource Include="Assets\IconosDashboard\salirIcon.png" />
+    <Resource Include="Assets\IconosDashboard\trabajadoresIcon.png" />
+    <Resource Include="Assets\IconosDashboard\usuriosIcon.png" />
+    <Resource Include="Assets\iconPassword.png" />
+    <Resource Include="Assets\iconSoft.png" />
+    <Resource Include="Assets\Login_Fondo.png" />
+    <Resource Include="Assets\Logo_Cooperativa.png" />
+    <Resource Include="Assets\sujeto.jpg" />
+    <Resource Include="Assets\WallMain.png" />
+  </ItemGroup>
+
+</Project>

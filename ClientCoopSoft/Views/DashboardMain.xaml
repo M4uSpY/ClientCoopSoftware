@@ -1,0 +1,728 @@
+﻿<Window
+    x:Class="ClientCoopSoft.Views.DashboardMain"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:ClientCoopSoft.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    Title="DashboardMain"
+    Width="1200"
+    Height="700"
+    MinWidth="1000"
+    MinHeight="600"
+    Background="Transparent"
+    Icon="/Assets/Logo_Cooperativa.png"
+    WindowStartupLocation="CenterScreen"
+    WindowState="Maximized"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        <Style x:Key="MenuButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="Padding" Value="10,5" />
+            <Setter Property="Margin" Value="0,3,0,0" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="FontSize" Value="12" />
+
+            <Style.Triggers>
+                <!--  Hover  -->
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FBBF24" />
+                    <Setter Property="Foreground" Value="#232A33" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="210" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" Background="#232A33">
+            <StackPanel Margin="0,15,0,0">
+                <Image
+                    Width="125"
+                    Height="130"
+                    Source="/Assets/Logo_Cooperativa.png" />
+                <StackPanel Margin="10,0,10,10" Orientation="Vertical">
+                    <TextBlock
+                        Margin="0,15,0,15"
+                        Foreground="White"
+                        Text="{Binding Bienvenida}" />
+                    <StackPanel Orientation="Horizontal">
+
+                        <Ellipse Width="71" Height="70">
+                            <Ellipse.Fill>
+                                <ImageBrush ImageSource="{Binding FotoPerfil}" Stretch="UniformToFill" />
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <StackPanel
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center"
+                            Orientation="Vertical">
+                            <TextBlock
+                                Width="100"
+                                Margin="0,0,0,10"
+                                FontWeight="Bold"
+                                Foreground="#EFB214"
+                                Text="{Binding Info}"
+                                TextAlignment="Justify"
+                                TextWrapping="Wrap" />
+                            <TextBlock
+                                FontWeight="Bold"
+                                Foreground="#FFF3BC"
+                                Text="{Binding Rol}" />
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+
+                <!--  Informacion PERSONAL  -->
+                <Border Margin="2,1,1,2" CornerRadius="5">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="Cursor" Value="Hand" />
+
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#5CAEB0" />
+                                </Trigger>
+                                <DataTrigger Binding="{Binding MenuSeleccionado}" Value="InformacionPersonal">
+                                    <Setter Property="Background" Value="#3D8284" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <Button
+                        Padding="10,5"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Command="{Binding AbrirInformacionPersonalCommand}"
+                        CommandParameter="InformacionPersonal"
+                        Focusable="False"
+                        FontSize="12"
+                        FontWeight="UltraLight"
+                        Foreground="White">
+
+                        <Grid VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Image
+                                Grid.Column="0"
+                                Width="20"
+                                Height="20"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Source="/Assets/IconosDashboard/informacionPersonal.png" />
+
+                            <TextBlock
+                                Grid.Column="1"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Text="Información Personal" />
+                        </Grid>
+                    </Button>
+
+                    <Border.InputBindings>
+                        <MouseBinding
+                            Command="{Binding AbrirInformacionPersonalCommand}"
+                            CommandParameter="InformacionPersonal"
+                            MouseAction="LeftClick" />
+                    </Border.InputBindings>
+                </Border>
+
+                <!--  Boletas de pago  -->
+                <Border Margin="2,1,1,2" CornerRadius="5">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="Cursor" Value="Hand" />
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#5CAEB0" />
+                                </Trigger>
+                                <DataTrigger Binding="{Binding MenuSeleccionado}" Value="BoletasPago">
+                                    <Setter Property="Background" Value="#3D8284" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+
+                    <Button
+                        Padding="10,5"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Command="{Binding CambiarMenuCommand}"
+                        CommandParameter="BoletasPago"
+                        Focusable="False"
+                        FontSize="12"
+                        FontWeight="UltraLight"
+                        Foreground="White">
+                        <Grid VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image
+                                Grid.Column="0"
+                                Width="20"
+                                Height="20"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Source="/Assets/IconosDashboard/boletasPagoIcon.png" />
+                            <TextBlock
+                                Grid.Column="1"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Text="Tus boletas de pago" />
+                        </Grid>
+                    </Button>
+
+                    <Border.InputBindings>
+                        <MouseBinding
+                            Command="{Binding CambiarMenuCommand}"
+                            CommandParameter="BoletasPago"
+                            MouseAction="LeftClick" />
+                    </Border.InputBindings>
+                </Border>
+
+                <!--  Personas  -->
+                <Border
+                    Margin="2,1,1,2"
+                    CornerRadius="5"
+                    Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVis}}">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="Cursor" Value="Hand" />
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#5CAEB0" />
+                                </Trigger>
+                                <DataTrigger Binding="{Binding MenuSeleccionado}" Value="Personas">
+                                    <Setter Property="Background" Value="#3D8284" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+
+                    <Button
+                        Padding="10,5"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Command="{Binding AbrirPersonasCommand}"
+                        CommandParameter="Personas"
+                        Focusable="False"
+                        FontSize="12"
+                        FontWeight="UltraLight"
+                        Foreground="White">
+                        <Grid VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image
+                                Grid.Column="0"
+                                Width="20"
+                                Height="20"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Source="/Assets/IconosDashboard/personasIcon.png" />
+                            <TextBlock
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                Text="Personas" />
+                        </Grid>
+                    </Button>
+
+                    <Border.InputBindings>
+                        <MouseBinding
+                            Command="{Binding AbrirPersonasCommand}"
+                            CommandParameter="Personas"
+                            MouseAction="LeftClick" />
+                    </Border.InputBindings>
+                </Border>
+
+                <!--  Trabajadores  -->
+                <Border
+                    Margin="2,1,1,2"
+                    CornerRadius="5"
+                    Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVis}}">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="Cursor" Value="Hand" />
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#5CAEB0" />
+                                </Trigger>
+                                <DataTrigger Binding="{Binding MenuSeleccionado}" Value="Trabajadores">
+                                    <Setter Property="Background" Value="#3D8284" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+
+                    <Button
+                        Padding="10,5"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Command="{Binding CambiarMenuCommand}"
+                        CommandParameter="Trabajadores"
+                        Focusable="False"
+                        FontSize="12"
+                        FontWeight="UltraLight"
+                        Foreground="White">
+                        <Grid VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image
+                                Grid.Column="0"
+                                Width="20"
+                                Height="20"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Source="/Assets/IconosDashboard/trabajadoresIcon.png" />
+                            <TextBlock
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                Text="Trabajadores" />
+                        </Grid>
+                    </Button>
+
+                    <Border.InputBindings>
+                        <MouseBinding
+                            Command="{Binding CambiarMenuCommand}"
+                            CommandParameter="Trabajadores"
+                            MouseAction="LeftClick" />
+                    </Border.InputBindings>
+                </Border>
+
+                <!--  Usuarios  -->
+                <Border
+                    Margin="2,1,1,2"
+                    CornerRadius="5"
+                    Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVis}}">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="Cursor" Value="Hand" />
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#5CAEB0" />
+                                </Trigger>
+                                <DataTrigger Binding="{Binding MenuSeleccionado}" Value="Usuarios">
+                                    <Setter Property="Background" Value="#3D8284" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+
+                    <Button
+                        Padding="10,5"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Command="{Binding OpenUsuariosCommand}"
+                        CommandParameter="Usuarios"
+                        Focusable="False"
+                        FontSize="12"
+                        FontWeight="UltraLight"
+                        Foreground="White">
+                        <Grid VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image
+                                Grid.Column="0"
+                                Width="20"
+                                Height="20"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Source="/Assets/IconosDashboard/usuriosIcon.png" />
+                            <TextBlock
+                                Grid.Column="2"
+                                VerticalAlignment="Center"
+                                Text="Usuarios" />
+                        </Grid>
+                    </Button>
+
+                    <Border.InputBindings>
+                        <MouseBinding
+                            Command="{Binding OpenUsuariosCommand}"
+                            CommandParameter="Usuarios"
+                            MouseAction="LeftClick" />
+                    </Border.InputBindings>
+                </Border>
+
+                <!--  Asistencia trabajadores  -->
+                <Border
+                    Margin="2,1,1,2"
+                    CornerRadius="5"
+                    Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVis}}">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="Cursor" Value="Hand" />
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#5CAEB0" />
+                                </Trigger>
+                                <DataTrigger Binding="{Binding MenuSeleccionado}" Value="AsistenciaTrab">
+                                    <Setter Property="Background" Value="#3D8284" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+
+                    <Button
+                        Padding="10,5"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Command="{Binding CambiarMenuCommand}"
+                        CommandParameter="AsistenciaTrab"
+                        Focusable="False"
+                        FontSize="12"
+                        FontWeight="UltraLight"
+                        Foreground="White">
+                        <Grid VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                Width="20"
+                                Height="20"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Source="/Assets/IconosDashboard/asistenciaIcon.png" />
+                            <TextBlock
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                Text="Asistencia de Trabajadores" />
+                        </Grid>
+                    </Button>
+
+                    <Border.InputBindings>
+                        <MouseBinding
+                            Command="{Binding CambiarMenuCommand}"
+                            CommandParameter="AsistenciaTrab"
+                            MouseAction="LeftClick" />
+                    </Border.InputBindings>
+                </Border>
+
+                <!--  Vacaciones y permisos  -->
+                <Border Margin="2,1,1,2" CornerRadius="5">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="Cursor" Value="Hand" />
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#5CAEB0" />
+                                </Trigger>
+                                <DataTrigger Binding="{Binding MenuSeleccionado}" Value="VacacionesPermisos">
+                                    <Setter Property="Background" Value="#3D8284" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+
+                    <Button
+                        Padding="10,5"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Command="{Binding CambiarMenuCommand}"
+                        CommandParameter="VacacionesPermisos"
+                        Focusable="False"
+                        FontSize="12"
+                        FontWeight="UltraLight"
+                        Foreground="White">
+                        <Grid VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image
+                                Grid.Column="0"
+                                Width="20"
+                                Height="20"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Source="/Assets/IconosDashboard/calendarioIcon.png" />
+                            <TextBlock
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                Text="Vacaciones y permisos" />
+                        </Grid>
+                    </Button>
+
+                    <Border.InputBindings>
+                        <MouseBinding
+                            Command="{Binding CambiarMenuCommand}"
+                            CommandParameter="VacacionesPermisos"
+                            MouseAction="LeftClick" />
+                    </Border.InputBindings>
+                </Border>
+
+                <!--  Faltas registradas  -->
+                <Border Margin="2,1,1,2" CornerRadius="5">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="Cursor" Value="Hand" />
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#5CAEB0" />
+                                </Trigger>
+                                <DataTrigger Binding="{Binding MenuSeleccionado}" Value="Faltas">
+                                    <Setter Property="Background" Value="#3D8284" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+
+                    <Button
+                        Padding="10,5"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Command="{Binding CambiarMenuCommand}"
+                        CommandParameter="Faltas"
+                        Focusable="False"
+                        FontSize="12"
+                        FontWeight="UltraLight"
+                        Foreground="White">
+                        <Grid VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image
+                                Grid.Column="0"
+                                Width="20"
+                                Height="20"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Source="/Assets/IconosDashboard/faltasIcon.png" />
+                            <TextBlock
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                Text="Faltas registradas" />
+                        </Grid>
+                    </Button>
+
+                    <Border.InputBindings>
+                        <MouseBinding
+                            Command="{Binding CambiarMenuCommand}"
+                            CommandParameter="Faltas"
+                            MouseAction="LeftClick" />
+                    </Border.InputBindings>
+                </Border>
+
+                <!--  Planillas  -->
+                <Border
+                    Margin="2,1,1,2"
+                    CornerRadius="5"
+                    Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVis}}">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="Cursor" Value="Hand" />
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#5CAEB0" />
+                                </Trigger>
+                                <DataTrigger Binding="{Binding MenuSeleccionado}" Value="Planillas">
+                                    <Setter Property="Background" Value="#3D8284" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+
+                    <Button
+                        Padding="10,5"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Command="{Binding CambiarMenuCommand}"
+                        CommandParameter="Planillas"
+                        Focusable="False"
+                        FontSize="12"
+                        FontWeight="UltraLight"
+                        Foreground="White">
+                        <Grid VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image
+                                Grid.Column="0"
+                                Width="20"
+                                Height="20"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Source="/Assets/IconosDashboard/planillasIcon.png" />
+                            <TextBlock
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                Text="Planillas" />
+                        </Grid>
+                    </Button>
+
+                    <Border.InputBindings>
+                        <MouseBinding
+                            Command="{Binding CambiarMenuCommand}"
+                            CommandParameter="Planillas"
+                            MouseAction="LeftClick" />
+                    </Border.InputBindings>
+                </Border>
+
+                <!--  Reportes  -->
+                <Border
+                    Margin="2,1,1,2"
+                    CornerRadius="5"
+                    Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVis}}">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="Cursor" Value="Hand" />
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#5CAEB0" />
+                                </Trigger>
+                                <DataTrigger Binding="{Binding MenuSeleccionado}" Value="Reportes">
+                                    <Setter Property="Background" Value="#3D8284" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+
+                    <Button
+                        Padding="10,5"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Command="{Binding CambiarMenuCommand}"
+                        CommandParameter="Reportes"
+                        Focusable="False"
+                        FontSize="12"
+                        FontWeight="UltraLight"
+                        Foreground="White">
+                        <Grid VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image
+                                Grid.Column="0"
+                                Width="20"
+                                Height="20"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Source="/Assets/IconosDashboard/reportesIcon.png" />
+                            <TextBlock
+                                Grid.Column="2"
+                                VerticalAlignment="Center"
+                                Text="Reportes" />
+                        </Grid>
+                    </Button>
+
+                    <Border.InputBindings>
+                        <MouseBinding
+                            Command="{Binding CambiarMenuCommand}"
+                            CommandParameter="Reportes"
+                            MouseAction="LeftClick" />
+                    </Border.InputBindings>
+                </Border>
+
+                <!--  Salir  -->
+                <Border Margin="2,1,1,2" CornerRadius="5">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="Background" Value="#FF214F" />
+                            <Setter Property="Cursor" Value="Hand" />
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#FF3366" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+
+                    <Button
+                        x:Name="btnExit"
+                        Width="207"
+                        Padding="10,5"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Click="btnExit_Click_1"
+                        Cursor="Hand"
+                        Focusable="False"
+                        FontSize="12"
+                        FontWeight="SemiBold"
+                        Foreground="White">
+                        <Grid HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image
+                                Grid.Column="0"
+                                Width="20"
+                                Height="20"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Source="/Assets/IconosDashboard/salirIcon.png" />
+                            <TextBlock
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                Text="Salir" />
+                        </Grid>
+                    </Button>
+                </Border>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Column="1" Background="White">
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontFamily="Inter"
+                FontSize="40"
+                FontWeight="SemiBold" />
+            <ContentControl Content="{Binding CurrentView}" />
+        </Grid>
+    </Grid>
+</Window>
