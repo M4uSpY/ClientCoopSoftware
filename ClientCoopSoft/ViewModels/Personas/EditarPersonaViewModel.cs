@@ -19,6 +19,7 @@ namespace ClientCoopSoft.ViewModels.Personas
     {
         private readonly ApiClient _apiClient;
         private readonly Persona _persona;
+        private readonly LectorHuellaService _lectorHuellaService = new();
 
         [ObservableProperty] private string primerNombre = string.Empty;
         [ObservableProperty] private string? segundoNombre;
@@ -37,7 +38,14 @@ namespace ClientCoopSoft.ViewModels.Personas
         [ObservableProperty] private byte[]? fotoBytes;
         [ObservableProperty] private BitmapImage? fotoPreview;
 
-        [ObservableProperty] private string huella = string.Empty;
+        [ObservableProperty] private string? huellaBase64;
+        [ObservableProperty] private bool huellaRegistrada;
+        [ObservableProperty] private BitmapImage? huellaPreview;
+
+        [ObservableProperty] private BitmapImage? imagenHuella;
+        [ObservableProperty] private byte[]? huellaBytes;
+
+        [ObservableProperty] private string mensajeHuella = "No hay huella registrada";
 
         public EditarPersonaViewModel(Persona persona, ApiClient apiCilent)
         {
@@ -54,9 +62,35 @@ namespace ClientCoopSoft.ViewModels.Personas
             Direccion = persona.Direccion;
             Email = persona.Email;
             FotoBytes = persona.Foto;
+            HuellaBytes = persona.Huella;
 
             _ = CargarGenerosAsync(persona.Genero);
             _ = CargarNacionalidadesAsync(persona.IdNacionalidad);
+            _ = CargarHuellaAsync();
+
+        }
+        private async Task CargarHuellaAsync()
+        {
+            try
+            {
+                var huellaBytes = await _apiClient.ObtenerHuellaAsync(_persona.IdPersona);
+                if (huellaBytes != null && huellaBytes.Length > 0)
+                {
+                    HuellaBase64 = Convert.ToBase64String(huellaBytes);
+                    HuellaRegistrada = true;
+                    MensajeHuella = "Huella registrada ✔";
+                }
+                else
+                {
+                    HuellaRegistrada = false;
+                    MensajeHuella = "No hay huella registrada";
+                }
+            }
+            catch (Exception ex)
+            {
+                HuellaRegistrada = false;
+                MensajeHuella = $"Error al cargar huella: {ex.Message}";
+            }
         }
 
         private async Task CargarGenerosAsync(bool genero)
@@ -177,6 +211,7 @@ namespace ClientCoopSoft.ViewModels.Personas
                 Direccion = Direccion,
                 Email = Email,
                 Foto = FotoBytes,
+                Huella = HuellaBytes
             };
             bool exito = await _apiClient.EditarPersonaAsync(_persona.IdPersona, personaDTO);
             if (exito)
@@ -188,6 +223,21 @@ namespace ClientCoopSoft.ViewModels.Personas
             else
             {
                 MessageBox.Show("Error al actualizar el usuario", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+        [RelayCommand]
+        private async Task CapturarHuellaAsync()
+        {
+            var resultado = await _lectorHuellaService.CapturarHuellaAsync();
+            if (resultado != null)
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    ImagenHuella = resultado.ImagenHuella; // Preview
+                });
+
+                HuellaBytes = resultado.TemplateBytes; // <-- enviar byte[] directo al backend
+                MessageBox.Show("Huella capturada correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
         [RelayCommand]

@@ -3,13 +3,8 @@ using ClientCoopSoft.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
@@ -18,6 +13,7 @@ namespace ClientCoopSoft.ViewModels.Personas
     public partial class CrearPersonaViewModel : ObservableObject
     {
         private readonly ApiClient _apiClient;
+        private readonly LectorHuellaService _lectorHuellaService = new();
 
         [ObservableProperty] private string primerNombre = string.Empty;
         [ObservableProperty] private string? segundoNombre;
@@ -36,7 +32,8 @@ namespace ClientCoopSoft.ViewModels.Personas
         [ObservableProperty] private byte[]? fotoBytes;
         [ObservableProperty] private BitmapImage? fotoPreview;
 
-        [ObservableProperty] private string huella = string.Empty;
+        [ObservableProperty] private BitmapImage? imagenHuella;
+        [ObservableProperty] private byte[]? huellaBytes;
 
         public CrearPersonaViewModel(ApiClient apiCilent)
         {
@@ -161,7 +158,7 @@ namespace ClientCoopSoft.ViewModels.Personas
                 Direccion = Direccion,
                 Email = Email,
                 Foto = FotoBytes,
-                Huella = new byte[] { 0x00 }
+                Huella = HuellaBytes
             };
             bool exito = await _apiClient.CrearPersonaAsync(personaDTO);
             if (exito)
@@ -175,6 +172,23 @@ namespace ClientCoopSoft.ViewModels.Personas
                 MessageBox.Show("Error al crear el usuario", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+
+        [RelayCommand]
+        private async Task CapturarHuellaAsync()
+        {
+            var resultado = await _lectorHuellaService.CapturarHuellaAsync();
+            if (resultado != null)
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    ImagenHuella = resultado.ImagenHuella; // Preview
+                });
+
+                HuellaBytes = resultado.TemplateBytes; // <-- enviar byte[] directo al backend
+                MessageBox.Show("Huella capturada correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
         [RelayCommand]
         private void Cancelar(Window window)
         {

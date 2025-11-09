@@ -34,6 +34,22 @@ public class ApiClient
         }
         return auth;
     }
+    public async Task<byte[]?> ObtenerHuellaAsync(int idPersona)
+    {
+        try
+        {
+            var response = await _http.GetAsync($"api/personas/{idPersona}/huella");
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsByteArrayAsync();
+            }
+        }
+        catch
+        {
+            // Manejar errores
+        }
+        return null;
+    }
 
     public void SetBearer()
     {

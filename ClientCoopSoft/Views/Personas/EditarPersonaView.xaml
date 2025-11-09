@@ -17,18 +17,27 @@
     mc:Ignorable="d">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        <conv:BoolToColorConverter x:Key="BoolToColorConverter" />
         <conv:BoolToGeneroConverter x:Key="BoolToGeneroConverter" />
     </Window.Resources>
 
     <Border
         x:Name="borde"
         Width="1000"
-        Height="730"
+        Height="761"
         Background="White"
         BorderBrush="Gray"
         BorderThickness="1"
         CornerRadius="10"
         MouseLeftButtonDown="borde_MouseLeftButtonDown">
+        <UIElement.RenderTransform>
+            <TransformGroup>
+                <ScaleTransform />
+                <SkewTransform />
+                <RotateTransform />
+                <TranslateTransform />
+            </TransformGroup>
+        </UIElement.RenderTransform>
         <Grid Margin="30">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -351,11 +360,12 @@
 
             <!--  AGREGAR FOTO  -->
             <StackPanel
-                Grid.RowSpan="6"
+                Grid.Row="2"
+                Grid.RowSpan="3"
                 Grid.Column="2"
-                Margin="20"
+                Margin="0,26,0,0"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Center"
+                VerticalAlignment="Top"
                 Orientation="Vertical">
 
                 <Image
@@ -378,8 +388,38 @@
                     Content="Subir Foto"
                     Foreground="White" />
             </StackPanel>
+            <!--  Indicador de huella  -->
+            <StackPanel
+                Grid.Row="4"
+                Grid.RowSpan="2"
+                Grid.Column="2"
+                Margin="95,36,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Orientation="Vertical">
+                <Image
+                    Width="150"
+                    Height="150"
+                    Margin="0,0,0,10"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    ClipToBounds="True"
+                    SnapsToDevicePixels="True"
+                    Source="{Binding ImagenHuella}"
+                    Stretch="UniformToFill" />
 
+                <TextBlock
+                    Margin="0,0,0,5"
+                    HorizontalAlignment="Center"
+                    FontWeight="Bold"
+                    Foreground="{Binding HuellaRegistrada, Converter={StaticResource BoolToColorConverter}}"
+                    Text="{Binding MensajeHuella}" />
 
+                <Button
+                    Width="120"
+                    Command="{Binding CapturarHuellaCommand}"
+                    Content="Atualizar Huella" />
+            </StackPanel>
 
 
             <!--  Botones  -->
