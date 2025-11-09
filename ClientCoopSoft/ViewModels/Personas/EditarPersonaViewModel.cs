@@ -43,7 +43,7 @@ namespace ClientCoopSoft.ViewModels.Personas
         [ObservableProperty] private BitmapImage? huellaPreview;
 
         [ObservableProperty] private BitmapImage? imagenHuella;
-        [ObservableProperty] private byte[]? huellaBytes;
+        [ObservableProperty] private string? huellaXml;
 
         [ObservableProperty] private string mensajeHuella = "No hay huella registrada";
 
@@ -62,7 +62,7 @@ namespace ClientCoopSoft.ViewModels.Personas
             Direccion = persona.Direccion;
             Email = persona.Email;
             FotoBytes = persona.Foto;
-            HuellaBytes = persona.Huella;
+            HuellaXml = persona.Huella;
 
             _ = CargarGenerosAsync(persona.Genero);
             _ = CargarNacionalidadesAsync(persona.IdNacionalidad);
@@ -73,10 +73,10 @@ namespace ClientCoopSoft.ViewModels.Personas
         {
             try
             {
-                var huellaBytes = await _apiClient.ObtenerHuellaAsync(_persona.IdPersona);
-                if (huellaBytes != null && huellaBytes.Length > 0)
+                var huellaXml = await _apiClient.ObtenerHuellaXmlAsync(_persona.IdPersona);
+                if (!string.IsNullOrWhiteSpace(huellaXml))
                 {
-                    HuellaBase64 = Convert.ToBase64String(huellaBytes);
+                    HuellaBase64 = huellaXml;
                     HuellaRegistrada = true;
                     MensajeHuella = "Huella registrada ✔";
                 }
@@ -211,7 +211,7 @@ namespace ClientCoopSoft.ViewModels.Personas
                 Direccion = Direccion,
                 Email = Email,
                 Foto = FotoBytes,
-                Huella = HuellaBytes
+                Huella = HuellaXml
             };
             bool exito = await _apiClient.EditarPersonaAsync(_persona.IdPersona, personaDTO);
             if (exito)
@@ -236,7 +236,7 @@ namespace ClientCoopSoft.ViewModels.Personas
                     ImagenHuella = resultado.ImagenHuella; // Preview
                 });
 
-                HuellaBytes = resultado.TemplateBytes; // <-- enviar byte[] directo al backend
+                HuellaXml = resultado.TemplateXml; // <-- enviar byte[] directo al backend
                 MessageBox.Show("Huella capturada correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }

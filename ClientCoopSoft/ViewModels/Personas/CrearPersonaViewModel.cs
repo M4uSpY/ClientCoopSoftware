@@ -33,7 +33,7 @@ namespace ClientCoopSoft.ViewModels.Personas
         [ObservableProperty] private BitmapImage? fotoPreview;
 
         [ObservableProperty] private BitmapImage? imagenHuella;
-        [ObservableProperty] private byte[]? huellaBytes;
+        [ObservableProperty] private string? huellaXml;
 
         public CrearPersonaViewModel(ApiClient apiCilent)
         {
@@ -158,7 +158,7 @@ namespace ClientCoopSoft.ViewModels.Personas
                 Direccion = Direccion,
                 Email = Email,
                 Foto = FotoBytes,
-                Huella = HuellaBytes
+                Huella = HuellaXml
             };
             bool exito = await _apiClient.CrearPersonaAsync(personaDTO);
             if (exito)
@@ -184,10 +184,13 @@ namespace ClientCoopSoft.ViewModels.Personas
                     ImagenHuella = resultado.ImagenHuella; // Preview
                 });
 
-                HuellaBytes = resultado.TemplateBytes; // <-- enviar byte[] directo al backend
+                // Antes: HuellaBytes = resultado.TemplateBytes;
+                HuellaXml = resultado.TemplateXml;
+
                 MessageBox.Show("Huella capturada correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
+
 
         [RelayCommand]
         private void Cancelar(Window window)

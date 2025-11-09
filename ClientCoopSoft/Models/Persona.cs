@@ -23,7 +23,7 @@ namespace ClientCoopSoft.Models
         public string Telefono { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public byte[]? Foto { get; set; }
-        public byte[]? Huella { get; set; }
+        public string? Huella { get; set; }
 
         public string NombreCompleto =>
         string.Join(" ",

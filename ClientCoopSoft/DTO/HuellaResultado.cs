@@ -9,7 +9,7 @@ namespace ClientCoopSoft.DTO
 {
     public class HuellaResultado
     {
-        public byte[] TemplateBytes { get; set; } = Array.Empty<byte>();
+        public string? TemplateXml { get; set; }
         public BitmapImage? ImagenHuella { get; set; } // Cambiado de BitmapImage
     }
 }

@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text;
+using System.Windows;
 
 public class ApiClient
 {
@@ -34,20 +35,23 @@ public class ApiClient
         }
         return auth;
     }
-    public async Task<byte[]?> ObtenerHuellaAsync(int idPersona)
+    public async Task<string?> ObtenerHuellaXmlAsync(int idPersona)
     {
         try
         {
             var response = await _http.GetAsync($"api/personas/{idPersona}/huella");
             if (response.IsSuccessStatusCode)
             {
-                return await response.Content.ReadAsByteArrayAsync();
+                // Leer el contenido como string (XML)
+                return await response.Content.ReadAsStringAsync();
             }
         }
-        catch
+        catch (Exception ex)
         {
-            // Manejar errores
+            // Manejar errores, opcionalmente registrar ex.Message
+            MessageBox.Show(ex.Message);
         }
+
         return null;
     }
 

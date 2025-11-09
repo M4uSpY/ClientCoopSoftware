@@ -62,9 +62,12 @@ public class LectorHuellaService
 
             var imagen = ConvertFidToBitmapImage(captureResult.Data);
 
+            // Serializar a XML
+            string fmdXml = Fmd.SerializeXml(fmdResult.Data);
+
             _tcs?.TrySetResult(new HuellaResultado
             {
-                TemplateBytes = fmdResult.Data.Bytes,
+                TemplateXml = fmdXml,
                 ImagenHuella = imagen
             });
         }
@@ -92,10 +95,8 @@ public class LectorHuellaService
         int h = view.Height;
         byte[] raw = view.RawImage;
 
-        // Crear bitmap en System.Drawing
         using var bmp = new System.Drawing.Bitmap(w, h, System.Drawing.Imaging.PixelFormat.Format8bppIndexed);
 
-        // Paleta grayscale
         var pal = bmp.Palette;
         for (int i = 0; i < 256; i++)
             pal.Entries[i] = System.Drawing.Color.FromArgb(i, i, i);
@@ -108,7 +109,6 @@ public class LectorHuellaService
             System.Runtime.InteropServices.Marshal.Copy(raw, y * w, data.Scan0 + y * data.Stride, w);
         bmp.UnlockBits(data);
 
-        // Guardar a MemoryStream como BMP
         using var ms = new MemoryStream();
         bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
         ms.Seek(0, SeekOrigin.Begin);
@@ -118,7 +118,7 @@ public class LectorHuellaService
         image.CacheOption = BitmapCacheOption.OnLoad;
         image.StreamSource = ms;
         image.EndInit();
-        image.Freeze(); // <-- Muy importante para usarlo desde cualquier hilo
+        image.Freeze();
 
         return image;
     }
