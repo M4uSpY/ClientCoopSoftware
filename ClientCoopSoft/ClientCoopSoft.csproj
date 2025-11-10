@@ -106,4 +106,8 @@
     <Resource Include="Assets\WallMain.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DTO\Trabajadores\" />
+  </ItemGroup>
+
 </Project>
