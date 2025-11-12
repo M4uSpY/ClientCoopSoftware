@@ -42,6 +42,7 @@
     <None Remove="Assets\IconosDashboard\boletasPagoIcon.png" />
     <None Remove="Assets\IconosDashboard\calendarioIcon.png" />
     <None Remove="Assets\IconosDashboard\faltasIcon.png" />
+    <None Remove="Assets\IconosDashboard\iconInicio.png" />
     <None Remove="Assets\IconosDashboard\informacionPersonal.png" />
     <None Remove="Assets\IconosDashboard\personasIcon.png" />
     <None Remove="Assets\IconosDashboard\planillasIcon.png" />
@@ -91,6 +92,7 @@
     <Resource Include="Assets\IconosDashboard\boletasPagoIcon.png" />
     <Resource Include="Assets\IconosDashboard\calendarioIcon.png" />
     <Resource Include="Assets\IconosDashboard\faltasIcon.png" />
+    <Resource Include="Assets\IconosDashboard\iconInicio.png" />
     <Resource Include="Assets\IconosDashboard\informacionPersonal.png" />
     <Resource Include="Assets\IconosDashboard\personasIcon.png" />
     <Resource Include="Assets\IconosDashboard\planillasIcon.png" />

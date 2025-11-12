@@ -60,15 +60,12 @@
                 Width="40"
                 Height="40"
                 Margin="8,0,0,0"
-                Background="Transparent"
+                Background="#1D9942"
                 BorderBrush="Transparent"
                 Command="{Binding ExportarExcelCommand}"
+                Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
                 ToolTip="Exportar a Excel (.xlsx)">
-                <md:PackIcon
-                    Width="10"
-                    Height="10"
-                    Foreground="#217346"
-                    Kind="FileExcel" />
+                <md:PackIcon Foreground="White" Kind="FileExcel" />
             </Button>
 
             <!--  Exportar a PDF  -->
@@ -76,15 +73,12 @@
                 Width="40"
                 Height="40"
                 Margin="8,0,0,0"
-                Background="Transparent"
+                Background="#D9534F"
                 BorderBrush="Transparent"
                 Command="{Binding ExportarPdfCommand}"
+                Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
                 ToolTip="Exportar a PDF">
-                <md:PackIcon
-                    Width="10"
-                    Height="10"
-                    Foreground="#D9534F"
-                    Kind="FilePdfBox" />
+                <md:PackIcon Foreground="White" Kind="FilePdfBox" />
             </Button>
         </StackPanel>
         <DataGrid

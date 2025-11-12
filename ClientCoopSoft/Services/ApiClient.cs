@@ -16,10 +16,11 @@ public class ApiClient
     {
         _http = new HttpClient { BaseAddress = new Uri(baseUrl) };
     }
-    
+
+    // LOGIN
     public async Task<AuthResponse?> LoginAsync(string username, string password)
     {
-        var payload = new { nombreUsuario = username, Password = password }; // usar lo que espera tu backend
+        var payload = new { nombreUsuario = username, Password = password };
         var resp = await _http.PostAsJsonAsync("api/auth/login", payload);
         var raw = await resp.Content.ReadAsStringAsync();
         System.Diagnostics.Debug.WriteLine($"Login response: {resp.StatusCode} - {raw}");
@@ -35,6 +36,8 @@ public class ApiClient
         }
         return auth;
     }
+
+    // OBTENER HUELLA
     public async Task<string?> ObtenerHuellaXmlAsync(int idPersona)
     {
         try
@@ -42,19 +45,18 @@ public class ApiClient
             var response = await _http.GetAsync($"api/personas/{idPersona}/huella");
             if (response.IsSuccessStatusCode)
             {
-                // Leer el contenido como string (XML)
                 return await response.Content.ReadAsStringAsync();
             }
         }
         catch (Exception ex)
         {
-            // Manejar errores, opcionalmente registrar ex.Message
             MessageBox.Show(ex.Message);
         }
 
         return null;
     }
 
+    // SETEAR JWT BEARER
     public void SetBearer()
     {
         if (!string.IsNullOrWhiteSpace(JwtToken))
@@ -63,6 +65,8 @@ public class ApiClient
             _http.DefaultRequestHeaders.Authorization = null;
     }
 
+    #region USUARIOS
+    // OBTENER USUARIOS
     public async Task<List<Usuario>?> GetUsuariosAsync()
     {
         SetBearer();
@@ -74,19 +78,7 @@ public class ApiClient
             return JsonConvert.DeserializeObject<List<Usuario>>(raw);
         return null;
     }
-    public async Task<List<Persona>?> ObtenerPersonasAsync()
-    {
-        SetBearer();
-        var request = new HttpRequestMessage(HttpMethod.Get, "api/personas");
-        var response = await _http.SendAsync(request);
-        var raw = await response.Content.ReadAsStringAsync();
-
-        if (response.IsSuccessStatusCode)
-        {
-            return JsonConvert.DeserializeObject<List<Persona>>(raw);
-        }
-        return null;
-    }
+    // CREAR USUARIOS
     public async Task<bool> CrearUsuarioAsync(UsuarioCrearDTO dto)
     {
         try
@@ -101,6 +93,57 @@ public class ApiClient
             return false;
         }
     }
+    // ACTUALIZAR USUARIOS
+    public async Task<bool> ActualizarUsuarioAsync(int id, UsuarioEditarDTO dto)
+    {
+        SetBearer();
+        var json = JsonConvert.SerializeObject(dto);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+        var response = await _http.PutAsync($"api/usuarios/{id}", content);
+        return response.IsSuccessStatusCode;
+    }
+    // ELIMINAR USUARIOS
+    public async Task<bool> EliminarUsuarioAsync(int idUsuario)
+    {
+        try
+        {
+            var response = await _http.DeleteAsync($"api/usuarios/{idUsuario}");
+            return response.IsSuccessStatusCode;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+    #endregion
+
+    public async Task<List<Persona>?> ObtenerPersonasAsync()
+    {
+        SetBearer();
+        var request = new HttpRequestMessage(HttpMethod.Get, "api/personas");
+        var response = await _http.SendAsync(request);
+        var raw = await response.Content.ReadAsStringAsync();
+
+        if (response.IsSuccessStatusCode)
+        {
+            return JsonConvert.DeserializeObject<List<Persona>>(raw);
+        }
+        return null;
+    }
+    public async Task<List<Trabajador>?> ObtenerTrabajadoresAsync()
+    {
+        SetBearer();
+        var request = new HttpRequestMessage(HttpMethod.Get, "api/trabajadores");
+        var resp = await _http.SendAsync(request);
+        var raw = await resp.Content.ReadAsStringAsync();
+
+        if (resp.IsSuccessStatusCode)
+        {
+            return JsonConvert.DeserializeObject<List<Trabajador>>(raw);
+        }
+        return null;
+    }
+    
     public async Task<bool> CrearPersonaAsync(PersonaCrearDTO dto)
     {
         try
@@ -116,14 +159,7 @@ public class ApiClient
         }
     }
 
-    public async Task<bool> ActualizarUsuarioAsync(int id, UsuarioEditarDTO dto)
-    {
-        SetBearer();
-        var json = JsonConvert.SerializeObject(dto);
-        var content = new StringContent(json, Encoding.UTF8, "application/json");
-        var response = await _http.PutAsync($"api/usuarios/{id}", content);
-        return response.IsSuccessStatusCode;
-    }
+    
     public async Task<bool> EditarPersonaAsync(int id, Persona dto)
     {
         SetBearer();
@@ -132,18 +168,7 @@ public class ApiClient
         var response = await _http.PutAsync($"api/personas/{id}", content);
         return response.IsSuccessStatusCode;
     }
-    public async Task<bool> EliminarUsuarioAsync(int idUsuario)
-    {
-        try
-        {
-            var response = await _http.DeleteAsync($"api/usuarios/{idUsuario}");
-            return response.IsSuccessStatusCode;
-        }
-        catch
-        {
-            return false;
-        }
-    }
+    
     public async Task<bool> EliminarPersonaAsync(int idPersona)
     {
         try

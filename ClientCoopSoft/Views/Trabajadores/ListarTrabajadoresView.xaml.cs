@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ClientCoopSoft.Marcado
+namespace ClientCoopSoft.Views.Trabajadores
 {
     /// <summary>
-    /// Lógica de interacción para Marcado.xaml
+    /// Lógica de interacción para ListarTrabajadoresView.xaml
     /// </summary>
-    public partial class Marcado : Window
+    public partial class ListarTrabajadoresView : UserControl
     {
-        public Marcado()
+        public ListarTrabajadoresView()
         {
             InitializeComponent();
         }

@@ -18,6 +18,7 @@
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
         <conv:BoolToColorConverter x:Key="BoolToColorConverter" />
+        <BitmapImage x:Key="PlaceholderImage" UriSource="/Assets/fotoIcon.png" />
         <conv:BoolToGeneroConverter x:Key="BoolToGeneroConverter" />
     </Window.Resources>
 
@@ -376,7 +377,7 @@
                     VerticalAlignment="Center"
                     ClipToBounds="True"
                     SnapsToDevicePixels="True"
-                    Source="{Binding FotoPreview}"
+                    Source="{Binding FotoPreview, TargetNullValue={StaticResource PlaceholderImage}}"
                     Stretch="UniformToFill" />
 
                 <Button

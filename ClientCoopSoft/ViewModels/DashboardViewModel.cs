@@ -1,8 +1,11 @@
 ﻿using ClientCoopSoft.ViewModels.InformacionPersonal;
+using ClientCoopSoft.ViewModels.Inicio;
+using ClientCoopSoft.ViewModels.Trabajadores;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,8 +38,8 @@ namespace ClientCoopSoft.ViewModels
             Bienvenida = $"Bienvenido";
             Info = $"{NombreCompleto}";
 
-            CurrentView = null;
             MenuSeleccionado = "Inicio";
+            CurrentView = new InicioViewModel();
 
             _ = CargarFotoPerfilAsync();
         }
@@ -44,6 +47,13 @@ namespace ClientCoopSoft.ViewModels
         {
             return IsAdmin;
         }
+        [RelayCommand]
+        private Task AbrirInicioAsync() {
+            MenuSeleccionado = "Inicio";
+            CurrentView = new InicioViewModel();
+            return Task.CompletedTask;
+        }
+
         [RelayCommand]
         private async Task OpenUsuariosAsync()
         {
@@ -57,6 +67,20 @@ namespace ClientCoopSoft.ViewModels
             await usuariosVM.LoadUsuariosAsync();
             CurrentView = usuariosVM;
         }
+        [RelayCommand]
+        private async Task AbrirTrabajadoresAsync()
+        {
+            if (!IsAllowed())
+            {
+                System.Windows.MessageBox.Show("No tiene permiso para ver trabajadores.", "Acceso denegado", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+                return;
+            }
+            MenuSeleccionado = "Trabajadores";
+            var trabajadoresVM = new ListarTrabajadoresViewModel(_apiClient);
+            await trabajadoresVM.CargarTrabajadoresAsync();
+            CurrentView = trabajadoresVM;
+        }
+
         [RelayCommand]
         private async Task AbrirPersonasAsync()
         {

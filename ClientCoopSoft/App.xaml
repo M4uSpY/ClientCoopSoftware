@@ -46,6 +46,22 @@
                 <views:InformacionPersonalView />
             </DataTemplate>
 
+            <!--  Mapea InfPersonalViewModel a InformacionPersonalView  -->
+            <DataTemplate
+                xmlns:views="clr-namespace:ClientCoopSoft.Views.Trabajadores"
+                xmlns:vm="clr-namespace:ClientCoopSoft.ViewModels.Trabajadores"
+                DataType="{x:Type vm:ListarTrabajadoresViewModel}">
+                <views:ListarTrabajadoresView />
+            </DataTemplate>
+
+            <DataTemplate
+                xmlns:views="clr-namespace:ClientCoopSoft.Views.Inicio"
+                xmlns:vm="clr-namespace:ClientCoopSoft.ViewModels.Inicio"
+                DataType="{x:Type vm:InicioViewModel}">
+                <views:InicioView />
+            </DataTemplate>
+
+
 
 
 
