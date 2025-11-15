@@ -1,6 +1,8 @@
-﻿using ClientCoopSoft.ViewModels.InformacionPersonal;
+﻿using ClientCoopSoft.ViewModels.Asistencia;
+using ClientCoopSoft.ViewModels.InformacionPersonal;
 using ClientCoopSoft.ViewModels.Inicio;
 using ClientCoopSoft.ViewModels.Trabajadores;
+using ClientCoopSoft.ViewModels.VacacionesPemisos;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
@@ -107,6 +109,26 @@ namespace ClientCoopSoft.ViewModels
 
             var infpersonalVM = new InfPersonalViewModel(persona, _apiClient);
             CurrentView = infpersonalVM;
+        }
+
+        [RelayCommand]
+        private async Task AbrirVacacionesPermisosAsync()
+        {
+            MenuSeleccionado = "VacacionesPermisos";
+            var listaVacPermisosVM = new CalendarioVacacionesPermisosViewModel(_apiClient);
+            CurrentView = listaVacPermisosVM;
+
+            await listaVacPermisosVM.CargarEventosAsync();
+        }
+
+        [RelayCommand]
+        private async Task AbrirAsistenciasAsync()
+        {
+            MenuSeleccionado = "Asistencias";
+            var listaAsistenciasVM = new ListarAsistenciasViewModel(_apiClient);
+
+            await listaAsistenciasVM.CargarAsistenciasAsync();
+            CurrentView = listaAsistenciasVM;
         }
 
         [RelayCommand]

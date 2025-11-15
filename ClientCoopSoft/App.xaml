@@ -19,6 +19,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
+
             <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
 
 
@@ -60,6 +61,23 @@
                 DataType="{x:Type vm:InicioViewModel}">
                 <views:InicioView />
             </DataTemplate>
+
+            <DataTemplate
+                xmlns:views="clr-namespace:ClientCoopSoft.Views.VacacionesPermisos"
+                xmlns:vm="clr-namespace:ClientCoopSoft.ViewModels.VacacionesPemisos"
+                DataType="{x:Type vm:CalendarioVacacionesPermisosViewModel}">
+                <views:CalendarioVacacionesPermisosView />
+            </DataTemplate>
+
+
+            <DataTemplate
+                xmlns:views="clr-namespace:ClientCoopSoft.Views.Asistencia"
+                xmlns:vm="clr-namespace:ClientCoopSoft.ViewModels.Asistencia"
+                DataType="{x:Type vm:ListarAsistenciasViewModel}">
+                <views:AsistenciaView />
+            </DataTemplate>
+
+
 
 
 

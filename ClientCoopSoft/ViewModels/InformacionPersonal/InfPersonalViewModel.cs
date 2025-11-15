@@ -1,4 +1,5 @@
 ﻿using ClientCoopSoft.Models;
+using ClientCoopSoft.Views.InformacionPersonal;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Win32;
@@ -7,9 +8,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
 namespace ClientCoopSoft.ViewModels.InformacionPersonal
@@ -19,6 +20,7 @@ namespace ClientCoopSoft.ViewModels.InformacionPersonal
         private readonly ApiClient _apiClient;
         private readonly Persona _persona;
 
+        // Campos existentes
         [ObservableProperty] private string primerNombre = string.Empty;
         [ObservableProperty] private string? segundoNombre;
         [ObservableProperty] private string apellidoPaterno = string.Empty;
@@ -32,17 +34,19 @@ namespace ClientCoopSoft.ViewModels.InformacionPersonal
         [ObservableProperty] private string telefono = string.Empty;
         [ObservableProperty] private string direccion = string.Empty;
         [ObservableProperty] private string email = string.Empty;
-
         [ObservableProperty] private byte[]? fotoBytes;
         [ObservableProperty] private BitmapImage? fotoPreview;
-
         [ObservableProperty] private string huella = string.Empty;
+
+        // NUEVO: contenido dinámico para navegación de pestañas
+        [ObservableProperty] private UserControl? contenidoActual;
 
         public InfPersonalViewModel(Persona persona, ApiClient apiCilent)
         {
             _apiClient = apiCilent;
             _persona = persona;
 
+            // Inicializar campos
             PrimerNombre = persona.PrimerNombre;
             SegundoNombre = persona.SegundoNombre ?? string.Empty;
             ApellidoPaterno = persona.ApellidoPaterno;
@@ -56,20 +60,26 @@ namespace ClientCoopSoft.ViewModels.InformacionPersonal
 
             _ = CargarGenerosAsync(persona.Genero);
             _ = CargarNacionalidadesAsync(persona.IdNacionalidad);
+
+            // Inicializar contenido con la vista principal
+            ContenidoActual = new InformacionPersonalFormView { DataContext = this };
         }
 
+        // Métodos existentes
         private async Task CargarGenerosAsync(bool genero)
         {
             var listaGeneros = await _apiClient.ObtenerGenerosAsync() ?? new List<bool>();
             Generos = new ObservableCollection<bool>(listaGeneros);
             GeneroSeleccionado = Generos.FirstOrDefault(g => g.Equals(genero));
         }
+
         private async Task CargarNacionalidadesAsync(int idNacionalidad)
         {
             var listaNacionalidades = await _apiClient.ObtenerNacionalidadesAsync() ?? new List<Nacionalidad>();
             Nacionalidades = new ObservableCollection<Nacionalidad>(listaNacionalidades);
             NacionalidadSeleccionada = Nacionalidades.FirstOrDefault(n => n.IdClasificador == idNacionalidad);
         }
+
         [RelayCommand]
         private void SubirFoto()
         {
@@ -83,10 +93,8 @@ namespace ClientCoopSoft.ViewModels.InformacionPersonal
 
                 if (openFileDialog.ShowDialog() == true)
                 {
-                    var filePath = openFileDialog.FileName;
-                    FotoBytes = File.ReadAllBytes(filePath);
+                    FotoBytes = File.ReadAllBytes(openFileDialog.FileName);
 
-                    // Crear previsualización
                     var bitmap = new BitmapImage();
                     using (var stream = new MemoryStream(FotoBytes))
                     {
@@ -103,73 +111,30 @@ namespace ClientCoopSoft.ViewModels.InformacionPersonal
                 MessageBox.Show($"Error al cargar la imagen: {ex.Message}");
             }
         }
+
         [RelayCommand]
         private async Task GuardarAsync(Window window)
         {
-            if (GeneroSeleccionado is null)
+            // Validaciones existentes...
+            if (GeneroSeleccionado is null || NacionalidadSeleccionada is null ||
+                string.IsNullOrWhiteSpace(PrimerNombre) || string.IsNullOrWhiteSpace(SegundoNombre) ||
+                string.IsNullOrWhiteSpace(ApellidoPaterno) || string.IsNullOrWhiteSpace(ApellidoMaterno) ||
+                string.IsNullOrWhiteSpace(CarnetIdentidad) || string.IsNullOrWhiteSpace(Telefono) ||
+                string.IsNullOrWhiteSpace(Direccion) || string.IsNullOrWhiteSpace(Email) ||
+                FechaNacimiento > DateTime.Today)
             {
-                MessageBox.Show("Selecciona una persona.", "Advertencia", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-            if (NacionalidadSeleccionada is null)
-            {
-                MessageBox.Show("Selecciona una nacionalidad.", "Advertencia", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-            if (string.IsNullOrWhiteSpace(PrimerNombre))
-            {
-                MessageBox.Show("Ingresa el primer nombre", "Advertencia", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-            if (string.IsNullOrWhiteSpace(SegundoNombre))
-            {
-                MessageBox.Show("Ingresa el segundo nombre", "Advertencia", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-            if (string.IsNullOrWhiteSpace(ApellidoPaterno))
-            {
-                MessageBox.Show("Ingresa el apellido paterno", "Advertencia", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-            if (string.IsNullOrWhiteSpace(ApellidoMaterno))
-            {
-                MessageBox.Show("Ingresa el apellido materno", "Advertencia", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-            if (string.IsNullOrWhiteSpace(CarnetIdentidad))
-            {
-                MessageBox.Show("Ingresa el carnet de identidad", "Advertencia", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-            if (FechaNacimiento > DateTime.Today)
-            {
-                MessageBox.Show("La fecha de nacimiento no puede ser futura.", "Advertencia", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-            if (string.IsNullOrWhiteSpace(Telefono))
-            {
-                MessageBox.Show("Ingresa el telefono", "Advertencia", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-            if (string.IsNullOrWhiteSpace(Direccion))
-            {
-                MessageBox.Show("Ingresa la direccion", "Advertencia", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-            if (string.IsNullOrWhiteSpace(Email))
-            {
-                MessageBox.Show("Ingresa el email", "Advertencia", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Por favor completa todos los campos correctamente.", "Advertencia", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             var personaDTO = new Persona
             {
-                IdNacionalidad = NacionalidadSeleccionada.IdClasificador,
+                IdNacionalidad = NacionalidadSeleccionada!.IdClasificador,
                 PrimerNombre = PrimerNombre,
                 SegundoNombre = string.IsNullOrWhiteSpace(SegundoNombre) ? null : SegundoNombre,
                 ApellidoPaterno = ApellidoPaterno,
                 ApellidoMaterno = ApellidoMaterno,
-                Genero = GeneroSeleccionado.Value,
+                Genero = GeneroSeleccionado!.Value,
                 CarnetIdentidad = CarnetIdentidad,
                 FechaNacimiento = FechaNacimiento,
                 Telefono = Telefono,
@@ -177,21 +142,37 @@ namespace ClientCoopSoft.ViewModels.InformacionPersonal
                 Email = Email,
                 Foto = FotoBytes,
             };
+
             bool exito = await _apiClient.EditarPersonaAsync(_persona.IdPersona, personaDTO);
-            if (exito)
-            {
-                MessageBox.Show("Informacion personal actualizada correctamente", "Exito", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            else
-            {
-                MessageBox.Show("Error al actualizar la informacion personal", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
+            MessageBox.Show(exito ? "Informacion personal actualizada correctamente" : "Error al actualizar la informacion personal",
+                            exito ? "Éxito" : "Error", MessageBoxButton.OK,
+                            exito ? MessageBoxImage.Information : MessageBoxImage.Warning);
         }
+
         [RelayCommand]
         private void Cancelar(Window window)
         {
             window.DialogResult = false;
             window.Close();
+        }
+
+        // NUEVOS: comandos de navegación
+        [RelayCommand]
+        private void MostrarInformacionPersonal()
+        {
+            ContenidoActual = new InformacionPersonalFormView { DataContext = this };
+        }
+
+        [RelayCommand]
+        private void MostrarFormacionAcademica()
+        {
+            ContenidoActual = new FormacionAcademicaView(); // Crear este UserControl
+        }
+
+        [RelayCommand]
+        private void MostrarContratacion()
+        {
+            ContenidoActual = new ContratacionView(); // Crear este UserControl
         }
     }
 }

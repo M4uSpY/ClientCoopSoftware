@@ -449,7 +449,7 @@
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="Background" Value="#5CAEB0" />
                                 </Trigger>
-                                <DataTrigger Binding="{Binding MenuSeleccionado}" Value="AsistenciaTrab">
+                                <DataTrigger Binding="{Binding MenuSeleccionado}" Value="Asistencias">
                                     <Setter Property="Background" Value="#3D8284" />
                                 </DataTrigger>
                             </Style.Triggers>
@@ -462,8 +462,8 @@
                         VerticalAlignment="Center"
                         Background="Transparent"
                         BorderThickness="0"
-                        Command="{Binding CambiarMenuCommand}"
-                        CommandParameter="AsistenciaTrab"
+                        Command="{Binding AbrirAsistenciasCommand}"
+                        CommandParameter="Asistencias"
                         Focusable="False"
                         FontSize="12"
                         FontWeight="UltraLight"
@@ -490,8 +490,8 @@
 
                     <Border.InputBindings>
                         <MouseBinding
-                            Command="{Binding CambiarMenuCommand}"
-                            CommandParameter="AsistenciaTrab"
+                            Command="{Binding AbrirAsistenciasCommand}"
+                            CommandParameter="Asistencias"
                             MouseAction="LeftClick" />
                     </Border.InputBindings>
                 </Border>
@@ -519,7 +519,7 @@
                         VerticalAlignment="Center"
                         Background="Transparent"
                         BorderThickness="0"
-                        Command="{Binding CambiarMenuCommand}"
+                        Command="{Binding AbrirVacacionesPermisosCommand}"
                         CommandParameter="VacacionesPermisos"
                         Focusable="False"
                         FontSize="12"
@@ -546,7 +546,7 @@
 
                     <Border.InputBindings>
                         <MouseBinding
-                            Command="{Binding CambiarMenuCommand}"
+                            Command="{Binding AbrirVacacionesPermisosCommand}"
                             CommandParameter="VacacionesPermisos"
                             MouseAction="LeftClick" />
                     </Border.InputBindings>

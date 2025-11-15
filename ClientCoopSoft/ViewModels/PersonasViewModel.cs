@@ -7,13 +7,18 @@ using ClosedXML.Excel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Win32;
+using Newtonsoft.Json;
 using PdfSharpCore.Drawing;
 using PdfSharpCore.Pdf;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows;
+using static System.Net.WebRequestMethods;
+
+
 
 namespace ClientCoopSoft.ViewModels
 {
@@ -226,7 +231,7 @@ namespace ClientCoopSoft.ViewModels
                 }
             }
 
-            using var stream = File.OpenWrite(path);
+            using var stream = System.IO.File.OpenWrite(path);
             doc.Save(stream);
         }
     }

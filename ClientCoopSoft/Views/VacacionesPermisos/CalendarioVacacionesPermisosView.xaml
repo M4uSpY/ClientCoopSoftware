@@ -1,0 +1,63 @@
+﻿<UserControl
+    x:Class="ClientCoopSoft.Views.VacacionesPermisos.CalendarioVacacionesPermisosView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+    mc:Ignorable="d">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!--  Encabezado  -->
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock
+                Grid.Column="0"
+                Margin="0,0,0,20"
+                FontSize="24"
+                FontWeight="SemiBold"
+                Text="Calendario de Vacaciones y Permisos" />
+
+            <Button
+                Grid.Column="2"
+                Width="100"
+                Height="32"
+                Margin="10,0,0,20"
+                Content="Solicitar"
+                Foreground="White" />
+            <Button
+                Grid.Column="1"
+                Width="Auto"
+                Height="32"
+                Margin="10,0,0,20"
+                Content="Ver Lista de Solicitudes"
+                Foreground="White" />
+        </Grid>
+
+        <!--  Scheduler  -->
+        <syncfusion:SfScheduler
+            x:Name="Schedule"
+            Grid.Row="1"
+            ItemsSource="{Binding Eventos}"
+            ViewType="Month">
+
+            <!--  Configuración de vista mensual tipo Google Calendar  -->
+            <syncfusion:SfScheduler.MonthViewSettings>
+                <syncfusion:MonthViewSettings
+                    AppointmentDisplayCount="3"
+                    AppointmentDisplayMode="Appointment"
+                    ShowAgendaView="True" />
+            </syncfusion:SfScheduler.MonthViewSettings>
+        </syncfusion:SfScheduler>
+    </Grid>
+</UserControl>

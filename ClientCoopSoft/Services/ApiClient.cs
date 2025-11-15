@@ -1,5 +1,7 @@
 ﻿using ClientCoopSoft.DTO;
+using ClientCoopSoft.DTO.Asistencia;
 using ClientCoopSoft.DTO.Personas;
+using ClientCoopSoft.DTO.Trabajadores;
 using ClientCoopSoft.Models;
 using Newtonsoft.Json;
 using System.Net.Http;
@@ -130,6 +132,20 @@ public class ApiClient
         }
         return null;
     }
+
+    public async Task<List<Cargo>?> ObtenerCargosAsync()
+    {
+        SetBearer();
+        var request = new HttpRequestMessage(HttpMethod.Get, "api/cargos");
+        var response = await _http.SendAsync(request);
+        var raw = await response.Content.ReadAsStringAsync();
+        if (response.IsSuccessStatusCode)
+        {
+            return JsonConvert.DeserializeObject<List<Cargo>>(raw);
+        }
+        return null;
+    }
+
     public async Task<List<Trabajador>?> ObtenerTrabajadoresAsync()
     {
         SetBearer();
@@ -159,7 +175,23 @@ public class ApiClient
         }
     }
 
-    
+    public async Task<bool> CrearTrabajadorAsync(TrabajadorCrearDTO dto)
+    {
+        try
+        {
+            var json = JsonConvert.SerializeObject(dto);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _http.PostAsync("api/trabajadores", content);
+            return response.IsSuccessStatusCode;
+        }
+        catch 
+        {
+            return false;
+        }
+    }
+
+
+
     public async Task<bool> EditarPersonaAsync(int id, Persona dto)
     {
         SetBearer();
@@ -230,4 +262,69 @@ public class ApiClient
         }
         return null;
     }
+
+
+    public async Task<List<SolicitudVacPermiso>?> ObtenerVacacionesPermisosAsync()
+    {
+        SetBearer();
+        var response = await _http.GetAsync("api/VacacionesPermisos/SolicitudesCalendario");
+        var raw = await response.Content.ReadAsStringAsync();
+
+        if (response.IsSuccessStatusCode)
+            return JsonConvert.DeserializeObject<List<SolicitudVacPermiso>>(raw);
+
+        return null;
+    }
+
+
+    public async Task<bool> EditarTrabajadorAsync(int idTrabajador, TrabajadorEditarDTO dto)
+    {
+        SetBearer();
+
+        var json = JsonConvert.SerializeObject(dto);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+        var response = await _http.PutAsync($"api/trabajadores/{idTrabajador}", content);
+        return response.IsSuccessStatusCode;
+    }
+
+    public async Task<Trabajador?> ObtenerTrabajadorAsync(int idTrabajador)
+    {
+        SetBearer();
+        var response = await _http.GetAsync($"api/trabajadores/{idTrabajador}");
+        var raw = await response.Content.ReadAsStringAsync();
+
+        if (response.IsSuccessStatusCode)
+            return JsonConvert.DeserializeObject<Trabajador>(raw);
+        return null;
+    }
+
+    public async Task<bool> EliminarTrabajadorAsync(int idTrabajador)
+    {
+        try
+        {
+            var response = await _http.DeleteAsync($"api/trabajadores/{idTrabajador}");
+            return response.IsSuccessStatusCode;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    public async Task<List<AsistenciaListarDTO>?> ObtenerListaAsistencias()
+    {
+        SetBearer();
+        var response = await _http.GetAsync("api/asistencias");
+        var raw = await response.Content.ReadAsStringAsync();
+
+        if (response.IsSuccessStatusCode)
+        {
+            return JsonConvert.DeserializeObject<List<AsistenciaListarDTO>>(raw);
+        }
+           
+
+        return null;
+    }
+
 }
