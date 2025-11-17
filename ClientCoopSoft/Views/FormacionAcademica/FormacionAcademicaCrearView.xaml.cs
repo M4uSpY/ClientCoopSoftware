@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ClientCoopSoft.Views.InformacionPersonal
+namespace ClientCoopSoft.Views.FormacionAcademica
 {
     /// <summary>
-    /// Lógica de interacción para FormacionAcademicaView.xaml
+    /// Lógica de interacción para FormacionAcademicaCrearView.xaml
     /// </summary>
-    public partial class FormacionAcademicaView : UserControl
+    public partial class FormacionAcademicaCrearView : Window
     {
-        public FormacionAcademicaView()
+        public FormacionAcademicaCrearView()
         {
             InitializeComponent();
         }

@@ -82,8 +82,8 @@
             <Button
                 Width="150"
                 Height="40"
-                Command="{Binding MostrarContratacionCommand}"
-                Content="Contratación"
+                Command="{Binding MostrarCapacitacionesCommand}"
+                Content="Cursos Realizados"
                 Style="{StaticResource MaterialDesignRaisedButton}" />
         </StackPanel>
 

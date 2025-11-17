@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ClientCoopSoft.DTO.Extras;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -24,6 +25,9 @@ namespace ClientCoopSoft.Models
         public string Email { get; set; } = string.Empty;
         public byte[]? Foto { get; set; }
         public string? Huella { get; set; }
+        public TrabajadorPersonaDTO? Trabajador { get; set; }
+
+
 
         public string NombreCompleto =>
         string.Join(" ",

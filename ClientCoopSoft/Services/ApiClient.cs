@@ -1,5 +1,7 @@
 ﻿using ClientCoopSoft.DTO;
 using ClientCoopSoft.DTO.Asistencia;
+using ClientCoopSoft.DTO.Capacitaciones;
+using ClientCoopSoft.DTO.FormacionAcademica;
 using ClientCoopSoft.DTO.Personas;
 using ClientCoopSoft.DTO.Trabajadores;
 using ClientCoopSoft.Models;
@@ -327,4 +329,153 @@ public class ApiClient
         return null;
     }
 
+    #region FORMACION ACADEMICA
+
+    // OBTENER FORMACIONES POR TRABAJADOR (para las cards)
+    public async Task<List<FormacionAcademicaResumenDTO>?>
+        ObtenerFormacionesPorTrabajadorAsync(int idTrabajador)
+    {
+        SetBearer();
+        var response = await _http.GetAsync($"api/FormacionesAcademicas/trabajador/{idTrabajador}");
+        var raw = await response.Content.ReadAsStringAsync();
+
+        if (response.IsSuccessStatusCode)
+        {
+            return JsonConvert.DeserializeObject<List<FormacionAcademicaResumenDTO>>(raw);
+        }
+
+        return null;
+    }
+
+    public async Task<List<CapacitacionResumenDTO>?> ObtenerCapacitacionesPorTrabajadorAsync(int idTrabajador)
+    {
+        SetBearer();
+        var response = await _http.GetAsync($"api/Capacitaciones/trabajador/{idTrabajador}");
+        var raw = await response.Content.ReadAsStringAsync();
+
+        if (response.IsSuccessStatusCode)
+        {
+            return JsonConvert.DeserializeObject<List<CapacitacionResumenDTO>>(raw);
+        }
+        return null;
+    }
+
+    // OBTENER UNA FORMACION POR ID (para editar en el modal)
+    public async Task<FormacionAcademicaEditarDTO?> ObtenerFormacionPorIdAsync(int idFormacion)
+    {
+        SetBearer();
+        var response = await _http.GetAsync($"api/FormacionesAcademicas/{idFormacion}");
+        var raw = await response.Content.ReadAsStringAsync();
+
+        if (response.IsSuccessStatusCode)
+        {
+            return JsonConvert.DeserializeObject<FormacionAcademicaEditarDTO>(raw);
+        }
+
+        return null;
+    }
+
+    public async Task<CapacitacionEditarDTO?> ObtenerCapacitacionPorIdAsync(int idCapacitacion)
+    {
+        SetBearer();
+        var response = await _http.GetAsync($"api/Capacitaciones/{idCapacitacion}");
+        var raw = await response.Content.ReadAsStringAsync();
+
+        if (response.IsSuccessStatusCode)
+        {
+            return JsonConvert.DeserializeObject<CapacitacionEditarDTO>(raw);
+        }
+
+        return null;
+    }
+
+    // CREAR FORMACION ACADEMICA (desde el modal, cuando IdFormacion = 0)
+    public async Task<FormacionAcademicaResumenDTO?> CrearFormacionAcademicaAsync(FormacionAcademicaCrearDTO dto)
+    {
+        SetBearer();
+
+        var json = JsonConvert.SerializeObject(dto);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+        var response = await _http.PostAsync("api/FormacionesAcademicas", content);
+        var raw = await response.Content.ReadAsStringAsync();
+
+        if (response.IsSuccessStatusCode)
+        {
+            // el backend devuelve el resumen (id, titulo, institucion, anio, etc.)
+            return JsonConvert.DeserializeObject<FormacionAcademicaResumenDTO>(raw);
+        }
+
+        return null;
+    }
+    public async Task<CapacitacionResumenDTO?> CrearCapacitacionAsync(CapacitacionCrearDTO dto)
+    {
+        SetBearer();
+
+        var json = JsonConvert.SerializeObject(dto);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+        var response = await _http.PostAsync("api/Capacitaciones", content);
+        var raw = await response.Content.ReadAsStringAsync();
+
+        if (response.IsSuccessStatusCode)
+        {
+            return JsonConvert.DeserializeObject<CapacitacionResumenDTO>(raw);
+        }
+
+        return null;
+    }
+
+    // ACTUALIZAR FORMACION ACADEMICA
+    public async Task<bool> ActualizarCapacitacionAsync(int idCapacitacion, CapacitacionEditarDTO dto)
+    {
+        SetBearer();
+
+        var json = JsonConvert.SerializeObject(dto);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+        var response = await _http.PutAsync($"api/Capacitaciones/{idCapacitacion}", content);
+        return response.IsSuccessStatusCode;
+    }
+    public async Task<bool> ActualizarFormacionAcademicaAsync(int idFormacion, FormacionAcademicaEditarDTO dto)
+    {
+        SetBearer();
+
+        var json = JsonConvert.SerializeObject(dto);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+        var response = await _http.PutAsync($"api/FormacionesAcademicas/{idFormacion}", content);
+        return response.IsSuccessStatusCode;
+    }
+
+    // ELIMINAR FORMACION ACADEMICA
+    public async Task<bool> EliminarCapacitacionAsync(int idCapacitacion)
+    {
+        SetBearer();
+        try
+        {
+            var response = await _http.DeleteAsync($"api/Capacitaciones/{idCapacitacion}");
+            return response.IsSuccessStatusCode;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+    public async Task<bool> EliminarFormacionAcademicaAsync(int idFormacion)
+    {
+        SetBearer();
+        try
+        {
+            var response = await _http.DeleteAsync($"api/FormacionesAcademicas/{idFormacion}");
+            return response.IsSuccessStatusCode;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    #endregion
 }
+

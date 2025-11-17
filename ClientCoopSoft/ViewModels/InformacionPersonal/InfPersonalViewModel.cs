@@ -1,4 +1,8 @@
 ﻿using ClientCoopSoft.Models;
+using ClientCoopSoft.ViewModels.Capacitaciones;
+using ClientCoopSoft.ViewModels.FormacionAcademica;
+using ClientCoopSoft.Views.Capacitaciones;
+using ClientCoopSoft.Views.FormacionAcademica;
 using ClientCoopSoft.Views.InformacionPersonal;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -166,13 +170,31 @@ namespace ClientCoopSoft.ViewModels.InformacionPersonal
         [RelayCommand]
         private void MostrarFormacionAcademica()
         {
-            ContenidoActual = new FormacionAcademicaView(); // Crear este UserControl
+            if(_persona.Trabajador != null)
+            {
+                var vm = new FormacionAcademicaViewModel(_persona.Trabajador.IdTrabajador, _apiClient);
+
+                ContenidoActual = new FormacionAcademicaView
+                {
+                    DataContext = vm
+                };
+            }
+            return;
         }
 
         [RelayCommand]
-        private void MostrarContratacion()
+        private void MostrarCapacitaciones()
         {
-            ContenidoActual = new ContratacionView(); // Crear este UserControl
+            if (_persona.Trabajador != null)
+            {
+                var vm = new CapacitacionResumenViewModel(_persona.Trabajador.IdTrabajador, _apiClient);
+
+                ContenidoActual = new CapacitacionResumenView
+                {
+                    DataContext = vm
+                };
+            }
+            return;
         }
     }
 }

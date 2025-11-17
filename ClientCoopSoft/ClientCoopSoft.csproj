@@ -34,6 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Assets\capacitacionImage.png" />
     <None Remove="Assets\foto.jpg" />
     <None Remove="Assets\fotoIcon.png" />
     <None Remove="Assets\huella.jpg" />
@@ -85,6 +86,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\capacitacionImage.png" />
     <Resource Include="Assets\foto.jpg" />
     <Resource Include="Assets\fotoIcon.png" />
     <Resource Include="Assets\huella.jpg" />

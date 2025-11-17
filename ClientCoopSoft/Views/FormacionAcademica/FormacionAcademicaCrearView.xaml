@@ -1,0 +1,136 @@
+﻿<Window
+    x:Class="ClientCoopSoft.Views.FormacionAcademica.FormacionAcademicaCrearView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:ClientCoopSoft.Views.FormacionAcademica"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    Title="{Binding TituloVentana}"
+    ResizeMode="NoResize"
+    SizeToContent="WidthAndHeight"
+    WindowStartupLocation="CenterOwner"
+    mc:Ignorable="d">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel
+            Grid.Row="0"
+            Margin="0,0,0,10"
+            Orientation="Vertical">
+            <!--  Nivel Estudios  -->
+            <StackPanel Margin="0,0,0,10" Orientation="Vertical">
+                <TextBlock
+                    Margin="2,0,0,3"
+                    FontSize="11"
+                    Foreground="#666"
+                    Text="Nivel de estudios alcanzado:" />
+                <TextBox
+                    Width="300"
+                    Margin="0,5,0,0"
+                    md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                    md:TextFieldAssist.UnderlineBrush="#0078D7"
+                    BorderBrush="Gray"
+                    BorderThickness="0.3"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                    Text="{Binding NivelEstudios, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+
+            <!--  Título Obtenido  -->
+            <StackPanel Margin="0,0,0,10" Orientation="Vertical">
+                <TextBlock
+                    Margin="2,0,0,3"
+                    FontSize="11"
+                    Foreground="#666"
+                    Text="Título obtenido:" />
+                <TextBox
+                    Width="300"
+                    Margin="0,5,0,0"
+                    md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                    md:TextFieldAssist.UnderlineBrush="#0078D7"
+                    BorderBrush="Gray"
+                    BorderThickness="0.3"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                    Text="{Binding TituloObtenido, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+
+            <!--  Institución  -->
+            <StackPanel Margin="0,0,0,10" Orientation="Vertical">
+                <TextBlock
+                    Margin="2,0,0,3"
+                    FontSize="11"
+                    Foreground="#666"
+                    Text="Institución donde estudió:" />
+                <TextBox
+                    Width="300"
+                    Margin="0,5,0,0"
+                    md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                    md:TextFieldAssist.UnderlineBrush="#0078D7"
+                    BorderBrush="Gray"
+                    BorderThickness="0.3"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                    Text="{Binding Institucion, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+
+            <!--  Año graduación  -->
+            <StackPanel Margin="0,0,0,10" Orientation="Vertical">
+                <TextBlock
+                    Margin="2,0,0,3"
+                    FontSize="11"
+                    Foreground="#666"
+                    Text="Año de graduación:" />
+                <TextBox
+                    Width="300"
+                    Margin="0,5,0,0"
+                    md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                    md:TextFieldAssist.UnderlineBrush="#0078D7"
+                    BorderBrush="Gray"
+                    BorderThickness="0.3"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                    Text="{Binding AnioGraduacion, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+
+            <!--  Nro Registro Profesional  -->
+            <StackPanel Margin="0,0,0,10" Orientation="Vertical">
+                <TextBlock
+                    Margin="2,0,0,3"
+                    FontSize="11"
+                    Foreground="#666"
+                    Text="Número de Registro Profesional:" />
+                <TextBox
+                    Width="300"
+                    Margin="0,5,0,0"
+                    md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                    md:TextFieldAssist.UnderlineBrush="#0078D7"
+                    BorderBrush="Gray"
+                    BorderThickness="0.3"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                    Text="{Binding NroRegistroProfesional, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+        </StackPanel>
+
+        <!--  Botones  -->
+        <StackPanel
+            Grid.Row="1"
+            Margin="0,10,0,0"
+            HorizontalAlignment="Right"
+            Orientation="Horizontal">
+            <Button
+                Width="100"
+                Margin="0,0,5,0"
+                md:ButtonAssist.CornerRadius="5"
+                Command="{Binding CancelarCommand}"
+                Content="Cancelar" />
+            <Button
+                Width="100"
+                md:ButtonAssist.CornerRadius="5"
+                Background="#4CAF50"
+                Command="{Binding GuardarCommand}"
+                Content="Guardar"
+                Foreground="White" />
+        </StackPanel>
+    </Grid>
+</Window>

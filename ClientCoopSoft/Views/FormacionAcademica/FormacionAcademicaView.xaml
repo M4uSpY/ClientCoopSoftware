@@ -1,0 +1,94 @@
+﻿<UserControl
+    x:Class="ClientCoopSoft.Views.FormacionAcademica.FormacionAcademicaView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:ClientCoopSoft.Views.FormacionAcademica"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    mc:Ignorable="d">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!--  Título  -->
+        <TextBlock
+            Grid.Row="0"
+            Margin="0,0,0,10"
+            FontSize="18"
+            FontWeight="Bold"
+            Foreground="#303048"
+            Text="{Binding TituloCabecera}" />
+
+        <!--  Lista de cards  -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding Formaciones}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border
+                            Margin="0,0,0,10"
+                            Padding="10"
+                            Background="White"
+                            BorderBrush="#DDDDDD"
+                            BorderThickness="1"
+                            CornerRadius="8">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock
+                                        FontSize="13"
+                                        FontWeight="Bold"
+                                        Foreground="#303048"
+                                        Text="{Binding TituloObtenido}" />
+                                    <TextBlock
+                                        Margin="0,2,0,0"
+                                        FontSize="11"
+                                        Foreground="#555"
+                                        Text="{Binding Institucion}" />
+                                    <TextBlock
+                                        Margin="0,2,0,0"
+                                        FontSize="10"
+                                        Foreground="#777"
+                                        Text="{Binding AnioGraduacion, StringFormat='Año: {0}'}" />
+                                </StackPanel>
+
+                                <Button
+                                    Grid.Column="1"
+                                    Width="80"
+                                    Margin="10,0,0,0"
+                                    md:ButtonAssist.CornerRadius="5"
+                                    Background="#3F51B5"
+                                    Command="{Binding DataContext.EditarFormacionCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    CommandParameter="{Binding}"
+                                    Content="Editar"
+                                    Foreground="White" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <!--  Botón Nueva  -->
+        <StackPanel
+            Grid.Row="2"
+            Margin="0,10,0,0"
+            HorizontalAlignment="Right"
+            Orientation="Horizontal">
+            <Button
+                Width="160"
+                md:ButtonAssist.CornerRadius="5"
+                Background="#4CAF50"
+                Command="{Binding NuevaFormacionCommand}"
+                Content="Nueva formación"
+                Foreground="White" />
+        </StackPanel>
+    </Grid>
+</UserControl>

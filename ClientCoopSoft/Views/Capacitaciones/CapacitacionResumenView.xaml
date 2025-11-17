@@ -1,0 +1,107 @@
+﻿<UserControl
+    x:Class="ClientCoopSoft.Views.Capacitaciones.CapacitacionResumenView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:ClientCoopSoft.Views.Capacitaciones"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    mc:Ignorable="d">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!--  Titulo  -->
+        <TextBlock
+            Grid.Row="0"
+            Margin="0,0,0,10"
+            FontSize="18"
+            FontWeight="Bold"
+            Foreground="#303048"
+            Text="{Binding TituloCabecera}" />
+
+        <!--  Lista de Cards  -->
+        <ScrollViewer Grid.Row="1">
+
+            <ItemsControl ItemsSource="{Binding Capacitaciones}">
+                <!--  PANEL QUE HACE WRAP  -->
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel
+                            ItemHeight="240"
+                            ItemWidth="180"
+                            Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <!--  TEMPLATE DE LA TARJETA  -->
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border
+                            Width="170"
+                            Height="230"
+                            Padding="8"
+                            Background="White"
+                            BorderBrush="#DDDDDD"
+                            BorderThickness="1"
+                            CornerRadius="8"
+                            Cursor="Hand">
+
+                            <StackPanel>
+
+                                <TextBlock
+                                    Margin="0,0,0,5"
+                                    FontSize="12"
+                                    FontWeight="Bold"
+                                    Foreground="#303048"
+                                    Text="{Binding Titulo}"
+                                    TextWrapping="Wrap" />
+
+                                <Image
+                                    Width="150"
+                                    Height="150"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Source="{Binding ArchivoCertificado}"
+                                    Stretch="UniformToFill" />
+
+                                <Button
+                                    Width="80"
+                                    Height="28"
+                                    Margin="0,8,0,0"
+                                    HorizontalAlignment="Center"
+                                    Background="#3F51B5"
+                                    Command="{Binding DataContext.EditarCapacitacionCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    CommandParameter="{Binding}"
+                                    Content="Editar"
+                                    Foreground="White" />
+                            </StackPanel>
+
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+
+            </ItemsControl>
+        </ScrollViewer>
+
+
+        <!--  Botón Nueva  -->
+        <StackPanel
+            Grid.Row="2"
+            Margin="0,10,0,0"
+            HorizontalAlignment="Right"
+            Orientation="Horizontal">
+            <Button
+                Width="160"
+                md:ButtonAssist.CornerRadius="5"
+                Background="#4CAF50"
+                Command="{Binding NuevaCapacitacionCommand}"
+                Content="Nueva capacitacion"
+                Foreground="White" />
+        </StackPanel>
+
+    </Grid>
+</UserControl>
