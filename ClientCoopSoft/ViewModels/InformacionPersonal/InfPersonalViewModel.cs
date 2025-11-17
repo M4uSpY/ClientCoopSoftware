@@ -1,7 +1,9 @@
 ﻿using ClientCoopSoft.Models;
 using ClientCoopSoft.ViewModels.Capacitaciones;
+using ClientCoopSoft.ViewModels.Contratacion;
 using ClientCoopSoft.ViewModels.FormacionAcademica;
 using ClientCoopSoft.Views.Capacitaciones;
+using ClientCoopSoft.Views.Contrato;
 using ClientCoopSoft.Views.FormacionAcademica;
 using ClientCoopSoft.Views.InformacionPersonal;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -160,6 +162,10 @@ namespace ClientCoopSoft.ViewModels.InformacionPersonal
             window.Close();
         }
 
+
+
+
+
         // NUEVOS: comandos de navegación
         [RelayCommand]
         private void MostrarInformacionPersonal()
@@ -190,6 +196,20 @@ namespace ClientCoopSoft.ViewModels.InformacionPersonal
                 var vm = new CapacitacionResumenViewModel(_persona.Trabajador.IdTrabajador, _apiClient);
 
                 ContenidoActual = new CapacitacionResumenView
+                {
+                    DataContext = vm
+                };
+            }
+            return;
+        }
+        [RelayCommand]
+        private void MostrarContrato()
+        {
+            if (_persona.Trabajador != null)
+            {
+                var vm = new ContratoViewModel(_persona.Trabajador.IdTrabajador, _apiClient);
+
+                ContenidoActual = new ContratoView
                 {
                     DataContext = vm
                 };

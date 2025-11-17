@@ -1,6 +1,7 @@
 ﻿using ClientCoopSoft.DTO;
 using ClientCoopSoft.DTO.Asistencia;
 using ClientCoopSoft.DTO.Capacitaciones;
+using ClientCoopSoft.DTO.Contratacion;
 using ClientCoopSoft.DTO.FormacionAcademica;
 using ClientCoopSoft.DTO.Personas;
 using ClientCoopSoft.DTO.Trabajadores;
@@ -147,7 +148,6 @@ public class ApiClient
         }
         return null;
     }
-
     public async Task<List<Trabajador>?> ObtenerTrabajadoresAsync()
     {
         SetBearer();
@@ -264,7 +264,30 @@ public class ApiClient
         }
         return null;
     }
+    public async Task<List<PeriodoPago>?> ObtenerPeriodosPagoAsync()
+    {
+        SetBearer();
+        var response = await _http.GetAsync("api/PeriodosPago");
+        var raw = await response.Content.ReadAsStringAsync();
 
+        if (response.IsSuccessStatusCode)
+        {
+            return JsonConvert.DeserializeObject<List<PeriodoPago>>(raw);
+        }
+        return null;
+    }
+    public async Task<List<TipoContrato>?> ObtenerTipoContratosAsync()
+    {
+        SetBearer();
+        var response = await _http.GetAsync("api/TipoContratos");
+        var raw = await response.Content.ReadAsStringAsync();
+
+        if (response.IsSuccessStatusCode)
+        {
+            return JsonConvert.DeserializeObject<List<TipoContrato>>(raw);
+        }
+        return null;
+    }
 
     public async Task<List<SolicitudVacPermiso>?> ObtenerVacacionesPermisosAsync()
     {
@@ -359,6 +382,19 @@ public class ApiClient
         }
         return null;
     }
+    public async Task<ContratoDTO?> ObtenerContratoUltimoPorTrabajadorAsync(int idTrabajador)
+    {
+        SetBearer();
+        var response = await _http.GetAsync($"api/Contratos/trabajador/ultimoContrato/{idTrabajador}");
+        var raw = await response.Content.ReadAsStringAsync();
+
+        if (response.IsSuccessStatusCode)
+        {
+            return JsonConvert.DeserializeObject<ContratoDTO> (raw);
+        }
+        return null;
+    }
+
 
     // OBTENER UNA FORMACION POR ID (para editar en el modal)
     public async Task<FormacionAcademicaEditarDTO?> ObtenerFormacionPorIdAsync(int idFormacion)
@@ -384,6 +420,20 @@ public class ApiClient
         if (response.IsSuccessStatusCode)
         {
             return JsonConvert.DeserializeObject<CapacitacionEditarDTO>(raw);
+        }
+
+        return null;
+    }
+
+    public async Task<ContratoActualizarDTO?> ObtenerContratoPorIdAsync(int idContrato)
+    {
+        SetBearer();
+        var response = await _http.GetAsync($"api/Contratos/{idContrato}");
+        var raw = await response.Content.ReadAsStringAsync();
+
+        if (response.IsSuccessStatusCode)
+        {
+            return JsonConvert.DeserializeObject<ContratoActualizarDTO>(raw);
         }
 
         return null;
@@ -445,6 +495,16 @@ public class ApiClient
         var content = new StringContent(json, Encoding.UTF8, "application/json");
 
         var response = await _http.PutAsync($"api/FormacionesAcademicas/{idFormacion}", content);
+        return response.IsSuccessStatusCode;
+    }
+    public async Task<bool> ActualizarContratoAsync(int idContrato, ContratoActualizarDTO dto)
+    {
+        SetBearer();
+
+        var json = JsonConvert.SerializeObject(dto);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+        var response = await _http.PutAsync($"api/Contratos/{idContrato}", content);
         return response.IsSuccessStatusCode;
     }
 

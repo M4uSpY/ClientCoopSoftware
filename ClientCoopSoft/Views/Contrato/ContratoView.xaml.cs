@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ClientCoopSoft.Views.InformacionPersonal
+namespace ClientCoopSoft.Views.Contrato
 {
     /// <summary>
-    /// Lógica de interacción para ContratacionView.xaml
+    /// Lógica de interacción para ContratoView.xaml
     /// </summary>
-    public partial class ContratacionView : UserControl
+    public partial class ContratoView : UserControl
     {
-        public ContratacionView()
+        public ContratoView()
         {
             InitializeComponent();
         }

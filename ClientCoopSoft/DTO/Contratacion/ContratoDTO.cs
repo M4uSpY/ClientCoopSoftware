@@ -1,0 +1,17 @@
+﻿using ClientCoopSoft.DTO.Extras;
+
+namespace ClientCoopSoft.DTO.Contratacion
+{
+    public class ContratoDTO
+    {
+        public int IdContrato { get; set; }
+        public int IdTrabajador { get; set; }
+        public string NumeroContrato { get; set; } = string.Empty;
+        public int IdTipoContrato { get; set; } // Clasificador
+        public int IdPeriodoPago { get; set; } // Clasificador
+        public DateTime FechaInicio { get; set; }
+        public DateTime FechaFin { get; set; }
+        public byte[] ArchivoPdf { get; set; } = Array.Empty<byte>(); // para DESCARGAR CONTRATO
+        public TrabajadorPersonaDTO? Trabajador { get; set; }
+    }
+}

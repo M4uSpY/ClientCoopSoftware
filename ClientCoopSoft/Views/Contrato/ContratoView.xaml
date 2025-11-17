@@ -1,0 +1,173 @@
+﻿<UserControl
+    x:Class="ClientCoopSoft.Views.Contrato.ContratoView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:ClientCoopSoft.Views.Contrato"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    mc:Ignorable="d">
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            Grid.Row="0"
+            Grid.Column="0"
+            Text="Informacion de Contrato" />
+
+        <StackPanel
+            Grid.Row="1"
+            Grid.Column="0"
+            HorizontalAlignment="Left"
+            Orientation="Vertical">
+            <TextBlock
+                Margin="2,0,0,3"
+                FontSize="11"
+                Foreground="#666"
+                Text="Ingrese el numero de contrato:" />
+            <TextBox
+                Width="300"
+                Margin="0,5,0,0"
+                md:HintAssist.Hint=""
+                md:HintAssist.HintPaddingBrush="Transparent"
+                md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                md:TextFieldAssist.UnderlineBrush="#0078D7"
+                BorderBrush="Gray"
+                BorderThickness="0.3"
+                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                Text="{Binding NumeroContrato, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+
+        <StackPanel
+            Grid.Row="2"
+            Grid.Column="0"
+            Margin="0,0,0,35"
+            HorizontalAlignment="Left"
+            Orientation="Vertical">
+
+            <TextBlock
+                Margin="2,0,0,3"
+                FontSize="11"
+                Foreground="#666"
+                Text="Seleccione el tipo de contrato:" />
+
+            <ComboBox
+                Width="300"
+                Height="auto"
+                Margin="0,5,0,0"
+                md:HintAssist.Foreground="Transparent"
+                md:HintAssist.Hint=""
+                md:HintAssist.HintPaddingBrush="Transparent"
+                md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                Background="Transparent"
+                BorderBrush="#CCC"
+                BorderThickness="1"
+                DisplayMemberPath="ValorCategoria"
+                ItemsSource="{Binding TipoContratos}"
+                SelectedItem="{Binding TipoContratoSeleccionado}"
+                Style="{StaticResource MaterialDesignOutlinedComboBox}" />
+        </StackPanel>
+        <StackPanel
+            Grid.Row="2"
+            Grid.Column="1"
+            Margin="10,0,0,35"
+            HorizontalAlignment="Left"
+            Orientation="Vertical">
+
+            <TextBlock
+                Margin="2,0,0,3"
+                FontSize="11"
+                Foreground="#666"
+                Text="Seleccione el periodo de pago:" />
+
+            <ComboBox
+                Width="300"
+                Height="auto"
+                Margin="0,5,0,0"
+                md:HintAssist.Foreground="Transparent"
+                md:HintAssist.Hint=""
+                md:HintAssist.HintPaddingBrush="Transparent"
+                md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                Background="Transparent"
+                BorderBrush="#CCC"
+                BorderThickness="1"
+                DisplayMemberPath="ValorCategoria"
+                ItemsSource="{Binding PeriodosPagos}"
+                SelectedItem="{Binding PeriodosPagoSeleccionado}"
+                Style="{StaticResource MaterialDesignOutlinedComboBox}" />
+        </StackPanel>
+
+        <StackPanel
+            Grid.Row="3"
+            Grid.Column="0"
+            Margin="0,0,0,35"
+            HorizontalAlignment="Left"
+            Orientation="Vertical">
+            <TextBlock
+                Margin="2,0,0,3"
+                FontSize="11"
+                Foreground="#666"
+                Text="Indique la fecha de inicio del contrato:" />
+            <DatePicker
+                Width="300"
+                Margin="0,5,0,0"
+                md:HintAssist.Hint=""
+                md:HintAssist.HintPaddingBrush="Transparent"
+                BorderBrush="#CCC"
+                BorderThickness="1"
+                SelectedDate="{Binding FechaInicioContrato, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Style="{StaticResource MaterialDesignOutlinedDatePicker}" />
+        </StackPanel>
+
+
+        <StackPanel
+            Grid.Row="3"
+            Grid.Column="1"
+            Margin="10,0,0,35"
+            HorizontalAlignment="Left"
+            Orientation="Vertical">
+            <TextBlock
+                Margin="2,0,0,3"
+                FontSize="11"
+                Foreground="#666"
+                Text="Indique la fecha de finalizacion del contrato:" />
+            <DatePicker
+                Width="300"
+                Margin="0,5,0,0"
+                md:HintAssist.Hint=""
+                md:HintAssist.HintPaddingBrush="Transparent"
+                BorderBrush="#CCC"
+                BorderThickness="1"
+                SelectedDate="{Binding FechaFinContrato, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Style="{StaticResource MaterialDesignOutlinedDatePicker}" />
+        </StackPanel>
+
+        <StackPanel
+            Grid.RowSpan="4"
+            Grid.Column="3"
+            Margin="10,0,0,0"
+            VerticalAlignment="Center">
+            <Image
+                Width="250"
+                Height="250"
+                Source="{Binding FotoBytes}" />
+            <Button Command="{Binding SubirFotoCommand}" Content="Subir Contrato" />
+            <Button
+                Command="{Binding GuardarCommand}"
+                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                Content="Guardar Informacion" />
+            <Button Content="Descargar Contrato" />
+        </StackPanel>
+    </Grid>
+</UserControl>
