@@ -5,6 +5,7 @@ using ClientCoopSoft.DTO.Contratacion;
 using ClientCoopSoft.DTO.FormacionAcademica;
 using ClientCoopSoft.DTO.Personas;
 using ClientCoopSoft.DTO.Trabajadores;
+using ClientCoopSoft.DTO.VacacionesPermisos;
 using ClientCoopSoft.Models;
 using Newtonsoft.Json;
 using System.Net.Http;
@@ -300,6 +301,18 @@ public class ApiClient
 
         return null;
     }
+    public async Task<List<SolicitudVacPermListarDTO>?> ObtenerListaVacacionesPermisosAsync()
+    {
+        SetBearer();
+        var response = await _http.GetAsync("api/VacacionesPermisos");
+        var raw = await response.Content.ReadAsStringAsync();
+
+        if (response.IsSuccessStatusCode)
+            return JsonConvert.DeserializeObject<List<SolicitudVacPermListarDTO>>(raw);
+
+        return null;
+    }
+
 
 
     public async Task<bool> EditarTrabajadorAsync(int idTrabajador, TrabajadorEditarDTO dto)
@@ -537,5 +550,26 @@ public class ApiClient
     }
 
     #endregion
+
+    public async Task<bool> AprobarSolicitudAsync(int idSolicitud)
+    {
+        SetBearer();
+        var response = await _http.PutAsync(
+            $"api/VacacionesPermisos/{idSolicitud}/aprobar",
+            null); // sin body
+
+        return response.IsSuccessStatusCode;
+    }
+
+    public async Task<bool> RechazarSolicitudAsync(int idSolicitud)
+    {
+        SetBearer();
+        var response = await _http.PutAsync(
+            $"api/VacacionesPermisos/{idSolicitud}/rechazar",
+            null); // sin body
+
+        return response.IsSuccessStatusCode;
+    }
+
 }
 

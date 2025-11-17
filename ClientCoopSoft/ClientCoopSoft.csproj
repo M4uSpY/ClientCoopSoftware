@@ -111,8 +111,4 @@
     <Resource Include="Assets\WallMain.png" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\VacacionesPermisos\" />
-  </ItemGroup>
-
 </Project>

@@ -1,5 +1,8 @@
 ﻿using ClientCoopSoft.Models;
+using ClientCoopSoft.Views.InformacionPersonal;
+using ClientCoopSoft.Views.VacacionesPermisos;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Syncfusion.UI.Xaml.Scheduler;
 using System;
 using System.Collections.Generic;
@@ -7,6 +10,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace ClientCoopSoft.ViewModels.VacacionesPemisos
@@ -17,6 +21,7 @@ namespace ClientCoopSoft.ViewModels.VacacionesPemisos
 
         [ObservableProperty]
         private ScheduleAppointmentCollection eventos = new();
+        [ObservableProperty] private UserControl? contenidoActual;
 
         public CalendarioVacacionesPermisosViewModel(ApiClient apiClient)
         {
@@ -66,6 +71,22 @@ namespace ClientCoopSoft.ViewModels.VacacionesPemisos
 
                 Eventos.Add(appt);
             }
+        }
+
+        [RelayCommand]
+        private async Task Solicitudes()
+        {
+            // 1. Crear el ViewModel de la lista
+            var vm = new ListarSolicitudesViewModel(_apiClient,() => ContenidoActual = null);
+
+            // 2. Cargar los datos
+            await vm.CargarSolicitudesListaAsync();
+
+            // 3. Asignarlo como DataContext de la vista
+            ContenidoActual = new SolicitudesVacPerView
+            {
+                DataContext = vm
+            };
         }
 
     }

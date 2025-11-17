@@ -36,6 +36,7 @@
                 Command="{Binding SolicitarCommand}"
                 Content="Solicitar"
                 Foreground="White" />
+
             <Button
                 Grid.Column="1"
                 Width="Auto"
@@ -46,20 +47,45 @@
                 Foreground="White" />
         </Grid>
 
-        <!--  Scheduler  -->
-        <syncfusion:SfScheduler
-            x:Name="Schedule"
-            Grid.Row="1"
-            ItemsSource="{Binding Eventos}"
-            ViewType="Month">
+        <!--  Contenido: o calendario O vista dinámica  -->
+        <Grid Grid.Row="1">
+            <Grid.Resources>
+                <!--  Estilo para el calendario: solo visible cuando ContenidoActual es null  -->
+                <Style TargetType="syncfusion:SfScheduler">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ContenidoActual}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
 
-            <!--  Configuración de vista mensual tipo Google Calendar  -->
-            <syncfusion:SfScheduler.MonthViewSettings>
-                <syncfusion:MonthViewSettings
-                    AppointmentDisplayCount="3"
-                    AppointmentDisplayMode="Appointment"
-                    ShowAgendaView="True" />
-            </syncfusion:SfScheduler.MonthViewSettings>
-        </syncfusion:SfScheduler>
+                <!--  Estilo para la vista dinámica: solo visible cuando ContenidoActual != null  -->
+                <Style TargetType="ContentControl">
+                    <Setter Property="Visibility" Value="Visible" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ContenidoActual}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Resources>
+
+            <!--  Calendario  -->
+            <syncfusion:SfScheduler
+                x:Name="Schedule"
+                ItemsSource="{Binding Eventos}"
+                ViewType="Month">
+                <syncfusion:SfScheduler.MonthViewSettings>
+                    <syncfusion:MonthViewSettings
+                        AppointmentDisplayCount="3"
+                        AppointmentDisplayMode="Appointment"
+                        ShowAgendaView="True" />
+                </syncfusion:SfScheduler.MonthViewSettings>
+            </syncfusion:SfScheduler>
+
+            <!--  Vista dinámica (lista de solicitudes, etc.)  -->
+            <ContentControl Content="{Binding ContenidoActual}" />
+        </Grid>
     </Grid>
 </UserControl>
