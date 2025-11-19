@@ -35,10 +35,16 @@
 
   <ItemGroup>
     <None Remove="Assets\capacitacionImage.png" />
+    <None Remove="Assets\ContratoIcons\IconExcel.png" />
+    <None Remove="Assets\ContratoIcons\IconPdf.png" />
+    <None Remove="Assets\ContratoIcons\IconWord.png" />
+    <None Remove="Assets\ContratoIcons\icon_file.png" />
+    <None Remove="Assets\ContratoIcons\icon_imagen.png" />
     <None Remove="Assets\foto.jpg" />
     <None Remove="Assets\fotoIcon.png" />
     <None Remove="Assets\huella.jpg" />
     <None Remove="Assets\iconAccount.png" />
+    <None Remove="Assets\iconContratoView.png" />
     <None Remove="Assets\IconosDashboard\asistenciaIcon.png" />
     <None Remove="Assets\IconosDashboard\boletasPagoIcon.png" />
     <None Remove="Assets\IconosDashboard\calendarioIcon.png" />
@@ -53,6 +59,7 @@
     <None Remove="Assets\IconosDashboard\usuriosIcon.png" />
     <None Remove="Assets\iconPassword.png" />
     <None Remove="Assets\iconSoft.png" />
+    <None Remove="Assets\imgFormAcademicaAdd.png" />
     <None Remove="Assets\Login_Fondo.png" />
     <None Remove="Assets\Logo_Cooperativa.png" />
     <None Remove="Assets\sujeto.jpg" />
@@ -87,10 +94,16 @@
 
   <ItemGroup>
     <Resource Include="Assets\capacitacionImage.png" />
+    <Resource Include="Assets\ContratoIcons\IconExcel.png" />
+    <Resource Include="Assets\ContratoIcons\IconPdf.png" />
+    <Resource Include="Assets\ContratoIcons\IconWord.png" />
+    <Resource Include="Assets\ContratoIcons\icon_file.png" />
+    <Resource Include="Assets\ContratoIcons\icon_imagen.png" />
     <Resource Include="Assets\foto.jpg" />
     <Resource Include="Assets\fotoIcon.png" />
     <Resource Include="Assets\huella.jpg" />
     <Resource Include="Assets\iconAccount.png" />
+    <Resource Include="Assets\iconContratoView.png" />
     <Resource Include="Assets\IconosDashboard\asistenciaIcon.png" />
     <Resource Include="Assets\IconosDashboard\boletasPagoIcon.png" />
     <Resource Include="Assets\IconosDashboard\calendarioIcon.png" />
@@ -105,6 +118,7 @@
     <Resource Include="Assets\IconosDashboard\usuriosIcon.png" />
     <Resource Include="Assets\iconPassword.png" />
     <Resource Include="Assets\iconSoft.png" />
+    <Resource Include="Assets\imgFormAcademicaAdd.png" />
     <Resource Include="Assets\Login_Fondo.png" />
     <Resource Include="Assets\Logo_Cooperativa.png" />
     <Resource Include="Assets\sujeto.jpg" />

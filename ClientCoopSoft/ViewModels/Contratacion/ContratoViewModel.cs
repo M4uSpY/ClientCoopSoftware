@@ -34,6 +34,14 @@ namespace ClientCoopSoft.ViewModels.Contratacion
         [ObservableProperty] private byte[]? fotoBytes;
         [ObservableProperty] private BitmapImage? fotoPreview;
 
+        [ObservableProperty] private BitmapImage? archivoIconoPreview;
+        [ObservableProperty] private string archivoNombre = "Sin archivo seleccionado";
+
+        [ObservableProperty]
+        private string mensajeArchivo = string.Empty;
+
+
+
         // Contenido dinámico para navegación de pestañas
         [ObservableProperty] private UserControl? contenidoActual;
 
@@ -53,6 +61,7 @@ namespace ClientCoopSoft.ViewModels.Contratacion
             var contrato = await ObtenerTrabajador(_idTrabajador);
             if (contrato is null)
             {
+                MensajeArchivo = "No hay archivo cargado.";
                 MessageBox.Show("No se encontró información de contrato para este trabajador.",
                                 "Información", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
@@ -65,26 +74,19 @@ namespace ClientCoopSoft.ViewModels.Contratacion
             FechaFinContrato = contrato.FechaFin;
             FotoBytes = contrato.ArchivoPdf;
 
-            // Si ArchivoPdf es imagen, puedes inicializar el preview
+            // Mensaje según si hay archivo desde la API
             if (FotoBytes is not null && FotoBytes.Length > 0)
             {
-                try
-                {
-                    var bitmap = new BitmapImage();
-                    using (var stream = new MemoryStream(FotoBytes))
-                    {
-                        bitmap.BeginInit();
-                        bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                        bitmap.StreamSource = stream;
-                        bitmap.EndInit();
-                    }
-                    FotoPreview = bitmap;
-                }
-                catch
-                {
-                    // Ignorar si el archivo no es imagen válida
-                }
+                MensajeArchivo = "Archivo de contrato registrado.";
             }
+            else
+            {
+                MensajeArchivo = "No hay archivo cargado.";
+            }
+
+            // Como ahora solo manejamos PDF, no usamos preview de imagen
+            FotoPreview = null;
+
 
             await CargarTiposContrato(contrato.IdTipoContrato);
             await CargarPeriodoPagos(contrato.IdPeriodoPago);
@@ -117,30 +119,34 @@ namespace ClientCoopSoft.ViewModels.Contratacion
             {
                 var openFileDialog = new OpenFileDialog
                 {
-                    Filter = "Imágenes|*.jpg;*.jpeg;*.png;*.bmp",
-                    Title = "Seleccionar imagen del contrato"
+                    Filter = "Documento PDF|*.pdf",
+                    Title = "Seleccionar contrato (PDF)"
                 };
 
                 if (openFileDialog.ShowDialog() == true)
                 {
-                    FotoBytes = File.ReadAllBytes(openFileDialog.FileName);
+                    string filePath = openFileDialog.FileName;
 
-                    var bitmap = new BitmapImage();
-                    using (var stream = new MemoryStream(FotoBytes))
-                    {
-                        bitmap.BeginInit();
-                        bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                        bitmap.StreamSource = stream;
-                        bitmap.EndInit();
-                    }
-                    FotoPreview = bitmap;
+                    FotoBytes = File.ReadAllBytes(filePath);
+
+                    // Mostrar mensaje de éxito
+                    MensajeArchivo = $"Archivo cargado: {Path.GetFileName(filePath)}";
+
+                    // No preview porque es PDF
+                    FotoPreview = null;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al cargar la imagen: {ex.Message}");
+                MessageBox.Show($"Error al cargar el archivo PDF: {ex.Message}",
+                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                MensajeArchivo = "Error al cargar el archivo";
             }
         }
+
+
+
 
         [RelayCommand]
         private async Task GuardarAsync(Window window)
@@ -189,6 +195,48 @@ namespace ClientCoopSoft.ViewModels.Contratacion
             );
 
         }
+        [RelayCommand]
+        private void DescargarContrato()
+        {
+            if (FotoBytes is null || FotoBytes.Length == 0)
+            {
+                MessageBox.Show(
+                    "No hay ningún contrato PDF cargado para descargar.",
+                    "Información",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+                return;
+            }
+
+            try
+            {
+                var saveFileDialog = new SaveFileDialog
+                {
+                    Title = "Guardar contrato",
+                    Filter = "Documento PDF|*.pdf",
+                    FileName = $"Contrato_{NumeroContrato.Replace(" ", "_")}.pdf"
+                };
+
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    File.WriteAllBytes(saveFileDialog.FileName, FotoBytes);
+                    MessageBox.Show(
+                        "Contrato guardado correctamente.",
+                        "Éxito",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Error al guardar el contrato: {ex.Message}",
+                    "Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+        }
+
 
         [RelayCommand]
         private void Cancelar(Window window)

@@ -23,5 +23,10 @@ namespace ClientCoopSoft.Views.Capacitaciones
         {
             InitializeComponent();
         }
+
+        private void borde_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }

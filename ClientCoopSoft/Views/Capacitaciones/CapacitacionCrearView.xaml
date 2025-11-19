@@ -7,134 +7,175 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
     Title="{Binding TituloVentana}"
+    AllowsTransparency="True"
+    Background="Transparent"
     ResizeMode="NoResize"
     SizeToContent="WidthAndHeight"
     WindowStartupLocation="CenterOwner"
+    WindowStyle="None"
     mc:Ignorable="d">
-    <Grid Margin="20">
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
 
-        <TextBlock
-            Grid.Row="0"
-            Grid.ColumnSpan="2"
-            HorizontalAlignment="Center"
-            Text="Agregar Capacitacion" />
-        <StackPanel
-            Grid.Row="1"
-            Grid.Column="0"
-            Margin="0,0,0,10"
-            Orientation="Vertical">
-            <StackPanel Margin="0,0,0,10" Orientation="Vertical">
-                <TextBlock
-                    Margin="2,0,0,3"
-                    FontSize="11"
-                    Foreground="#666"
-                    Text="Titulo de la capacitacion:" />
-                <TextBox
-                    Width="300"
-                    Margin="0,5,0,0"
-                    md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
-                    md:TextFieldAssist.UnderlineBrush="#0078D7"
-                    BorderBrush="Gray"
-                    BorderThickness="0.3"
-                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                    Text="{Binding Titulo, UpdateSourceTrigger=PropertyChanged}" />
+    <Border
+        x:Name="borde"
+        Width="1000"
+        Height="530"
+        Background="White"
+        BorderBrush="Gray"
+        BorderThickness="1"
+        CornerRadius="10"
+        MouseLeftButtonDown="borde_MouseLeftButtonDown">
+        <Grid Margin="30">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock
+                Grid.Row="0"
+                Grid.ColumnSpan="2"
+                Margin="0,0,0,30"
+                HorizontalAlignment="Center"
+                FontSize="36"
+                FontWeight="SemiBold"
+                Foreground="#695858"
+                Text="Agregar Capacitacion" />
+            <StackPanel
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="0,0,0,10"
+                HorizontalAlignment="Center"
+                Orientation="Vertical">
+                <StackPanel Margin="0,0,0,10" Orientation="Vertical">
+                    <TextBlock
+                        Margin="2,0,0,3"
+                        FontSize="11"
+                        Foreground="#666"
+                        Text="Titulo de la capacitacion:" />
+                    <TextBox
+                        Width="400"
+                        Margin="0,5,0,0"
+                        md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                        md:TextFieldAssist.UnderlineBrush="#0078D7"
+                        BorderBrush="Gray"
+                        BorderThickness="0.3"
+                        Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                        Text="{Binding Titulo, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+
+                <StackPanel
+                    Margin="0,0,0,10"
+                    HorizontalAlignment="Center"
+                    Orientation="Vertical">
+                    <TextBlock
+                        Margin="2,0,0,3"
+                        FontSize="11"
+                        Foreground="#666"
+                        Text="Institucion donde realizo el curso:" />
+                    <TextBox
+                        Width="400"
+                        Margin="0,5,0,0"
+                        md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                        md:TextFieldAssist.UnderlineBrush="#0078D7"
+                        BorderBrush="Gray"
+                        BorderThickness="0.3"
+                        Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                        Text="{Binding Institucion, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+
+                <StackPanel
+                    Margin="0,0,0,10"
+                    HorizontalAlignment="Center"
+                    Orientation="Vertical">
+                    <TextBlock
+                        Margin="2,0,0,3"
+                        FontSize="11"
+                        Foreground="#666"
+                        Text="Carga Horaria:" />
+                    <TextBox
+                        Width="400"
+                        Margin="0,5,0,0"
+                        md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                        md:TextFieldAssist.UnderlineBrush="#0078D7"
+                        BorderBrush="Gray"
+                        BorderThickness="0.3"
+                        Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                        Text="{Binding CargaHoraria, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+
+                <StackPanel
+                    Margin="0,0,0,10"
+                    HorizontalAlignment="Center"
+                    Orientation="Vertical">
+                    <TextBlock
+                        Margin="2,0,0,3"
+                        FontSize="11"
+                        Foreground="#666"
+                        Text="Fecha:" />
+                    <DatePicker
+                        Width="400"
+                        Margin="0,5,0,0"
+                        md:HintAssist.Hint=""
+                        md:HintAssist.HintPaddingBrush="Transparent"
+                        BorderBrush="#CCC"
+                        BorderThickness="1"
+                        SelectedDate="{Binding Fecha, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        Style="{StaticResource MaterialDesignOutlinedDatePicker}" />
+                </StackPanel>
             </StackPanel>
 
-            <StackPanel Margin="0,0,0,10" Orientation="Vertical">
-                <TextBlock
-                    Margin="2,0,0,3"
-                    FontSize="11"
-                    Foreground="#666"
-                    Text="Institucion donde realizo el curso:" />
-                <TextBox
-                    Width="300"
-                    Margin="0,5,0,0"
-                    md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
-                    md:TextFieldAssist.UnderlineBrush="#0078D7"
-                    BorderBrush="Gray"
-                    BorderThickness="0.3"
-                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                    Text="{Binding Institucion, UpdateSourceTrigger=PropertyChanged}" />
+
+            <!--  Botones  -->
+            <StackPanel
+                Grid.Row="2"
+                Grid.ColumnSpan="2"
+                Margin="0,10,0,0"
+                HorizontalAlignment="Center"
+                Orientation="Horizontal">
+                <Button
+                    Width="90"
+                    Margin="0,0,5,0"
+                    md:ButtonAssist.CornerRadius="5"
+                    Background="#FF214F"
+                    BorderBrush="Transparent"
+                    BorderThickness="0"
+                    Command="{Binding CancelarCommand}"
+                    Content="Cancelar"
+                    Foreground="White" />
+                <Button
+                    Width="90"
+                    md:ButtonAssist.CornerRadius="5"
+                    Background="#1DA143"
+                    BorderBrush="Transparent"
+                    BorderThickness="0"
+                    Command="{Binding GuardarCommand}"
+                    Content="Guardar"
+                    Foreground="White" />
             </StackPanel>
 
-            <StackPanel Margin="0,0,0,10" Orientation="Vertical">
-                <TextBlock
-                    Margin="2,0,0,3"
-                    FontSize="11"
-                    Foreground="#666"
-                    Text="Carga Horaria:" />
-                <TextBox
-                    Width="300"
-                    Margin="0,5,0,0"
-                    md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
-                    md:TextFieldAssist.UnderlineBrush="#0078D7"
-                    BorderBrush="Gray"
-                    BorderThickness="0.3"
-                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                    Text="{Binding CargaHoraria, UpdateSourceTrigger=PropertyChanged}" />
+            <StackPanel
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="10,0,0,0"
+                VerticalAlignment="Center"
+                Orientation="Vertical">
+                <Image
+                    Width="250"
+                    Height="250"
+                    Source="{Binding FotoBytes}" />
+                <Button
+                    Background="#303048"
+                    BorderBrush="Transparent"
+                    BorderThickness="0"
+                    Command="{Binding SubirFotoCommand}"
+                    Content="Subir Foto"
+                    Foreground="#FFFFFF" />
             </StackPanel>
+        </Grid>
+    </Border>
 
-            <StackPanel Margin="0,0,0,10" Orientation="Vertical">
-                <TextBlock
-                    Margin="2,0,0,3"
-                    FontSize="11"
-                    Foreground="#666"
-                    Text="Fecha:" />
-                <DatePicker
-                    Width="300"
-                    Margin="0,5,0,0"
-                    md:HintAssist.Hint=""
-                    md:HintAssist.HintPaddingBrush="Transparent"
-                    BorderBrush="#CCC"
-                    BorderThickness="1"
-                    SelectedDate="{Binding Fecha, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    Style="{StaticResource MaterialDesignOutlinedDatePicker}" />
-            </StackPanel>
-        </StackPanel>
-
-
-        <!--  Botones  -->
-        <StackPanel
-            Grid.Row="2"
-            Grid.ColumnSpan="1"
-            Margin="0,10,0,0"
-            HorizontalAlignment="Right"
-            Orientation="Horizontal">
-            <Button
-                Width="100"
-                Margin="0,0,5,0"
-                md:ButtonAssist.CornerRadius="5"
-                Command="{Binding CancelarCommand}"
-                Content="Cancelar" />
-            <Button
-                Width="100"
-                md:ButtonAssist.CornerRadius="5"
-                Background="#4CAF50"
-                Command="{Binding GuardarCommand}"
-                Content="Guardar"
-                Foreground="White" />
-        </StackPanel>
-
-        <StackPanel
-            Grid.Row="1"
-            Grid.Column="1"
-            Margin="10,0,0,0"
-            VerticalAlignment="Center"
-            Orientation="Vertical">
-            <Image
-                Width="250"
-                Height="250"
-                Source="{Binding FotoBytes}" />
-            <Button Command="{Binding SubirFotoCommand}" Content="Subir Foto" />
-        </StackPanel>
-    </Grid>
 </Window>

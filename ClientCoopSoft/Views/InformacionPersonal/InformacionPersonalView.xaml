@@ -11,15 +11,19 @@
 
     <UserControl.Resources>
         <conv:BoolToGeneroConverter x:Key="BoolToGeneroConverter" />
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     </UserControl.Resources>
 
     <DockPanel
-        Margin="30"
+        Margin="20"
         Background="Transparent"
         LastChildFill="True">
 
         <!--  Encabezado  -->
-        <Grid Height="50" DockPanel.Dock="Top">
+        <Grid
+            Height="50"
+            DockPanel.Dock="Top"
+            Visibility="{Binding MostrarEncabezado, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
@@ -28,11 +32,12 @@
 
             <TextBlock
                 Grid.Column="0"
-                Margin="30,0,0,0"
+                Margin="20,10,0,20"
                 VerticalAlignment="Center"
                 FontSize="24"
                 FontWeight="SemiBold"
-                Text="Mi información personal" />
+                Foreground="#303048"
+                Text="MI INFORMACION PERSONAL" />
 
             <TextBlock
                 Grid.Column="1"
@@ -40,7 +45,7 @@
                 VerticalAlignment="Center"
                 FontSize="20"
                 FontWeight="SemiBold"
-                Foreground="Black"
+                Foreground="#303048"
                 Text="Guardar" />
 
             <Button
@@ -84,13 +89,13 @@
                         Height="32"
                         Margin="0,0,0,4"
                         HorizontalAlignment="Center"
-                        Foreground="#2E7D7F"
+                        Foreground="#3D8284"
                         Kind="AccountBox" />
 
                     <TextBlock
                         HorizontalAlignment="Center"
                         FontSize="14"
-                        Foreground="#2E7D7F"
+                        Foreground="#3D8284"
                         Text="Datos Personales" />
 
                     <!--  Línea inferior  -->
@@ -98,7 +103,7 @@
                         Height="3"
                         Margin="0,6,0,0"
                         HorizontalAlignment="Stretch"
-                        Background="#2E7D7F" />
+                        Background="#3D8284" />
                 </StackPanel>
             </Button>
 
@@ -119,14 +124,14 @@
                         Height="32"
                         Margin="0,0,0,4"
                         HorizontalAlignment="Center"
-                        Foreground="#2E7D7F"
+                        Foreground="#3D8284"
                         Kind="School" />
 
                     <!--  Texto  -->
                     <TextBlock
                         HorizontalAlignment="Center"
                         FontSize="14"
-                        Foreground="#2E7D7F"
+                        Foreground="#3D8284"
                         Text="Formación Académica" />
 
                     <!--  Línea inferior  -->
@@ -134,7 +139,7 @@
                         Height="3"
                         Margin="0,6,0,0"
                         HorizontalAlignment="Stretch"
-                        Background="#2E7D7F" />
+                        Background="#3D8284" />
                 </StackPanel>
             </Button>
 
@@ -155,14 +160,14 @@
                         Height="32"
                         Margin="0,0,0,4"
                         HorizontalAlignment="Center"
-                        Foreground="#2E7D7F"
+                        Foreground="#3D8284"
                         Kind="Certificate" />
 
                     <!--  Texto  -->
                     <TextBlock
                         HorizontalAlignment="Center"
                         FontSize="14"
-                        Foreground="#2E7D7F"
+                        Foreground="#3D8284"
                         Text="Cursos Realizados" />
 
                     <!--  Línea inferior  -->
@@ -170,14 +175,13 @@
                         Height="3"
                         Margin="0,6,0,0"
                         HorizontalAlignment="Stretch"
-                        Background="#2E7D7F" />
+                        Background="#3D8284" />
                 </StackPanel>
             </Button>
 
             <Button
-                Width="150"
+                Width="120"
                 Height="80"
-                Padding="0"
                 Background="Transparent"
                 BorderThickness="0"
                 Command="{Binding MostrarContratoCommand}"
@@ -190,14 +194,14 @@
                         Height="32"
                         Margin="0,0,0,4"
                         HorizontalAlignment="Center"
-                        Foreground="#2E7D7F"
+                        Foreground="#3D8284"
                         Kind="FileDocument" />
 
                     <!--  Texto  -->
                     <TextBlock
                         HorizontalAlignment="Center"
                         FontSize="14"
-                        Foreground="#2E7D7F"
+                        Foreground="#3D8284"
                         Text="Contratación" />
 
                     <!--  Línea inferior  -->
@@ -205,7 +209,7 @@
                         Height="3"
                         Margin="0,6,0,0"
                         HorizontalAlignment="Stretch"
-                        Background="#2E7D7F" />
+                        Background="#3D8284" />
                 </StackPanel>
             </Button>
 

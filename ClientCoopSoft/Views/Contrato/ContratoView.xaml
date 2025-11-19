@@ -7,37 +7,76 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
     mc:Ignorable="d">
-    <Grid Margin="20">
+
+    <Grid>
+        <!--  4 columnas: datos, datos, fechas, panel derecho  -->
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
             <ColumnDefinition />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
+
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="Auto" />
+            <!--  Encabezado  -->
+            <RowDefinition Height="Auto" />
+            <!--  Número contrato  -->
+            <RowDefinition Height="Auto" />
+            <!--  Tipo / Periodo  -->
+            <RowDefinition Height="Auto" />
+            <!--  Fechas  -->
+            <RowDefinition Height="*" />
+            <!--  Panel derecho  -->
         </Grid.RowDefinitions>
 
-        <TextBlock
+        <!--  ENCABEZADO  -->
+        <Grid
             Grid.Row="0"
-            Grid.Column="0"
-            Text="Informacion de Contrato" />
+            Grid.ColumnSpan="4"
+            Margin="0,-15,0,30">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
 
+            <TextBlock
+                Grid.Column="0"
+                VerticalAlignment="Center"
+                FontSize="24"
+                FontWeight="SemiBold"
+                Foreground="#303048"
+                Text="INFORMACION DE CONTRATO" />
+
+            <Button
+                Grid.Column="1"
+                Width="150"
+                Height="36"
+                md:ButtonAssist.CornerRadius="5"
+                Background="#CCA10B"
+                BorderBrush="Transparent"
+                BorderThickness="0"
+                Command="{Binding GuardarCommand}"
+                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                Content="Guardar"
+                Foreground="White"
+                Style="{StaticResource MaterialDesignRaisedButton}" />
+        </Grid>
+
+        <!--  Número de contrato  -->
         <StackPanel
             Grid.Row="1"
-            Grid.Column="0"
-            HorizontalAlignment="Left"
+            Grid.ColumnSpan="2"
+            Margin="0,0,0,30"
+            HorizontalAlignment="Center"
             Orientation="Vertical">
             <TextBlock
                 Margin="2,0,0,3"
                 FontSize="11"
                 Foreground="#666"
-                Text="Ingrese el numero de contrato:" />
+                Text="Ingrese el número de contrato:" />
             <TextBox
-                Width="300"
+                Width="810"
                 Margin="0,5,0,0"
                 md:HintAssist.Hint=""
                 md:HintAssist.HintPaddingBrush="Transparent"
@@ -49,21 +88,20 @@
                 Text="{Binding NumeroContrato, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
 
+        <!--  Tipo de contrato  -->
         <StackPanel
             Grid.Row="2"
             Grid.Column="0"
-            Margin="0,0,0,35"
-            HorizontalAlignment="Left"
+            Margin="0,0,0,30"
+            HorizontalAlignment="Center"
             Orientation="Vertical">
-
             <TextBlock
                 Margin="2,0,0,3"
                 FontSize="11"
                 Foreground="#666"
                 Text="Seleccione el tipo de contrato:" />
-
             <ComboBox
-                Width="300"
+                Width="400"
                 Height="auto"
                 Margin="0,5,0,0"
                 md:HintAssist.Foreground="Transparent"
@@ -78,21 +116,21 @@
                 SelectedItem="{Binding TipoContratoSeleccionado}"
                 Style="{StaticResource MaterialDesignOutlinedComboBox}" />
         </StackPanel>
+
+        <!--  Periodo de pago  -->
         <StackPanel
             Grid.Row="2"
             Grid.Column="1"
             Margin="10,0,0,35"
-            HorizontalAlignment="Left"
+            HorizontalAlignment="Center"
             Orientation="Vertical">
-
             <TextBlock
                 Margin="2,0,0,3"
                 FontSize="11"
                 Foreground="#666"
                 Text="Seleccione el periodo de pago:" />
-
             <ComboBox
-                Width="300"
+                Width="395"
                 Height="auto"
                 Margin="0,5,0,0"
                 md:HintAssist.Foreground="Transparent"
@@ -108,11 +146,12 @@
                 Style="{StaticResource MaterialDesignOutlinedComboBox}" />
         </StackPanel>
 
+        <!--  Fecha inicio  -->
         <StackPanel
             Grid.Row="3"
             Grid.Column="0"
             Margin="0,0,0,35"
-            HorizontalAlignment="Left"
+            HorizontalAlignment="Center"
             Orientation="Vertical">
             <TextBlock
                 Margin="2,0,0,3"
@@ -120,7 +159,7 @@
                 Foreground="#666"
                 Text="Indique la fecha de inicio del contrato:" />
             <DatePicker
-                Width="300"
+                Width="400"
                 Margin="0,5,0,0"
                 md:HintAssist.Hint=""
                 md:HintAssist.HintPaddingBrush="Transparent"
@@ -130,20 +169,20 @@
                 Style="{StaticResource MaterialDesignOutlinedDatePicker}" />
         </StackPanel>
 
-
+        <!--  Fecha fin  -->
         <StackPanel
             Grid.Row="3"
             Grid.Column="1"
             Margin="10,0,0,35"
-            HorizontalAlignment="Left"
+            HorizontalAlignment="Center"
             Orientation="Vertical">
             <TextBlock
                 Margin="2,0,0,3"
                 FontSize="11"
                 Foreground="#666"
-                Text="Indique la fecha de finalizacion del contrato:" />
+                Text="Indique la fecha de finalización del contrato:" />
             <DatePicker
-                Width="300"
+                Width="395"
                 Margin="0,5,0,0"
                 md:HintAssist.Hint=""
                 md:HintAssist.HintPaddingBrush="Transparent"
@@ -153,21 +192,59 @@
                 Style="{StaticResource MaterialDesignOutlinedDatePicker}" />
         </StackPanel>
 
+        <!--  Panel derecho: PDF / imagen contrato y acciones  -->
         <StackPanel
-            Grid.RowSpan="4"
-            Grid.Column="3"
+            Grid.Row="4"
+            Grid.ColumnSpan="2"
             Margin="10,0,0,0"
             VerticalAlignment="Center">
-            <Image
-                Width="250"
-                Height="250"
-                Source="{Binding FotoBytes}" />
-            <Button Command="{Binding SubirFotoCommand}" Content="Subir Contrato" />
+            <StackPanel HorizontalAlignment="Center">
+                <Image
+                    Width="120"
+                    Height="120"
+                    Margin="0,0,0,10"
+                    Source="/Assets/ContratoIcons/IconPdf.png" />
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    Foreground="#666"
+                    Text="Archivo PDF de contrato" />
+
+            </StackPanel>
+
             <Button
-                Command="{Binding GuardarCommand}"
-                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
-                Content="Guardar Informacion" />
-            <Button Content="Descargar Contrato" />
+                Width="300"
+                Margin="0,8,0,0"
+                Background="#303048"
+                BorderBrush="Transparent"
+                BorderThickness="0"
+                Command="{Binding SubirFotoCommand}"
+                Content="Subir contrato"
+                Foreground="White" />
+            <Button
+                Width="300"
+                Margin="0,8,0,0"
+                Background="#303048"
+                BorderBrush="Transparent"
+                BorderThickness="0"
+                Command="{Binding DescargarContratoCommand}"
+                Content="Descargar contrato"
+                Foreground="White" />
+            <TextBlock
+                Margin="0,10,0,0"
+                HorizontalAlignment="Center"
+                FontSize="13"
+                Foreground="#444"
+                Text="{Binding MensajeArchivo}" />
+
+
         </StackPanel>
+
+        <Image
+            Grid.RowSpan="5"
+            Grid.ColumnSpan="4"
+            Width="1000"
+            Height="600"
+            HorizontalAlignment="Right"
+            Source="/Assets/iconContratoView.png" />
     </Grid>
 </UserControl>

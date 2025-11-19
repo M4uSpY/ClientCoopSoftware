@@ -47,6 +47,10 @@ namespace ClientCoopSoft.ViewModels.InformacionPersonal
         // NUEVO: contenido dinámico para navegación de pestañas
         [ObservableProperty] private UserControl? contenidoActual;
 
+        [ObservableProperty]
+        private bool mostrarEncabezado;
+
+
         public InfPersonalViewModel(Persona persona, ApiClient apiCilent)
         {
             _apiClient = apiCilent;
@@ -69,6 +73,7 @@ namespace ClientCoopSoft.ViewModels.InformacionPersonal
 
             // Inicializar contenido con la vista principal
             ContenidoActual = new InformacionPersonalFormView { DataContext = this };
+            MostrarEncabezado = true;
         }
 
         // Métodos existentes
@@ -171,6 +176,7 @@ namespace ClientCoopSoft.ViewModels.InformacionPersonal
         private void MostrarInformacionPersonal()
         {
             ContenidoActual = new InformacionPersonalFormView { DataContext = this };
+            MostrarEncabezado = true;
         }
 
         [RelayCommand]
@@ -184,6 +190,7 @@ namespace ClientCoopSoft.ViewModels.InformacionPersonal
                 {
                     DataContext = vm
                 };
+                MostrarEncabezado = false;
             }
             return;
         }
@@ -199,6 +206,7 @@ namespace ClientCoopSoft.ViewModels.InformacionPersonal
                 {
                     DataContext = vm
                 };
+                MostrarEncabezado = false;
             }
             return;
         }
@@ -213,6 +221,7 @@ namespace ClientCoopSoft.ViewModels.InformacionPersonal
                 {
                     DataContext = vm
                 };
+                MostrarEncabezado = false;
             }
             return;
         }
