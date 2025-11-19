@@ -680,7 +680,7 @@
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="Background" Value="#5CAEB0" />
                                 </Trigger>
-                                <DataTrigger Binding="{Binding MenuSeleccionado}" Value="Reportes">
+                                <DataTrigger Binding="{Binding MenuSeleccionado}" Value="Logs">
                                     <Setter Property="Background" Value="#3D8284" />
                                 </DataTrigger>
                             </Style.Triggers>
@@ -714,7 +714,7 @@
                             <TextBlock
                                 Grid.Column="2"
                                 VerticalAlignment="Center"
-                                Text="Reportes" />
+                                Text="Logs" />
                         </Grid>
                     </Button>
 
@@ -748,7 +748,7 @@
                         VerticalAlignment="Center"
                         Background="Transparent"
                         BorderThickness="0"
-                        Click="btnExit_Click_1"
+                        Command="{Binding CerrarSesionCommand}"
                         Cursor="Hand"
                         Focusable="False"
                         FontSize="12"

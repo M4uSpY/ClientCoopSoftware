@@ -1,14 +1,11 @@
 ﻿using ClientCoopSoft.Models;
-using ClientCoopSoft.Views.InformacionPersonal;
+using ClientCoopSoft.ViewModels.VacacionesPermisos;
 using ClientCoopSoft.Views.VacacionesPermisos;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Syncfusion.UI.Xaml.Scheduler;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -18,21 +15,25 @@ namespace ClientCoopSoft.ViewModels.VacacionesPemisos
     public partial class CalendarioVacacionesPermisosViewModel : ObservableObject
     {
         private readonly ApiClient _apiClient;
+        private readonly int _idTrabajadorActual;
 
         [ObservableProperty]
         private ScheduleAppointmentCollection eventos = new();
-        [ObservableProperty] private UserControl? contenidoActual;
 
-        public CalendarioVacacionesPermisosViewModel(ApiClient apiClient)
+        [ObservableProperty]
+        private UserControl? contenidoActual; // Solo para mostrar la lista
+
+        public CalendarioVacacionesPermisosViewModel(ApiClient apiClient, int idTrabajadorActual)
         {
             _apiClient = apiClient;
+            _idTrabajadorActual = idTrabajadorActual;
+
             _ = CargarEventosAsync();
         }
 
         public async Task CargarEventosAsync()
         {
             var lista = await _apiClient.ObtenerVacacionesPermisosAsync();
-
             Eventos.Clear();
 
             if (lista == null)
@@ -40,54 +41,59 @@ namespace ClientCoopSoft.ViewModels.VacacionesPemisos
 
             foreach (var s in lista)
             {
-                // Mapeo DTO -> ScheduleAppointment
                 var appt = new ScheduleAppointment
                 {
                     StartTime = s.FechaInicio,
-                    EndTime = s.FechaFin,   // o s.FechaFin.AddDays(1) si quieres incluir el último día completo
+                    EndTime = s.FechaFin,
                     Subject = $"{s.TipoSolicitud} - {s.Trabajador}",
-                    Location = "",           // si luego quieres sucursal/oficina, etc.
-                    IsAllDay = true          // vacaciones/permisos normalmente son de todo el día
+                    IsAllDay = true
                 };
 
-                switch (s.EstadoSolicitud)
+                appt.AppointmentBackground = s.EstadoSolicitud switch
                 {
-                    case "Pendiente":
-                        appt.AppointmentBackground = new SolidColorBrush(Color.FromRgb(255, 193, 7)); // Amarillo
-                        break;
-
-                    case "Aprobado":
-                        appt.AppointmentBackground = new SolidColorBrush(Color.FromRgb(46, 204, 113)); // Verde
-                        break;
-
-                    case "Rechazado":
-                        appt.AppointmentBackground = new SolidColorBrush(Color.FromRgb(231, 76, 60)); // Rojo
-                        break;
-
-                    default:
-                        appt.AppointmentBackground = new SolidColorBrush(Colors.LightGray);
-                        break;
-                }
+                    "Pendiente" => new SolidColorBrush(Color.FromRgb(255, 193, 7)),
+                    "Aprobado" => new SolidColorBrush(Color.FromRgb(46, 204, 113)),
+                    "Rechazado" => new SolidColorBrush(Color.FromRgb(231, 76, 60)),
+                    _ => new SolidColorBrush(Colors.LightGray)
+                };
 
                 Eventos.Add(appt);
             }
         }
 
         [RelayCommand]
-        private async Task Solicitudes()
+        private async Task SolicitudesAsync()
         {
-            // 1. Crear el ViewModel de la lista
-            var vm = new ListarSolicitudesViewModel(_apiClient,() => ContenidoActual = null);
+            var vm = new ListarSolicitudesViewModel(_apiClient, () => ContenidoActual = null);
 
-            // 2. Cargar los datos
             await vm.CargarSolicitudesListaAsync();
 
-            // 3. Asignarlo como DataContext de la vista
             ContenidoActual = new SolicitudesVacPerView
             {
                 DataContext = vm
             };
         }
 
+        [RelayCommand]
+        private async Task SolicitarAsync()
+        {
+            var vm = new CrearSolicitudVacPermViewModel(_apiClient, _idTrabajadorActual);
+
+            await vm.CargarCombosAsync();
+
+            var win = new CrearSolicitudVacPermWindow
+            {
+                DataContext = vm,
+                Owner = App.Current.MainWindow
+            };
+
+            vm.SolicitudCreada += async () =>
+            {
+                win.Close();
+                await CargarEventosAsync();
+            };
+
+            win.ShowDialog();
+        }
     }
 }

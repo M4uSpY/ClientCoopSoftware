@@ -2,6 +2,7 @@
 using ClientCoopSoft.DTO.Asistencia;
 using ClientCoopSoft.DTO.Capacitaciones;
 using ClientCoopSoft.DTO.Contratacion;
+using ClientCoopSoft.DTO.Extras;
 using ClientCoopSoft.DTO.FormacionAcademica;
 using ClientCoopSoft.DTO.Personas;
 using ClientCoopSoft.DTO.Trabajadores;
@@ -570,6 +571,37 @@ public class ApiClient
 
         return response.IsSuccessStatusCode;
     }
+
+    public async Task<bool> CrearSolicitudVacPermAsync(SolicitudVacPermCrearDTO dto)
+    {
+        SetBearer();
+        var json = JsonConvert.SerializeObject(dto);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+        var response = await _http.PostAsync("api/VacacionesPermisos", content);
+        return response.IsSuccessStatusCode;
+    }
+
+    public async Task<List<TipoSolicitud>?> ObtenerClasificadorPorTipoSolicitudAsync()
+    {
+        SetBearer();
+        var response = await _http.GetAsync("api/TipoSolicitud");
+        var raw = await response.Content.ReadAsStringAsync();
+
+        if (response.IsSuccessStatusCode)
+        {
+            return JsonConvert.DeserializeObject<List<TipoSolicitud>>(raw);
+        }
+        return null;
+    }
+
+    public async Task<bool> LogoutAsync(int idUsuario)
+    {
+        var dto = new LogoutSolicitudDTO { IdUsuario = idUsuario };
+
+        var response = await _http.PostAsJsonAsync("api/auth/logout", dto);
+        return response.IsSuccessStatusCode;
+    }
+
 
 }
 

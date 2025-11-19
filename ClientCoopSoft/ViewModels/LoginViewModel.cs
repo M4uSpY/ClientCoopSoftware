@@ -43,7 +43,7 @@ namespace ClientCoopSoft.ViewModels
                 }
 
                 // abrir dashboard
-                var dash = new DashboardMain(_api, resp.Rol, resp.NombreCompleto, resp.IdPersona);
+                var dash = new DashboardMain(_api, resp.Rol, resp.NombreCompleto, resp.IdPersona, resp.IdUsuario);
 
                 // reemplazar la ventana principal actual
                 System.Windows.Application.Current.MainWindow = dash;

@@ -3,6 +3,7 @@ using ClientCoopSoft.ViewModels.InformacionPersonal;
 using ClientCoopSoft.ViewModels.Inicio;
 using ClientCoopSoft.ViewModels.Trabajadores;
 using ClientCoopSoft.ViewModels.VacacionesPemisos;
+using ClientCoopSoft.ViewModels.VacacionesPermisos;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
@@ -20,6 +21,8 @@ namespace ClientCoopSoft.ViewModels
     {
         private readonly ApiClient _apiClient;
         private readonly int _idPersonaActual;
+        private readonly int _idUsuarioActual;
+
 
         [ObservableProperty] private string bienvenida = string.Empty;
         [ObservableProperty] private string rol = string.Empty;
@@ -31,10 +34,11 @@ namespace ClientCoopSoft.ViewModels
 
         public bool IsAdmin => string.Equals(Rol, "Administrador", System.StringComparison.OrdinalIgnoreCase) || string.Equals(Rol, "Admin", System.StringComparison.OrdinalIgnoreCase);
 
-        public DashboardViewModel(ApiClient apiClient, string rolName, string NombreCompleto, int idPersonaActual)
+        public DashboardViewModel(ApiClient apiClient, string rolName, string NombreCompleto, int idPersonaActual, int idUsuarioActual)
         {
             _apiClient = apiClient;
             _idPersonaActual = idPersonaActual;
+            _idUsuarioActual = idUsuarioActual;
 
             Rol = $"{rolName}";
             Bienvenida = $"Bienvenido";
@@ -115,11 +119,22 @@ namespace ClientCoopSoft.ViewModels
         private async Task AbrirVacacionesPermisosAsync()
         {
             MenuSeleccionado = "VacacionesPermisos";
-            var listaVacPermisosVM = new CalendarioVacacionesPermisosViewModel(_apiClient);
-            CurrentView = listaVacPermisosVM;
 
-            await listaVacPermisosVM.CargarEventosAsync();
+            var persona = await _apiClient.ObtenerPersonaAsync(_idPersonaActual);
+            if (persona?.Trabajador == null)
+            {
+                MessageBox.Show("No se encontró el trabajador asociado a la persona actual.",
+                    "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var idTrabajadorActual = persona.Trabajador.IdTrabajador;
+
+            var calendarioVM = new CalendarioVacacionesPermisosViewModel(_apiClient, idTrabajadorActual);
+            await calendarioVM.CargarEventosAsync();
+            CurrentView = calendarioVM;
         }
+
 
         [RelayCommand]
         private async Task AbrirAsistenciasAsync()
@@ -177,5 +192,32 @@ namespace ClientCoopSoft.ViewModels
                 return null;
             }
         }
+
+        [RelayCommand]
+        private async Task CerrarSesionAsync()
+        {
+            var result = MessageBox.Show(
+                "¿Está seguro que desea cerrar sesión?",
+                "Confirmación",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
+
+            if (result != MessageBoxResult.Yes)
+                return;
+
+            // Llamada al backend para registrar logout
+            var ok = await _apiClient.LogoutAsync(_idUsuarioActual);
+
+            if (!ok)
+            {
+                MessageBox.Show("No se pudo cerrar sesión correctamente.", "Error",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // Cerrar la ventana principal
+            Application.Current.MainWindow.Close();
+        }
+
     }
 }
