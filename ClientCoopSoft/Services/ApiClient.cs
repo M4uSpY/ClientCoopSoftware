@@ -602,6 +602,19 @@ public class ApiClient
         return response.IsSuccessStatusCode;
     }
 
+    public async Task<List<LogsAccesoDTO>?> ObtenerListaLogsAcceso()
+    {
+        SetBearer();
+        var response = await _http.GetAsync("api/LogsAcceso");
+        var raw = await response.Content.ReadAsStringAsync();
 
+        if (response.IsSuccessStatusCode)
+        {
+            return JsonConvert.DeserializeObject<List<LogsAccesoDTO>>(raw);
+        }
+
+
+        return null;
+    }
 }
 

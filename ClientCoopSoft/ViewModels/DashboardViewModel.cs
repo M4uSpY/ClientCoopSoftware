@@ -1,6 +1,7 @@
 ﻿using ClientCoopSoft.ViewModels.Asistencia;
 using ClientCoopSoft.ViewModels.InformacionPersonal;
 using ClientCoopSoft.ViewModels.Inicio;
+using ClientCoopSoft.ViewModels.LogsAcceso;
 using ClientCoopSoft.ViewModels.Trabajadores;
 using ClientCoopSoft.ViewModels.VacacionesPemisos;
 using ClientCoopSoft.ViewModels.VacacionesPermisos;
@@ -144,6 +145,16 @@ namespace ClientCoopSoft.ViewModels
 
             await listaAsistenciasVM.CargarAsistenciasAsync();
             CurrentView = listaAsistenciasVM;
+        }
+
+        [RelayCommand]
+        private async Task AbrirLogsAsync()
+        {
+            MenuSeleccionado = "Logs";
+            var listaLogsVM = new LogsViewModel(_apiClient);
+
+            await listaLogsVM.CargarLogsAccesoAsync();
+            CurrentView = listaLogsVM;
         }
 
         [RelayCommand]

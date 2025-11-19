@@ -28,6 +28,7 @@
 
             <TextBlock
                 Grid.Column="0"
+                Margin="30,0,0,0"
                 VerticalAlignment="Center"
                 FontSize="24"
                 FontWeight="SemiBold"
@@ -67,30 +68,147 @@
             HorizontalAlignment="Center"
             DockPanel.Dock="Bottom"
             Orientation="Horizontal">
+
             <Button
                 Width="150"
-                Height="40"
+                Height="80"
+                Padding="0"
+                Background="Transparent"
+                BorderThickness="0"
                 Command="{Binding MostrarInformacionPersonalCommand}"
-                Content="Información Personal"
-                Style="{StaticResource MaterialDesignRaisedButton}" />
+                Style="{StaticResource MaterialDesignFlatButton}">
+
+                <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
+                    <md:PackIcon
+                        Width="32"
+                        Height="32"
+                        Margin="0,0,0,4"
+                        HorizontalAlignment="Center"
+                        Foreground="#2E7D7F"
+                        Kind="AccountBox" />
+
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        FontSize="14"
+                        Foreground="#2E7D7F"
+                        Text="Datos Personales" />
+
+                    <!--  Línea inferior  -->
+                    <Border
+                        Height="3"
+                        Margin="0,6,0,0"
+                        HorizontalAlignment="Stretch"
+                        Background="#2E7D7F" />
+                </StackPanel>
+            </Button>
+
+
             <Button
                 Width="150"
-                Height="40"
+                Height="80"
+                Padding="0"
+                Background="Transparent"
+                BorderThickness="0"
                 Command="{Binding MostrarFormacionAcademicaCommand}"
-                Content="Formación Académica"
-                Style="{StaticResource MaterialDesignRaisedButton}" />
+                Style="{StaticResource MaterialDesignFlatButton}">
+
+                <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
+                    <!--  Icono  -->
+                    <md:PackIcon
+                        Width="32"
+                        Height="32"
+                        Margin="0,0,0,4"
+                        HorizontalAlignment="Center"
+                        Foreground="#2E7D7F"
+                        Kind="School" />
+
+                    <!--  Texto  -->
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        FontSize="14"
+                        Foreground="#2E7D7F"
+                        Text="Formación Académica" />
+
+                    <!--  Línea inferior  -->
+                    <Border
+                        Height="3"
+                        Margin="0,6,0,0"
+                        HorizontalAlignment="Stretch"
+                        Background="#2E7D7F" />
+                </StackPanel>
+            </Button>
+
+
             <Button
                 Width="150"
-                Height="40"
+                Height="80"
+                Padding="0"
+                Background="Transparent"
+                BorderThickness="0"
                 Command="{Binding MostrarCapacitacionesCommand}"
-                Content="Cursos Realizados"
-                Style="{StaticResource MaterialDesignRaisedButton}" />
+                Style="{StaticResource MaterialDesignFlatButton}">
+
+                <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
+                    <!--  Icono  -->
+                    <md:PackIcon
+                        Width="32"
+                        Height="32"
+                        Margin="0,0,0,4"
+                        HorizontalAlignment="Center"
+                        Foreground="#2E7D7F"
+                        Kind="Certificate" />
+
+                    <!--  Texto  -->
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        FontSize="14"
+                        Foreground="#2E7D7F"
+                        Text="Cursos Realizados" />
+
+                    <!--  Línea inferior  -->
+                    <Border
+                        Height="3"
+                        Margin="0,6,0,0"
+                        HorizontalAlignment="Stretch"
+                        Background="#2E7D7F" />
+                </StackPanel>
+            </Button>
+
             <Button
                 Width="150"
-                Height="40"
+                Height="80"
+                Padding="0"
+                Background="Transparent"
+                BorderThickness="0"
                 Command="{Binding MostrarContratoCommand}"
-                Content="Contratacion"
-                Style="{StaticResource MaterialDesignRaisedButton}" />
+                Style="{StaticResource MaterialDesignFlatButton}">
+
+                <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
+                    <!--  Icono  -->
+                    <md:PackIcon
+                        Width="32"
+                        Height="32"
+                        Margin="0,0,0,4"
+                        HorizontalAlignment="Center"
+                        Foreground="#2E7D7F"
+                        Kind="FileDocument" />
+
+                    <!--  Texto  -->
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        FontSize="14"
+                        Foreground="#2E7D7F"
+                        Text="Contratación" />
+
+                    <!--  Línea inferior  -->
+                    <Border
+                        Height="3"
+                        Margin="0,6,0,0"
+                        HorizontalAlignment="Stretch"
+                        Background="#2E7D7F" />
+                </StackPanel>
+            </Button>
+
         </StackPanel>
 
         <!--  Contenido dinámico  -->

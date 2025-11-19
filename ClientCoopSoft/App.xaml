@@ -77,6 +77,12 @@
                 <views:AsistenciaView />
             </DataTemplate>
 
+            <DataTemplate
+                xmlns:views="clr-namespace:ClientCoopSoft.Views.Logs"
+                xmlns:vm="clr-namespace:ClientCoopSoft.ViewModels.LogsAcceso"
+                DataType="{x:Type vm:LogsViewModel}">
+                <views:LogsView />
+            </DataTemplate>
 
 
 
