@@ -1,7 +1,10 @@
 ﻿using ClientCoopSoft.ViewModels.Asistencia;
+using ClientCoopSoft.ViewModels.BoletasPago;
+using ClientCoopSoft.ViewModels.Faltas;
 using ClientCoopSoft.ViewModels.InformacionPersonal;
 using ClientCoopSoft.ViewModels.Inicio;
 using ClientCoopSoft.ViewModels.LogsAcceso;
+using ClientCoopSoft.ViewModels.Planillas;
 using ClientCoopSoft.ViewModels.Trabajadores;
 using ClientCoopSoft.ViewModels.VacacionesPemisos;
 using ClientCoopSoft.ViewModels.VacacionesPermisos;
@@ -145,6 +148,35 @@ namespace ClientCoopSoft.ViewModels
 
             await listaAsistenciasVM.CargarAsistenciasAsync();
             CurrentView = listaAsistenciasVM;
+        }
+
+        [RelayCommand]
+        private async Task AbrirBoletasPagoAsync()
+        {
+            MenuSeleccionado = "BoletasPago";
+            var listaBoletasPagoVM = new ListaBoletasPagoViewModel(_apiClient);
+
+            //await listaAsistenciasVM.CargarAsistenciasAsync();
+            CurrentView = listaBoletasPagoVM;
+        }
+
+        [RelayCommand]
+        private async Task AbrirFaltasAsync()
+        {
+            MenuSeleccionado = "Faltas";
+            var listaFaltasVM = new ListaFaltasViewModel(_apiClient);
+
+            //await listaAsistenciasVM.CargarAsistenciasAsync();
+            CurrentView = listaFaltasVM;
+        }
+        [RelayCommand]
+        private async Task AbrirPlanillasAsync()
+        {
+            MenuSeleccionado = "Planillas";
+            var listaPlanillasVM = new PlanillaSueldosSalariosViewModel(_apiClient);
+
+            //await listaAsistenciasVM.CargarAsistenciasAsync();
+            CurrentView = listaPlanillasVM;
         }
 
         [RelayCommand]

@@ -25,14 +25,21 @@
             Grid.Column="0"
             Orientation="Horizontal">
             <Button
-                Width="90"
-                Height="32"
+                Width="35"
+                Height="35"
                 Margin="0,0,0,10"
-                Background="#eeeeee"
-                BorderBrush="#ccc"
+                Background="#1E0F74"
+                BorderBrush="Transparent"
+                BorderThickness="0"
                 Command="{Binding VolverCommand}"
-                Content="← Atrás"
-                Foreground="#333" />
+                Foreground="#333"
+                Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}">
+                <md:PackIcon
+                    Width="20"
+                    Height="30"
+                    Foreground="White"
+                    Kind="ArrowLeft" />
+            </Button>
             <TextBlock
                 Margin="10,0,0,20"
                 FontSize="24"
@@ -79,11 +86,11 @@
                 <DataGridTextColumn
                     Width="*"
                     Binding="{Binding FechaInicio}"
-                    Header="FechaInicio" />
+                    Header="Fecha Inicio" />
                 <DataGridTextColumn
                     Width="*"
                     Binding="{Binding FechaFin}"
-                    Header="FechaFin" />
+                    Header="Fecha Fin" />
                 <DataGridTextColumn
                     Width="*"
                     Binding="{Binding Estado}"

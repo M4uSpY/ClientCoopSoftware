@@ -1,0 +1,156 @@
+﻿<UserControl
+    x:Class="ClientCoopSoft.Views.Planillas.PlanillaSueldosSalariosView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:ClientCoopSoft.Views.Planillas"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    mc:Ignorable="d">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+        </Grid.ColumnDefinitions>
+        <TextBlock
+            Grid.Row="0"
+            Grid.Column="0"
+            Margin="0,0,0,20"
+            FontSize="24"
+            FontWeight="SemiBold"
+            Foreground="#303048"
+            Text="Planilla de Sueldos y Salarios" />
+        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+            <!--  Exportar a Excel (.xlsx)  -->
+            <Button
+                Width="40"
+                Height="40"
+                Margin="8,0,0,0"
+                Background="#1D9942"
+                BorderBrush="Transparent"
+                Command="{Binding ExportarExcelCommand}"
+                Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                ToolTip="Exportar a Excel (.xlsx)">
+                <md:PackIcon Foreground="White" Kind="FileExcel" />
+            </Button>
+
+            <!--  Exportar a PDF  -->
+            <Button
+                Width="40"
+                Height="40"
+                Margin="8,0,0,0"
+                Background="#D9534F"
+                BorderBrush="Transparent"
+                Command="{Binding ExportarPdfCommand}"
+                Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                ToolTip="Exportar a PDF">
+                <md:PackIcon Foreground="White" Kind="FilePdfBox" />
+            </Button>
+        </StackPanel>
+        <DataGrid
+            Grid.Row="1"
+            Grid.ColumnSpan="3"
+            Margin="0"
+            AutoGenerateColumns="False"
+            Background="White"
+            BorderThickness="1"
+            CanUserAddRows="False"
+            CanUserDeleteRows="False"
+            IsReadOnly="True"
+            ItemsSource="{Binding PlanillaSueldos}">
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    Width="auto"
+                    Binding="{Binding IdS}"
+                    Header="No" />
+                <DataGridTextColumn
+                    Width="Auto"
+                    Binding="{Binding CarnetIdentidad}"
+                    Header="CI" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding ApNombres}"
+                    Header="Apellidos y Nombres" />
+                <DataGridTextColumn
+                    Width="Auto"
+                    Binding="{Binding Nacionalidad}"
+                    Header="Nacionalidad" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding FechaNacimiento}"
+                    Header="Fecha de Nacimiento" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Genero}"
+                    Header="Genero" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Cargo}"
+                    Header="Cargo" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding FechaIngreso}"
+                    Header="Fecha de Ingreso" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding DiasPagados}"
+                    Header="Dias Pagados" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding HaberBasico}"
+                    Header="Haber Basico" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding BonoAntiguedad}"
+                    Header="Bono Antiguedad" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding BonoProd}"
+                    Header="Bono Produccion" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding ApCoop}"
+                    Header="Aporte Cooperativa" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding TotalGanado}"
+                    Header="Total Ganado" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Gestora}"
+                    Header="Gestora" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding RCIVA}"
+                    Header="RC-IVA" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding RCIVA}"
+                    Header="RC-IVA" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding ApSolidario}"
+                    Header="Aporte Solidario" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding OtrosDescuentos}"
+                    Header="Otros Descuentos" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding TotalDescuentos}"
+                    Header="TotalDescuentos" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding LiquidoPagable}"
+                    Header="Liquido Pagable" />
+
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+
+</UserControl>

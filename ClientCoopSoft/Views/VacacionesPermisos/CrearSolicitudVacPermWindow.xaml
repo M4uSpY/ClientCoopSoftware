@@ -5,63 +5,210 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:ClientCoopSoft.Views.VacacionesPermisos"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    Title="Ventana de Solicitud"
+    AllowsTransparency="True"
+    Background="Transparent"
     ResizeMode="NoResize"
+    SizeToContent="WidthAndHeight"
     WindowStartupLocation="CenterOwner"
-    WindowStyle="SingleBorderWindow"
+    WindowStyle="None"
     mc:Ignorable="d">
-    <Border Padding="20">
-        <Grid>
 
+    <Border
+        Width="1000"
+        Height="730"
+        Background="White"
+        BorderBrush="Gray"
+        BorderThickness="1"
+        CornerRadius="10">
+
+        <Grid Margin="30">
+            <!--  COLUMNAS  -->
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1.2*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="0" Margin="10">
+            <!--  FILAS  -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <!--  Título  -->
+                <RowDefinition Height="Auto" />
+                <!--  Fecha inicio / fin  -->
+                <RowDefinition Height="Auto" />
+                <!--  Tipo solicitud / Motivo  -->
+                <RowDefinition Height="*" />
+                <!--  Observación / Calendario  -->
+                <RowDefinition Height="Auto" />
+                <!--  Botones  -->
+            </Grid.RowDefinitions>
 
-                <TextBlock FontWeight="Bold" Text="Fecha Inicio" />
-                <DatePicker Margin="0,5,0,15" SelectedDate="{Binding FechaInicio}" />
+            <!--  TÍTULO  -->
+            <TextBlock
+                Grid.Row="0"
+                Grid.ColumnSpan="3"
+                Margin="0,0,0,30"
+                HorizontalAlignment="Center"
+                FontSize="36"
+                FontWeight="SemiBold"
+                Foreground="#695858"
+                Text="Solicitar vacación o permiso" />
 
-                <TextBlock FontWeight="Bold" Text="Fecha Fin" />
-                <DatePicker Margin="0,5,0,15" SelectedDate="{Binding FechaFin}" />
-
-                <TextBlock FontWeight="Bold" Text="Tipo de Solicitud" />
-                <ComboBox
-                    Margin="0,5,0,15"
-                    DisplayMemberPath="ValorCategoria"
-                    ItemsSource="{Binding TiposSolicitud}"
-                    SelectedItem="{Binding TipoSeleccionado}" />
-
-                <TextBlock FontWeight="Bold" Text="Motivo" />
-                <TextBox Margin="0,5,0,15" Text="{Binding Motivo}" />
-
-                <TextBlock FontWeight="Bold" Text="Observación" />
-                <TextBox
-                    Height="100"
-                    Margin="0,5,0,15"
-                    AcceptsReturn="True"
-                    Text="{Binding Observacion}" />
-
+            <!--  FECHAS  -->
+            <StackPanel
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="0,0,20,20">
+                <TextBlock
+                    Margin="0,0,0,10"
+                    FontSize="11"
+                    Foreground="#666"
+                    Text="Fecha Inicio:" />
+                <DatePicker
+                    Width="290"
+                    md:HintAssist.Hint=""
+                    md:HintAssist.HintPaddingBrush="Transparent"
+                    BorderBrush="#CCC"
+                    BorderThickness="1"
+                    SelectedDate="{Binding FechaInicio}"
+                    Style="{StaticResource MaterialDesignOutlinedDatePicker}" />
             </StackPanel>
 
             <StackPanel
+                Grid.Row="1"
                 Grid.Column="1"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Bottom"
-                Orientation="Horizontal">
-
-                <Button
-                    Width="120"
-                    Height="40"
-                    Command="{Binding EnviarCommand}"
-                    Content="Enviar" />
-
-                <Button
-                    Width="120"
-                    Height="40"
-                    Command="{Binding CancelarCommand}"
-                    Content="Cancelar" />
+                Margin="0,0,20,20">
+                <TextBlock
+                    Margin="0,0,0,10"
+                    FontSize="11"
+                    Foreground="#666"
+                    Text="Fecha Fin:" />
+                <DatePicker
+                    md:HintAssist.Hint=""
+                    md:HintAssist.HintPaddingBrush="Transparent"
+                    BorderBrush="#CCC"
+                    BorderThickness="1"
+                    SelectedDate="{Binding FechaFin}"
+                    Style="{StaticResource MaterialDesignOutlinedDatePicker}" />
             </StackPanel>
+
+            <!--  CALENDARIO DE REFERENCIA (SOLO VISUAL / OPCIONAL SELECCIÓN)  -->
+            <StackPanel
+                Grid.Row="1"
+                Grid.RowSpan="3"
+                Grid.Column="2"
+                Margin="10,0,0,20"
+                HorizontalAlignment="Center">
+                <TextBlock
+                    Margin="0,0,0,5"
+                    HorizontalAlignment="Center"
+                    FontSize="20"
+                    Foreground="#666"
+                    Text="Calendario" />
+
+                <Calendar
+                    Width="260"
+                    Margin="0,5,0,0"
+                    BorderThickness="0"
+                    SelectedDate="{Binding FechaInicio, Mode=TwoWay}"
+                    SelectionMode="SingleDate" />
+                <StackPanel Margin="0,20,0,0">
+                    <Button
+                        Width="180"
+                        Height="40"
+                        Background="#303048"
+                        BorderBrush="Transparent"
+                        BorderThickness="0"
+                        Command="{Binding EnviarCommand}"
+                        Content="ENVIAR SOLICITUD"
+                        Foreground="White" />
+
+                    <Button
+                        Width="180"
+                        Height="40"
+                        Margin="0,15,0,0"
+                        Background="#FF5478"
+                        BorderBrush="Transparent"
+                        BorderThickness="0"
+                        Command="{Binding CancelarCommand}"
+                        Content="CANCELAR SOLICITUD"
+                        Foreground="White" />
+                </StackPanel>
+            </StackPanel>
+
+            <!--  Tipo solicitud  -->
+            <StackPanel
+                Grid.Row="2"
+                Grid.Column="0"
+                Margin="0,0,20,20">
+                <TextBlock
+                    FontSize="11"
+                    Foreground="#666"
+                    Text="Tipo de Solicitud:" />
+                <ComboBox
+                    Width="290"
+                    Height="auto"
+                    Margin="0,5,0,0"
+                    md:HintAssist.Foreground="Transparent"
+                    md:HintAssist.Hint=""
+                    md:HintAssist.HintPaddingBrush="Transparent"
+                    md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                    Background="Transparent"
+                    BorderBrush="#CCC"
+                    BorderThickness="1"
+                    DisplayMemberPath="ValorCategoria"
+                    ItemsSource="{Binding TiposSolicitud}"
+                    SelectedItem="{Binding TipoSeleccionado}"
+                    Style="{StaticResource MaterialDesignOutlinedComboBox}" />
+            </StackPanel>
+
+            <!--  Motivo  -->
+            <StackPanel
+                Grid.Row="2"
+                Grid.Column="1"
+                Margin="0,0,0,20">
+                <TextBlock
+                    FontSize="11"
+                    Foreground="#666"
+                    Text="Motivo:" />
+                <TextBox
+                    Margin="0,5,0,0"
+                    md:HintAssist.Hint=""
+                    md:HintAssist.HintPaddingBrush="Transparent"
+                    md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                    md:TextFieldAssist.UnderlineBrush="#0078D7"
+                    BorderBrush="Gray"
+                    BorderThickness="0.3"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                    Text="{Binding Motivo}" />
+            </StackPanel>
+
+            <!--  OBSERVACIÓN  -->
+            <StackPanel
+                Grid.Row="3"
+                Grid.ColumnSpan="2"
+                Margin="0,0,0,20">
+                <TextBlock
+                    FontSize="11"
+                    Foreground="#666"
+                    Text="Observación:" />
+                <TextBox
+                    Height="329"
+                    Margin="0,5,0,0"
+                    md:HintAssist.Hint=""
+                    md:HintAssist.HintPaddingBrush="Transparent"
+                    md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                    md:TextFieldAssist.UnderlineBrush="#0078D7"
+                    AcceptsReturn="True"
+                    BorderBrush="Gray"
+                    BorderThickness="0.3"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                    Text="{Binding Observacion}"
+                    TextWrapping="Wrap" />
+            </StackPanel>
+
 
         </Grid>
     </Border>

@@ -167,6 +167,7 @@
                                         <DataGridTextColumn
                                             Width="*"
                                             Binding="{Binding DiaSemana}"
+                                            FontWeight="SemiBold"
                                             Header="Día Semana"
                                             IsReadOnly="True" />
 

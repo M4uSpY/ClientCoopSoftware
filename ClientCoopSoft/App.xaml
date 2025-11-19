@@ -84,6 +84,26 @@
                 <views:LogsView />
             </DataTemplate>
 
+            <DataTemplate
+                xmlns:views="clr-namespace:ClientCoopSoft.Views.BoletasPago"
+                xmlns:vm="clr-namespace:ClientCoopSoft.ViewModels.BoletasPago"
+                DataType="{x:Type vm:ListaBoletasPagoViewModel}">
+                <views:BoletasPagoView />
+            </DataTemplate>
+
+            <DataTemplate
+                xmlns:views="clr-namespace:ClientCoopSoft.Views.Faltas"
+                xmlns:vm="clr-namespace:ClientCoopSoft.ViewModels.Faltas"
+                DataType="{x:Type vm:ListaFaltasViewModel}">
+                <views:ListaFaltasView />
+            </DataTemplate>
+            <DataTemplate
+                xmlns:views="clr-namespace:ClientCoopSoft.Views.Planillas"
+                xmlns:vm="clr-namespace:ClientCoopSoft.ViewModels.Planillas"
+                DataType="{x:Type vm:PlanillaSueldosSalariosViewModel}">
+                <views:PlanillaSueldosSalariosView />
+            </DataTemplate>
+
 
 
 

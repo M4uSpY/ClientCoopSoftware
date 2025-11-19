@@ -225,7 +225,7 @@
                         VerticalAlignment="Center"
                         Background="Transparent"
                         BorderThickness="0"
-                        Command="{Binding CambiarMenuCommand}"
+                        Command="{Binding AbrirBoletasPagoCommand}"
                         CommandParameter="BoletasPago"
                         Focusable="False"
                         FontSize="12"
@@ -253,7 +253,7 @@
 
                     <Border.InputBindings>
                         <MouseBinding
-                            Command="{Binding CambiarMenuCommand}"
+                            Command="{Binding AbrirBoletasPagoCommand}"
                             CommandParameter="BoletasPago"
                             MouseAction="LeftClick" />
                     </Border.InputBindings>
@@ -575,7 +575,7 @@
                         VerticalAlignment="Center"
                         Background="Transparent"
                         BorderThickness="0"
-                        Command="{Binding CambiarMenuCommand}"
+                        Command="{Binding AbrirFaltasCommand}"
                         CommandParameter="Faltas"
                         Focusable="False"
                         FontSize="12"
@@ -602,7 +602,7 @@
 
                     <Border.InputBindings>
                         <MouseBinding
-                            Command="{Binding CambiarMenuCommand}"
+                            Command="{Binding AbrirFaltasCommand}"
                             CommandParameter="Faltas"
                             MouseAction="LeftClick" />
                     </Border.InputBindings>
@@ -634,7 +634,7 @@
                         VerticalAlignment="Center"
                         Background="Transparent"
                         BorderThickness="0"
-                        Command="{Binding CambiarMenuCommand}"
+                        Command="{Binding AbrirPlanillasCommand}"
                         CommandParameter="Planillas"
                         Focusable="False"
                         FontSize="12"
@@ -661,7 +661,7 @@
 
                     <Border.InputBindings>
                         <MouseBinding
-                            Command="{Binding CambiarMenuCommand}"
+                            Command="{Binding AbrirPlanillasCommand}"
                             CommandParameter="Planillas"
                             MouseAction="LeftClick" />
                     </Border.InputBindings>

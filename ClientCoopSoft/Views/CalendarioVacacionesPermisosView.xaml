@@ -33,6 +33,9 @@
                 Width="100"
                 Height="32"
                 Margin="10,0,0,20"
+                Background="#22B14C"
+                BorderBrush="Transparent"
+                BorderThickness="0"
                 Command="{Binding SolicitarCommand}"
                 Content="Solicitar"
                 Foreground="White" />
@@ -42,6 +45,9 @@
                 Width="Auto"
                 Height="32"
                 Margin="10,0,0,20"
+                Background="#303048"
+                BorderBrush="Transparent"
+                BorderThickness="0"
                 Command="{Binding SolicitudesCommand}"
                 Content="Ver Lista de Solicitudes"
                 Foreground="White" />
