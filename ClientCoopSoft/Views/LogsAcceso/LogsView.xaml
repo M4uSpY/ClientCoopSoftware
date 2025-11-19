@@ -1,0 +1,73 @@
+﻿<UserControl
+    x:Class="ClientCoopSoft.Views.Logs.LogsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:ClientCoopSoft.Views.Logs"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+        </Grid.ColumnDefinitions>
+        <TextBlock
+            Grid.Row="0"
+            Grid.Column="0"
+            Margin="0,0,0,20"
+            FontSize="24"
+            FontWeight="SemiBold"
+            Text="Logs de Acceso" />
+        <DataGrid
+            Grid.Row="1"
+            Grid.ColumnSpan="3"
+            Margin="0"
+            AutoGenerateColumns="False"
+            Background="White"
+            BorderThickness="1"
+            CanUserAddRows="False"
+            CanUserDeleteRows="False"
+            IsReadOnly="True"
+            ItemsSource="{Binding ListaLogs}">
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    Width="auto"
+                    Binding="{Binding IdLog}"
+                    Header="No" />
+                <DataGridTextColumn
+                    Width="Auto"
+                    Binding="{Binding NombreUsuario}"
+                    Header="Nombre de Usuario" />
+                <DataGridTextColumn
+                    Width="Auto"
+                    Binding="{Binding ApellidosNombres}"
+                    Header="Apellidos y Nombres" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding FechaLogin}"
+                    Header="Fecha Login" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding HoraLogin}"
+                    Header="Hora Login" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding FechaLogout}"
+                    Header="Fecha Logout" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding HoraLogout}"
+                    Header="Hora Logout" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>
+
