@@ -43,7 +43,7 @@
                     Header="No" />
                 <DataGridTextColumn
                     Width="Auto"
-                    Binding="{Binding CarnetIdentidad}"
+                    Binding="{Binding CI}"
                     Header="CI" />
                 <DataGridTextColumn
                     Width="*"

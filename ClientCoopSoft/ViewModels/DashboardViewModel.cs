@@ -166,7 +166,7 @@ namespace ClientCoopSoft.ViewModels
             MenuSeleccionado = "Faltas";
             var listaFaltasVM = new ListaFaltasViewModel(_apiClient);
 
-            //await listaAsistenciasVM.CargarAsistenciasAsync();
+            await listaFaltasVM.CargarFaltasAsync();
             CurrentView = listaFaltasVM;
         }
         [RelayCommand]

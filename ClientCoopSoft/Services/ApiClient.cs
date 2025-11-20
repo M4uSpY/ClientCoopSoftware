@@ -3,6 +3,7 @@ using ClientCoopSoft.DTO.Asistencia;
 using ClientCoopSoft.DTO.Capacitaciones;
 using ClientCoopSoft.DTO.Contratacion;
 using ClientCoopSoft.DTO.Extras;
+using ClientCoopSoft.DTO.Faltas;
 using ClientCoopSoft.DTO.FormacionAcademica;
 using ClientCoopSoft.DTO.Personas;
 using ClientCoopSoft.DTO.Trabajadores;
@@ -360,6 +361,20 @@ public class ApiClient
         if (response.IsSuccessStatusCode)
         {
             return JsonConvert.DeserializeObject<List<AsistenciaListarDTO>>(raw);
+        }
+           
+
+        return null;
+    }
+    public async Task<List<ListarFaltasDTO>?> ObtenerListaFaltas()
+    {
+        SetBearer();
+        var response = await _http.GetAsync("api/Faltas");
+        var raw = await response.Content.ReadAsStringAsync();
+
+        if (response.IsSuccessStatusCode)
+        {
+            return JsonConvert.DeserializeObject<List<ListarFaltasDTO>>(raw);
         }
            
 
