@@ -11,7 +11,7 @@ namespace ClientCoopSoft.DTO
     {
         public int IdPersona { get; set; }
         public string NombreUsuario { get; set; } = string.Empty;
-        public string Password { get; set; } = string.Empty;
         public int IdRol { get; set; }
+        public string? PasswordNueva { get; set; }  // va vacío si no cambian la contraseña
     }
 }

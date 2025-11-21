@@ -17,8 +17,8 @@ namespace ClientCoopSoft.ViewModels
         private readonly ApiClient _apiClient;
         private readonly Usuario _usuario;
 
-        [ObservableProperty] private string nombreUsuario;
-        [ObservableProperty] private string password;
+        [ObservableProperty] private string nombreUsuario = string.Empty;
+        [ObservableProperty] private string nuevaPassword = string.Empty;
         [ObservableProperty] private ObservableCollection<Persona> personas = new();
         [ObservableProperty] private Persona? personaSeleccionada;
         [ObservableProperty] private ObservableCollection<Rol> roles = new();
@@ -32,7 +32,7 @@ namespace ClientCoopSoft.ViewModels
             _apiClient = apiClient;
 
             NombreUsuario = usuario.NombreUsuario;
-            Password = usuario.Password;
+            NuevaPassword = string.Empty;
             _ = CargarPersonasAsync(usuario.IdPersona);
             _ = CargarRolesAsync(usuario.Rol);
         }
@@ -67,7 +67,7 @@ namespace ClientCoopSoft.ViewModels
                 IdPersona = PersonaSeleccionada.IdPersona,
                 NombreUsuario = NombreUsuario,
                 IdRol = RolSeleccionado.IdRol,
-                Password = Password
+                PasswordNueva = string.IsNullOrWhiteSpace(NuevaPassword) ? null : NuevaPassword
             };
             bool exito = await _apiClient.ActualizarUsuarioAsync(_usuario.IdUsuario, dto);
             if (exito)

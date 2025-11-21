@@ -174,7 +174,7 @@
                     BorderBrush="Gray"
                     BorderThickness="0.3"
                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                    Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}" />
+                    Text="{Binding NuevaPassword, UpdateSourceTrigger=PropertyChanged}" />
 
             </StackPanel>
             <!--  Botones  -->
