@@ -77,7 +77,7 @@ namespace ClientCoopSoft.ViewModels
                 NombreUsuario = NombreUsuario,
                 Password = password,
                 IdRol = RolSeleccionado.IdRol,
-                Activo = true
+                EstadoUsuario = true
             };
 
             bool exito = await _apiClient.CrearUsuarioAsync(dto);

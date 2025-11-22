@@ -134,7 +134,7 @@ namespace ClientCoopSoft.ViewModels
 
             var idTrabajadorActual = persona.Trabajador.IdTrabajador;
 
-            var calendarioVM = new CalendarioVacacionesPermisosViewModel(_apiClient, idTrabajadorActual);
+            var calendarioVM = new CalendarioVacacionesPermisosViewModel(_apiClient, idTrabajadorActual, IsAdmin);
             await calendarioVM.CargarEventosAsync();
             CurrentView = calendarioVM;
         }

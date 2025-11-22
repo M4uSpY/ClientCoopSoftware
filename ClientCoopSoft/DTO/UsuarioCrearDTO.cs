@@ -12,6 +12,6 @@ namespace ClientCoopSoft.DTO
         public string NombreUsuario { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
         public int IdRol { get; set; }
-        public bool Activo { get; set; } = true;
+        public bool EstadoUsuario { get; set; }
     }
 }

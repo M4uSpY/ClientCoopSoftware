@@ -7,6 +7,10 @@
     xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
     mc:Ignorable="d">
 
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+    </UserControl.Resources>
+
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -50,7 +54,8 @@
                 BorderThickness="0"
                 Command="{Binding SolicitudesCommand}"
                 Content="Ver Lista de Solicitudes"
-                Foreground="White" />
+                Foreground="White"
+                Visibility="{Binding EsAdmin, Converter={StaticResource BoolToVis}}" />
         </Grid>
 
         <!--  Contenido: o calendario O vista dinámica  -->

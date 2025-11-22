@@ -23,10 +23,14 @@ namespace ClientCoopSoft.ViewModels.VacacionesPemisos
         [ObservableProperty]
         private UserControl? contenidoActual; // Solo para mostrar la lista
 
-        public CalendarioVacacionesPermisosViewModel(ApiClient apiClient, int idTrabajadorActual)
+        [ObservableProperty]
+        private bool esAdmin;
+
+        public CalendarioVacacionesPermisosViewModel(ApiClient apiClient, int idTrabajadorActual, bool esAdmin)
         {
             _apiClient = apiClient;
             _idTrabajadorActual = idTrabajadorActual;
+            EsAdmin = esAdmin;
 
             _ = CargarEventosAsync();
         }

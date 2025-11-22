@@ -10,6 +10,9 @@
     mc:Ignorable="d">
     <UserControl.Resources>
         <converters:BoolToGeneroConverter x:Key="BoolToGeneroConverter" />
+        <converters:EstadoToIconConverter x:Key="EstadoToIconConverter" />
+        <converters:EstadoToColorConverter x:Key="EstadoToColorConverter" />
+        <converters:EstadoToTextConverter x:Key="EstadoToTextConverter" />
     </UserControl.Resources>
     <Grid Margin="20">
         <Grid.RowDefinitions>
@@ -124,11 +127,25 @@
                     Binding="{Binding NombreCompleto}"
                     Header="Apellidos y Nombres" />
 
-                <DataGridTextColumn
-                    Width="*"
-                    Binding="{Binding Activo}"
-                    Header="Estado" />
+                <DataGridTemplateColumn Width="130" Header="Estado">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                <md:PackIcon
+                                    Width="20"
+                                    Height="20"
+                                    Margin="0,0,6,0"
+                                    Foreground="{Binding Activo, Converter={StaticResource EstadoToColorConverter}}"
+                                    Kind="{Binding Activo, Converter={StaticResource EstadoToIconConverter}}" />
 
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    FontWeight="SemiBold"
+                                    Text="{Binding Activo, Converter={StaticResource EstadoToTextConverter}}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn
                     Width="*"
                     Binding="{Binding Genero, Converter={StaticResource BoolToGeneroConverter}}"
@@ -162,7 +179,7 @@
                                         Width="auto"
                                         Height="auto"
                                         Foreground="#D9534F"
-                                        Kind="Delete" />
+                                        Kind="AirplanemodeInactive" />
                                 </Button>
                             </StackPanel>
                         </DataTemplate>
