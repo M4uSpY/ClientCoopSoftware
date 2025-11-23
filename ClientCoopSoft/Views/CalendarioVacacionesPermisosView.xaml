@@ -43,7 +43,7 @@
                 BorderBrush="Transparent"
                 BorderThickness="0"
                 Command="{Binding SolicitudesCommand}"
-                Content="Ver Lista de Solicitudes"
+                Content="Solicitudes de Vacaciones"
                 Foreground="White"
                 Visibility="{Binding EsAdmin, Converter={StaticResource BoolToVis}}" />
 
@@ -54,9 +54,9 @@
                 Orientation="Horizontal">
 
                 <Button
-                    Width="110"
+                    Width="170"
                     Height="32"
-                    Background="#22B14C"
+                    Background="#303048"
                     BorderBrush="Transparent"
                     BorderThickness="0"
                     Command="{Binding SolicitarCommand}"
@@ -64,7 +64,7 @@
                     Foreground="White" />
 
                 <Button
-                    Width="120"
+                    Width="170"
                     Height="32"
                     Margin="10,0,0,0"
                     Background="#007ACC"
@@ -76,14 +76,14 @@
 
                 <Button
                     Grid.Column="3"
-                    Width="140"
+                    Width="190"
                     Height="32"
                     Margin="10,0,0,0"
                     Background="#0078D7"
                     BorderBrush="Transparent"
                     BorderThickness="0"
                     Command="{Binding LicenciasCommand}"
-                    Content="Ver Licencias"
+                    Content="Solicitudes de Licencias"
                     Foreground="White"
                     Visibility="{Binding EsAdmin, Converter={StaticResource BoolToVis}}" />
             </StackPanel>

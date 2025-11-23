@@ -16,7 +16,7 @@
 
     <Border
         Width="800"
-        Height="500"
+        Height="541"
         Background="White"
         BorderBrush="Gray"
         BorderThickness="1"
@@ -59,15 +59,24 @@
                 <DockPanel Margin="0,5,0,0">
                     <!--  Fecha  -->
                     <DatePicker
-                        Width="150"
+                        Width="250"
+                        md:HintAssist.Hint=""
+                        md:HintAssist.HintPaddingBrush="Transparent"
+                        BorderBrush="#CCC"
+                        BorderThickness="1"
                         SelectedDate="{Binding FechaInicio, Mode=TwoWay}"
                         Style="{StaticResource MaterialDesignOutlinedDatePicker}" />
                     <!--  Hora (texto)  -->
                     <TextBox
                         Width="80"
                         Margin="10,0,0,0"
-                        VerticalContentAlignment="Center"
-                        md:HintAssist.Hint="HH:mm"
+                        md:HintAssist.Hint=""
+                        md:HintAssist.HintPaddingBrush="Transparent"
+                        md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                        md:TextFieldAssist.UnderlineBrush="#0078D7"
+                        BorderBrush="Gray"
+                        BorderThickness="0.3"
+                        Style="{StaticResource MaterialDesignOutlinedTextBox}"
                         Text="{Binding HoraInicioTexto, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </DockPanel>
             </StackPanel>
@@ -84,15 +93,24 @@
                 <DockPanel Margin="0,5,0,0">
                     <!--  Fecha  -->
                     <DatePicker
-                        Width="150"
+                        Width="250"
+                        md:HintAssist.Hint=""
+                        md:HintAssist.HintPaddingBrush="Transparent"
+                        BorderBrush="#CCC"
+                        BorderThickness="1"
                         SelectedDate="{Binding FechaFin, Mode=TwoWay}"
                         Style="{StaticResource MaterialDesignOutlinedDatePicker}" />
                     <!--  Hora (texto)  -->
                     <TextBox
                         Width="80"
                         Margin="10,0,0,0"
-                        VerticalContentAlignment="Center"
-                        md:HintAssist.Hint="HH:mm"
+                        md:HintAssist.Hint=""
+                        md:HintAssist.HintPaddingBrush="Transparent"
+                        md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                        md:TextFieldAssist.UnderlineBrush="#0078D7"
+                        BorderBrush="Gray"
+                        BorderThickness="0.3"
+                        Style="{StaticResource MaterialDesignOutlinedTextBox}"
                         Text="{Binding HoraFinTexto, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </DockPanel>
             </StackPanel>
@@ -102,14 +120,23 @@
             <StackPanel
                 Grid.Row="2"
                 Grid.Column="0"
-                Margin="0,10,20,10">
+                Margin="0,10,20,10"
+                HorizontalAlignment="Left">
                 <TextBlock
                     FontSize="11"
                     Foreground="#666"
                     Text="Tipo de licencia:" />
                 <ComboBox
                     Width="250"
+                    Height="auto"
                     Margin="0,5,0,0"
+                    md:HintAssist.Foreground="Transparent"
+                    md:HintAssist.Hint=""
+                    md:HintAssist.HintPaddingBrush="Transparent"
+                    md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                    Background="Transparent"
+                    BorderBrush="#CCC"
+                    BorderThickness="1"
                     DisplayMemberPath="ValorCategoria"
                     ItemsSource="{Binding TiposLicencia}"
                     SelectedItem="{Binding TipoSeleccionado}"
@@ -120,14 +147,21 @@
             <StackPanel
                 Grid.Row="2"
                 Grid.Column="1"
-                Margin="0,10,0,10">
+                Margin="0,10,0,10"
+                HorizontalAlignment="Left">
                 <TextBlock
                     FontSize="11"
                     Foreground="#666"
                     Text="Motivo:" />
                 <TextBox
+                    Width="367"
                     Margin="0,5,0,0"
+                    md:HintAssist.Hint=""
+                    md:HintAssist.HintPaddingBrush="Transparent"
                     md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                    md:TextFieldAssist.UnderlineBrush="#0078D7"
+                    BorderBrush="Gray"
+                    BorderThickness="0.3"
                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
                     Text="{Binding Motivo}" />
             </StackPanel>
@@ -141,8 +175,13 @@
                 <TextBox
                     Height="160"
                     Margin="0,5,0,0"
+                    md:HintAssist.Hint=""
+                    md:HintAssist.HintPaddingBrush="Transparent"
                     md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                    md:TextFieldAssist.UnderlineBrush="#0078D7"
                     AcceptsReturn="True"
+                    BorderBrush="Gray"
+                    BorderThickness="0.3"
                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
                     Text="{Binding Observacion}"
                     TextWrapping="Wrap" />
