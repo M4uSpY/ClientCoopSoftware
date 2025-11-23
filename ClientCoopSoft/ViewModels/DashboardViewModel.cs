@@ -7,15 +7,11 @@ using ClientCoopSoft.ViewModels.LogsAcceso;
 using ClientCoopSoft.ViewModels.Planillas;
 using ClientCoopSoft.ViewModels.Trabajadores;
 using ClientCoopSoft.ViewModels.VacacionesPemisos;
-using ClientCoopSoft.ViewModels.VacacionesPermisos;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
-using System.Drawing.Printing;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using ClientCoopSoft;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
@@ -258,8 +254,20 @@ namespace ClientCoopSoft.ViewModels
                 return;
             }
 
+            var ventanaActual = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive);
+
+            var loginWindow = new MainWindow();
+            Application.Current.MainWindow = loginWindow;
+            loginWindow.Show();
+
+            if(ventanaActual != null)
+            {
+                ventanaActual.Close();
+            }
+                
+
             // Cerrar la ventana principal
-            Application.Current.MainWindow.Close();
+            //Application.Current.MainWindow.Close();
         }
 
     }

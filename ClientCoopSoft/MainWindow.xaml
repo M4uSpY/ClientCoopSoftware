@@ -111,47 +111,85 @@
                             </Style>
                         </PasswordBox.Style>
                     </PasswordBox>
-
-
                 </StackPanel>
 
-                <Button
-                    x:Name="btnLogin"
-                    Width="164"
-                    Height="50"
-                    Margin="0,10,0,0"
-                    HorizontalAlignment="Center"
-                    md:ButtonAssist.CornerRadius="10"
-                    Background="#343A40"
-                    BorderBrush="Transparent"
-                    BorderThickness="0"
-                    Command="{Binding LoginCommand}"
-                    Content="Iniciar Sesión"
-                    FontSize="16"
-                    FontWeight="SemiBold"
-                    Foreground="#FBBF24">
-                    <Button.Resources>
-                        <Style BasedOn="{StaticResource MaterialDesignOutlinedButton}" TargetType="Button">
-                            <Setter Property="Background" Value="#343A40" />
-                            <Setter Property="Foreground" Value="#FBBF24" />
-                            <Style.Triggers>
-                                <!--  Hover (cuando pasa el mouse)  -->
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#FBBF24" />
-                                    <!--  Fondo al pasar el mouse  -->
-                                    <Setter Property="Foreground" Value="#343A40" />
-                                    <!--  Texto al pasar el mouse  -->
-                                </Trigger>
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <Button
+                        x:Name="btnLogin"
+                        Width="164"
+                        Height="50"
+                        Margin="0,25,0,0"
+                        HorizontalAlignment="Center"
+                        md:ButtonAssist.CornerRadius="10"
+                        Background="#343A40"
+                        BorderBrush="Transparent"
+                        BorderThickness="0"
+                        Command="{Binding LoginCommand}"
+                        Content="Iniciar Sesión"
+                        FontSize="16"
+                        FontWeight="SemiBold"
+                        Foreground="#FBBF24">
+                        <Button.Resources>
+                            <Style BasedOn="{StaticResource MaterialDesignOutlinedButton}" TargetType="Button">
+                                <Setter Property="Background" Value="#343A40" />
+                                <Setter Property="Foreground" Value="#FBBF24" />
+                                <Style.Triggers>
+                                    <!--  Hover (cuando pasa el mouse)  -->
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#FBBF24" />
+                                        <!--  Fondo al pasar el mouse  -->
+                                        <Setter Property="Foreground" Value="#343A40" />
+                                        <!--  Texto al pasar el mouse  -->
+                                    </Trigger>
 
-                                <!--  Estado presionado  -->
-                                <Trigger Property="IsPressed" Value="True">
-                                    <Setter Property="Background" Value="#E5A500" />
-                                    <Setter Property="Foreground" Value="White" />
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Resources>
-                </Button>
+                                    <!--  Estado presionado  -->
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter Property="Background" Value="#E5A500" />
+                                        <Setter Property="Foreground" Value="White" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <Button
+                        x:Name="btnExit"
+                        Width="164"
+                        Height="50"
+                        Margin="10,25,0,0"
+                        HorizontalAlignment="Center"
+                        md:ButtonAssist.CornerRadius="10"
+                        Background="#343A40"
+                        BorderBrush="Transparent"
+                        BorderThickness="0"
+                        Command="{Binding ExitCommand}"
+                        Content="Salir"
+                        FontSize="16"
+                        FontWeight="SemiBold"
+                        Foreground="#FBBF24">
+                        <Button.Resources>
+                            <Style BasedOn="{StaticResource MaterialDesignOutlinedButton}" TargetType="Button">
+                                <Setter Property="Background" Value="#343A40" />
+                                <Setter Property="Foreground" Value="#FBBF24" />
+                                <Style.Triggers>
+                                    <!--  Hover (cuando pasa el mouse)  -->
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#FBBF24" />
+                                        <!--  Fondo al pasar el mouse  -->
+                                        <Setter Property="Foreground" Value="#343A40" />
+                                        <!--  Texto al pasar el mouse  -->
+                                    </Trigger>
+
+                                    <!--  Estado presionado  -->
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter Property="Background" Value="#E5A500" />
+                                        <Setter Property="Foreground" Value="White" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </StackPanel>
+
                 <TextBlock Foreground="Red" Text="{Binding ErrorMessage}" />
 
 

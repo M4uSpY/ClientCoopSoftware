@@ -16,7 +16,7 @@ namespace ClientCoopSoft.DTO.Licencias
         public string Cargo { get; set; } = string.Empty;
 
         public string TipoLicencia { get; set; } = string.Empty;
-        public string EstadoLicencia { get; set; } = string.Empty;
+        public string Estado { get; set; } = string.Empty;
 
         public DateTime FechaInicio { get; set; }
         public DateTime FechaFin { get; set; }

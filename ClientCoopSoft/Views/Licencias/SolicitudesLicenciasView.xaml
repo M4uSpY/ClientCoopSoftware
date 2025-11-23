@@ -24,6 +24,7 @@
                 Width="35"
                 Height="35"
                 Margin="0,0,0,10"
+                md:ElevationAssist.Elevation="Dp1"
                 Background="#1E0F74"
                 BorderBrush="Transparent"
                 BorderThickness="0"
@@ -78,7 +79,7 @@
                     Header="Tipo Licencia" />
                 <DataGridTextColumn
                     Width="Auto"
-                    Binding="{Binding EstadoLicencia}"
+                    Binding="{Binding Estado}"
                     Header="Estado" />
                 <DataGridTextColumn
                     Width="Auto"

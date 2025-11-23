@@ -66,5 +66,11 @@ namespace ClientCoopSoft.ViewModels
                 ErrorMessage = "No se pudo conectar al servidor: " + ex.Message;
             }
         }
+
+        [RelayCommand]
+        private void Exit()
+        {
+            Application.Current.Shutdown();
+        }
     }
 }

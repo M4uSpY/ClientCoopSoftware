@@ -724,5 +724,105 @@ public class ApiClient
         return (false, contenido);
     }
 
+
+    // APARTADO DE PLANILLAS
+    // Crear planilla de sueldos y salarios (encabezado)
+    public async Task<PlanillaResumenModel?> CrearPlanillaSueldosAsync(int gestion, int mes)
+    {
+        try
+        {
+            SetBearer();
+
+            var dto = new
+            {
+                idTipoPlanilla = 31, // Clasificador: TipoPlanilla -> PlanillaSueldosSalarios
+                gestion,
+                mes,
+                periodoDesde = new DateTime(gestion, mes, 1),
+                periodoHasta = new DateTime(gestion, mes, DateTime.DaysInMonth(gestion, mes))
+            };
+
+            var json = JsonConvert.SerializeObject(dto);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await _http.PostAsync("api/PlanillaSueldosSalarios", content);
+            var raw = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+                return null;
+
+            return JsonConvert.DeserializeObject<PlanillaResumenModel>(raw);
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    // Generar Trabajador_Planilla para una planilla dada
+    public async Task<bool> GenerarTrabajadoresPlanillaAsync(int idPlanilla)
+    {
+        try
+        {
+            SetBearer();
+            var response = await _http.PostAsync($"api/PlanillaSueldosSalarios/{idPlanilla}/generar-trabajadores", null);
+            return response.IsSuccessStatusCode;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    // Calcular planilla (llenar Trabajador_Planilla_Valor)
+    public async Task<bool> CalcularPlanillaSueldosAsync(int idPlanilla)
+    {
+        try
+        {
+            SetBearer();
+            var response = await _http.PostAsync($"api/PlanillaSueldosSalarios/{idPlanilla}/calcular", null);
+            return response.IsSuccessStatusCode;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    // Obtener filas de la planilla (tipo Excel)
+    public async Task<List<PlanillaSueldosFilaModel>?> ObtenerDatosPlanillaSueldosAsync(int idPlanilla)
+    {
+        try
+        {
+            SetBearer();
+            var response = await _http.GetAsync($"api/PlanillaSueldosSalarios/{idPlanilla}");
+            var raw = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+                return null;
+
+            return JsonConvert.DeserializeObject<List<PlanillaSueldosFilaModel>>(raw);
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    // Cerrar planilla (opcional)
+    public async Task<bool> CerrarPlanillaSueldosAsync(int idPlanilla)
+    {
+        try
+        {
+            SetBearer();
+            var response = await _http.PutAsync($"api/PlanillaSueldosSalarios/{idPlanilla}/cerrar", null);
+            return response.IsSuccessStatusCode;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
 }
 
