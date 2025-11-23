@@ -45,7 +45,7 @@
                 FontSize="26"
                 FontWeight="SemiBold"
                 Foreground="#695858"
-                Text="Solicitar Licencia" />
+                Text="Solicitar Licencia de Trabajo" />
 
             <!--  FECHA / HORA INICIO  -->
             <StackPanel
