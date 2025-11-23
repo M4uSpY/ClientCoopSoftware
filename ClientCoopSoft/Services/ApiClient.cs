@@ -5,6 +5,7 @@ using ClientCoopSoft.DTO.Contratacion;
 using ClientCoopSoft.DTO.Extras;
 using ClientCoopSoft.DTO.Faltas;
 using ClientCoopSoft.DTO.FormacionAcademica;
+using ClientCoopSoft.DTO.Licencias;
 using ClientCoopSoft.DTO.Personas;
 using ClientCoopSoft.DTO.Trabajadores;
 using ClientCoopSoft.DTO.VacacionesPermisos;
@@ -567,34 +568,58 @@ public class ApiClient
 
     #endregion
 
-    public async Task<bool> AprobarSolicitudAsync(int idSolicitud)
+    public async Task<(bool ok, string? error)> AprobarSolicitudAsync(int idSolicitud)
     {
-        SetBearer();
-        var response = await _http.PutAsync(
-            $"api/VacacionesPermisos/{idSolicitud}/aprobar",
-            null); // sin body
+        var resp = await _http.PutAsync($"api/VacacionesPermisos/{idSolicitud}/aprobar", null);
 
-        return response.IsSuccessStatusCode;
+        if (resp.IsSuccessStatusCode)
+            return (true, null);
+
+        var contenido = await resp.Content.ReadAsStringAsync();
+        return (false, contenido);
     }
 
-    public async Task<bool> RechazarSolicitudAsync(int idSolicitud)
+    public async Task<ResumenVacacionesDTO?> ObtenerResumenVacacionesAsync(int idTrabajador)
     {
         SetBearer();
-        var response = await _http.PutAsync(
-            $"api/VacacionesPermisos/{idSolicitud}/rechazar",
-            null); // sin body
 
-        return response.IsSuccessStatusCode;
+        var response = await _http.GetAsync($"api/VacacionesPermisos/Resumen/{idTrabajador}");
+
+        if (!response.IsSuccessStatusCode)
+            return null;
+
+        var json = await response.Content.ReadAsStringAsync();
+        return JsonConvert.DeserializeObject<ResumenVacacionesDTO>(json);
     }
 
-    public async Task<bool> CrearSolicitudVacPermAsync(SolicitudVacPermCrearDTO dto)
+    public async Task<(bool ok, string? error)> RechazarSolicitudAsync(int idSolicitud)
+    {
+        var resp = await _http.PutAsync($"api/VacacionesPermisos/{idSolicitud}/rechazar", null);
+
+        if (resp.IsSuccessStatusCode)
+            return (true, null);
+
+        var contenido = await resp.Content.ReadAsStringAsync();
+        return (false, contenido);
+    }
+
+    public async Task<(bool ok, string? error)> CrearSolicitudVacPermAsync(SolicitudVacPermCrearDTO dto)
     {
         SetBearer();
+
         var json = JsonConvert.SerializeObject(dto);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
+
         var response = await _http.PostAsync("api/VacacionesPermisos", content);
-        return response.IsSuccessStatusCode;
+
+        if (response.IsSuccessStatusCode)
+            return (true, null);
+
+        // Intentamos capturar mensaje del backend
+        var contenido = await response.Content.ReadAsStringAsync();
+        return (false, contenido);
     }
+
 
     public async Task<List<TipoSolicitud>?> ObtenerClasificadorPorTipoSolicitudAsync()
     {
@@ -631,5 +656,73 @@ public class ApiClient
 
         return null;
     }
+
+
+    public async Task<List<TipoLicencia>?> ObtenerTiposLicenciaAsync()
+    {
+        SetBearer();
+        var response = await _http.GetAsync("api/TipoLicencia"); // ajusta si tu endpoint se llama distinto
+        var raw = await response.Content.ReadAsStringAsync();
+
+        if (response.IsSuccessStatusCode)
+        {
+            return JsonConvert.DeserializeObject<List<TipoLicencia>>(raw);
+        }
+        return null;
+    }
+
+    public async Task<(bool ok, string? error)> CrearLicenciaAsync(LicenciaCrearDTO dto)
+    {
+        SetBearer();
+
+        var json = JsonConvert.SerializeObject(dto);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+        var response = await _http.PostAsync("api/Licencias", content);
+
+        if (response.IsSuccessStatusCode)
+            return (true, null);
+
+        var contenido = await response.Content.ReadAsStringAsync();
+        return (false, contenido);
+    }
+    public async Task<List<LicenciaListarDTO>?> ObtenerLicenciasAsync()
+    {
+        SetBearer();
+        var response = await _http.GetAsync("api/Licencias");
+        var raw = await response.Content.ReadAsStringAsync();
+
+        if (response.IsSuccessStatusCode)
+        {
+            return JsonConvert.DeserializeObject<List<LicenciaListarDTO>>(raw);
+        }
+
+        return null;
+    }
+
+    public async Task<(bool ok, string? error)> AprobarLicenciaAsync(int idLicencia)
+    {
+        SetBearer();
+        var response = await _http.PutAsync($"api/Licencias/{idLicencia}/aprobar", null);
+
+        if (response.IsSuccessStatusCode)
+            return (true, null);
+
+        var contenido = await response.Content.ReadAsStringAsync();
+        return (false, contenido);
+    }
+
+    public async Task<(bool ok, string? error)> RechazarLicenciaAsync(int idLicencia)
+    {
+        SetBearer();
+        var response = await _http.PutAsync($"api/Licencias/{idLicencia}/rechazar", null);
+
+        if (response.IsSuccessStatusCode)
+            return (true, null);
+
+        var contenido = await response.Content.ReadAsStringAsync();
+        return (false, contenido);
+    }
+
 }
 

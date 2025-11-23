@@ -1,13 +1,7 @@
 ﻿using ClientCoopSoft.DTO.VacacionesPermisos;
-using ClientCoopSoft.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace ClientCoopSoft.ViewModels.VacacionesPemisos
@@ -57,14 +51,16 @@ namespace ClientCoopSoft.ViewModels.VacacionesPemisos
                 MessageBoxImage.Question);
 
             if (resultado != MessageBoxResult.Yes)
-                return; // el usuario canceló
+                return;
 
-            var ok = await _apiClient.AprobarSolicitudAsync(solicitud.IdSolicitud);
+            var (ok, error) = await _apiClient.AprobarSolicitudAsync(solicitud.IdSolicitud);
 
             if (!ok)
             {
                 MessageBox.Show(
-                    "No se pudo aprobar la solicitud. Intente nuevamente.",
+                    string.IsNullOrWhiteSpace(error)
+                        ? "No se pudo aprobar la solicitud. Intente nuevamente."
+                        : error,
                     "Error",
                     MessageBoxButton.OK,
                     MessageBoxImage.Error);
@@ -73,6 +69,7 @@ namespace ClientCoopSoft.ViewModels.VacacionesPemisos
 
             await CargarSolicitudesListaAsync();
         }
+
 
 
         [RelayCommand]
@@ -94,12 +91,14 @@ namespace ClientCoopSoft.ViewModels.VacacionesPemisos
             if (resultado != MessageBoxResult.Yes)
                 return;
 
-            var ok = await _apiClient.RechazarSolicitudAsync(solicitud.IdSolicitud);
+            var (ok, error) = await _apiClient.RechazarSolicitudAsync(solicitud.IdSolicitud);
 
             if (!ok)
             {
                 MessageBox.Show(
-                    "No se pudo rechazar la solicitud. Intente nuevamente.",
+                    string.IsNullOrWhiteSpace(error)
+                        ? "No se pudo rechazar la solicitud. Intente nuevamente."
+                        : error,
                     "Error",
                     MessageBoxButton.OK,
                     MessageBoxImage.Error);
@@ -108,6 +107,7 @@ namespace ClientCoopSoft.ViewModels.VacacionesPemisos
 
             await CargarSolicitudesListaAsync();
         }
+
 
     }
 }

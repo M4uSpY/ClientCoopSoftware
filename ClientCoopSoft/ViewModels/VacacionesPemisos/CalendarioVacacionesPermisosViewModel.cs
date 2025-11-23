@@ -1,12 +1,10 @@
-﻿using ClientCoopSoft.Models;
+﻿using ClientCoopSoft.ViewModels.Licencias;
 using ClientCoopSoft.ViewModels.VacacionesPermisos;
+using ClientCoopSoft.Views.Licencias;
 using ClientCoopSoft.Views.VacacionesPermisos;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Syncfusion.UI.Xaml.Scheduler;
-using System;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -37,33 +35,60 @@ namespace ClientCoopSoft.ViewModels.VacacionesPemisos
 
         public async Task CargarEventosAsync()
         {
-            var lista = await _apiClient.ObtenerVacacionesPermisosAsync();
             Eventos.Clear();
 
-            if (lista == null)
-                return;
+            // 1) Vacaciones (Solicitudes)
+            var solicitudes = await _apiClient.ObtenerVacacionesPermisosAsync();
 
-            foreach (var s in lista)
+            if (solicitudes != null)
             {
-                var appt = new ScheduleAppointment
+                foreach (var s in solicitudes)
                 {
-                    StartTime = s.FechaInicio,
-                    EndTime = s.FechaFin,
-                    Subject = $"{s.TipoSolicitud} - {s.Trabajador}",
-                    IsAllDay = true
-                };
+                    var appt = new ScheduleAppointment
+                    {
+                        StartTime = s.FechaInicio,
+                        EndTime = s.FechaFin,
+                        Subject = $"Vacación - {s.Trabajador}",
+                        IsAllDay = true
+                    };
 
-                appt.AppointmentBackground = s.EstadoSolicitud switch
+                    appt.AppointmentBackground = s.EstadoSolicitud switch
+                    {
+                        "Pendiente" => new SolidColorBrush(Color.FromRgb(255, 193, 7)),   // amarillo
+                        "Aprobado" => new SolidColorBrush(Color.FromRgb(46, 204, 113)),  // verde
+                        "Rechazado" => new SolidColorBrush(Color.FromRgb(231, 76, 60)),   // rojo
+                        _ => new SolidColorBrush(Colors.LightGray)
+                    };
+
+                    Eventos.Add(appt);
+                }
+            }
+
+            // 2) Licencias
+            var licencias = await _apiClient.ObtenerLicenciasAsync();
+
+            if (licencias != null)
+            {
+                foreach (var l in licencias)
                 {
-                    "Pendiente" => new SolidColorBrush(Color.FromRgb(255, 193, 7)),
-                    "Aprobado" => new SolidColorBrush(Color.FromRgb(46, 204, 113)),
-                    "Rechazado" => new SolidColorBrush(Color.FromRgb(231, 76, 60)),
-                    _ => new SolidColorBrush(Colors.LightGray)
-                };
+                    // En el calendario mostramos solo fechas (IsAllDay),
+                    // pero si quieres puedes diferenciar con horas más adelante.
+                    var apptLic = new ScheduleAppointment
+                    {
+                        StartTime = l.FechaInicio,
+                        EndTime = l.FechaFin,
+                        Subject = $"Licencia - {l.ApellidosNombres} ({l.TipoLicencia})",
+                        IsAllDay = true
+                    };
 
-                Eventos.Add(appt);
+                    // Color distinto para licencias (ej. azul)
+                    apptLic.AppointmentBackground = new SolidColorBrush(Color.FromRgb(52, 152, 219));
+
+                    Eventos.Add(apptLic);
+                }
             }
         }
+
 
         [RelayCommand]
         private async Task SolicitudesAsync()
@@ -83,7 +108,7 @@ namespace ClientCoopSoft.ViewModels.VacacionesPemisos
         {
             var vm = new CrearSolicitudVacPermViewModel(_apiClient, _idTrabajadorActual);
 
-            await vm.CargarCombosAsync();
+            await vm.CargarResumenVacacionesAsync();
 
             var win = new CrearSolicitudVacPermWindow
             {
@@ -99,5 +124,42 @@ namespace ClientCoopSoft.ViewModels.VacacionesPemisos
 
             win.ShowDialog();
         }
+
+        [RelayCommand]
+        private async Task SolicitarLicenciaAsync()
+        {
+            var vm = new CrearLicenciaViewModel(_apiClient, _idTrabajadorActual);
+
+            await vm.CargarTiposLicenciaAsync();
+
+            var win = new CrearLicenciaWindow
+            {
+                DataContext = vm,
+                Owner = App.Current.MainWindow
+            };
+
+            vm.LicenciaCreada += async () =>
+            {
+                win.Close();
+                // Si más adelante también pintas licencias en el calendario, refrescas acá:
+                await CargarEventosAsync();
+            };
+
+            win.ShowDialog();
+        }
+        [RelayCommand]
+        private async Task LicenciasAsync()
+        {
+            var vm = new ListarLicenciasViewModel(_apiClient, () => ContenidoActual = null);
+
+            await vm.CargarLicenciasListaAsync();
+
+            ContenidoActual = new SolicitudesLicenciasView
+            {
+                DataContext = vm
+            };
+        }
+
+
     }
 }

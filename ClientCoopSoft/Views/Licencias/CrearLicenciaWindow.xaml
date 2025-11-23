@@ -1,0 +1,173 @@
+﻿<Window
+    x:Class="ClientCoopSoft.Views.Licencias.CrearLicenciaWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    Title="Solicitar Licencia"
+    AllowsTransparency="True"
+    Background="Transparent"
+    ResizeMode="NoResize"
+    SizeToContent="WidthAndHeight"
+    WindowStartupLocation="CenterOwner"
+    WindowStyle="None"
+    mc:Ignorable="d">
+
+    <Border
+        Width="800"
+        Height="500"
+        Background="White"
+        BorderBrush="Gray"
+        BorderThickness="1"
+        CornerRadius="10">
+
+        <Grid Margin="30">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!--  TÍTULO  -->
+            <TextBlock
+                Grid.Row="0"
+                Grid.ColumnSpan="2"
+                Margin="0,0,0,20"
+                HorizontalAlignment="Center"
+                FontSize="26"
+                FontWeight="SemiBold"
+                Foreground="#695858"
+                Text="Solicitar Licencia" />
+
+            <!--  FECHA / HORA INICIO  -->
+            <StackPanel
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="0,0,20,10">
+                <TextBlock
+                    FontSize="11"
+                    Foreground="#666"
+                    Text="Fecha y hora de inicio:" />
+                <DockPanel Margin="0,5,0,0">
+                    <DatePicker
+                        Width="150"
+                        SelectedDate="{Binding FechaHoraInicio}"
+                        Style="{StaticResource MaterialDesignOutlinedDatePicker}" />
+                    <TextBox
+                        Width="80"
+                        Margin="10,0,0,0"
+                        VerticalContentAlignment="Center"
+                        md:HintAssist.Hint="HH:mm"
+                        Text="{Binding FechaHoraInicio, StringFormat='HH:mm'}" />
+                </DockPanel>
+            </StackPanel>
+
+            <!--  FECHA / HORA FIN  -->
+            <StackPanel
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="0,0,0,10">
+                <TextBlock
+                    FontSize="11"
+                    Foreground="#666"
+                    Text="Fecha y hora de fin:" />
+                <DockPanel Margin="0,5,0,0">
+                    <DatePicker
+                        Width="150"
+                        SelectedDate="{Binding FechaHoraFin}"
+                        Style="{StaticResource MaterialDesignOutlinedDatePicker}" />
+                    <TextBox
+                        Width="80"
+                        Margin="10,0,0,0"
+                        VerticalContentAlignment="Center"
+                        md:HintAssist.Hint="HH:mm"
+                        Text="{Binding FechaHoraFin, StringFormat='HH:mm'}" />
+                </DockPanel>
+            </StackPanel>
+
+            <!--  TIPO LICENCIA  -->
+            <StackPanel
+                Grid.Row="2"
+                Grid.Column="0"
+                Margin="0,10,20,10">
+                <TextBlock
+                    FontSize="11"
+                    Foreground="#666"
+                    Text="Tipo de licencia:" />
+                <ComboBox
+                    Width="250"
+                    Margin="0,5,0,0"
+                    DisplayMemberPath="ValorCategoria"
+                    ItemsSource="{Binding TiposLicencia}"
+                    SelectedItem="{Binding TipoSeleccionado}"
+                    Style="{StaticResource MaterialDesignOutlinedComboBox}" />
+            </StackPanel>
+
+            <!--  MOTIVO  -->
+            <StackPanel
+                Grid.Row="2"
+                Grid.Column="1"
+                Margin="0,10,0,10">
+                <TextBlock
+                    FontSize="11"
+                    Foreground="#666"
+                    Text="Motivo:" />
+                <TextBox
+                    Margin="0,5,0,0"
+                    md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                    Text="{Binding Motivo}" />
+            </StackPanel>
+
+            <!--  OBSERVACIÓN  -->
+            <StackPanel Grid.Row="3" Grid.ColumnSpan="2">
+                <TextBlock
+                    FontSize="11"
+                    Foreground="#666"
+                    Text="Observación:" />
+                <TextBox
+                    Height="160"
+                    Margin="0,5,0,0"
+                    md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                    AcceptsReturn="True"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                    Text="{Binding Observacion}"
+                    TextWrapping="Wrap" />
+            </StackPanel>
+
+            <!--  BOTONES  -->
+            <StackPanel
+                Grid.Row="4"
+                Grid.ColumnSpan="2"
+                Margin="0,20,0,0"
+                HorizontalAlignment="Center"
+                Orientation="Horizontal">
+                <Button
+                    Width="160"
+                    Height="40"
+                    Margin="0,0,10,0"
+                    Background="#303048"
+                    BorderBrush="Transparent"
+                    Command="{Binding EnviarCommand}"
+                    Content="ENVIAR LICENCIA"
+                    Foreground="White" />
+                <Button
+                    Width="140"
+                    Height="40"
+                    Background="#FF5478"
+                    BorderBrush="Transparent"
+                    Command="{Binding CancelarCommand}"
+                    Content="CANCELAR"
+                    Foreground="White" />
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>
