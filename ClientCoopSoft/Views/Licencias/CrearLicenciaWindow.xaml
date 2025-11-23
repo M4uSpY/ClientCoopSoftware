@@ -57,16 +57,18 @@
                     Foreground="#666"
                     Text="Fecha y hora de inicio:" />
                 <DockPanel Margin="0,5,0,0">
+                    <!--  Fecha  -->
                     <DatePicker
                         Width="150"
-                        SelectedDate="{Binding FechaHoraInicio}"
+                        SelectedDate="{Binding FechaInicio, Mode=TwoWay}"
                         Style="{StaticResource MaterialDesignOutlinedDatePicker}" />
+                    <!--  Hora (texto)  -->
                     <TextBox
                         Width="80"
                         Margin="10,0,0,0"
                         VerticalContentAlignment="Center"
                         md:HintAssist.Hint="HH:mm"
-                        Text="{Binding FechaHoraInicio, StringFormat='HH:mm'}" />
+                        Text="{Binding HoraInicioTexto, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </DockPanel>
             </StackPanel>
 
@@ -80,18 +82,21 @@
                     Foreground="#666"
                     Text="Fecha y hora de fin:" />
                 <DockPanel Margin="0,5,0,0">
+                    <!--  Fecha  -->
                     <DatePicker
                         Width="150"
-                        SelectedDate="{Binding FechaHoraFin}"
+                        SelectedDate="{Binding FechaFin, Mode=TwoWay}"
                         Style="{StaticResource MaterialDesignOutlinedDatePicker}" />
+                    <!--  Hora (texto)  -->
                     <TextBox
                         Width="80"
                         Margin="10,0,0,0"
                         VerticalContentAlignment="Center"
                         md:HintAssist.Hint="HH:mm"
-                        Text="{Binding FechaHoraFin, StringFormat='HH:mm'}" />
+                        Text="{Binding HoraFinTexto, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </DockPanel>
             </StackPanel>
+
 
             <!--  TIPO LICENCIA  -->
             <StackPanel

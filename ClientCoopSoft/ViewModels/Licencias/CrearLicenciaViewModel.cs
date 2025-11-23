@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -13,12 +14,19 @@ namespace ClientCoopSoft.ViewModels.Licencias
         private readonly ApiClient _apiClient;
         private readonly int _idTrabajador;
 
-        // Fecha y hora de inicio / fin (usamos DateTime completos para el binding)
+        // FECHAS (solo fecha)
         [ObservableProperty]
-        private DateTime fechaHoraInicio = DateTime.Today.AddHours(8.5); // 08:30
+        private DateTime fechaInicio = DateTime.Today;
 
         [ObservableProperty]
-        private DateTime fechaHoraFin = DateTime.Today.AddHours(16.5);   // 16:30
+        private DateTime fechaFin = DateTime.Today;
+
+        // HORAS como TEXTO (para evitar que WPF cambie la fecha)
+        [ObservableProperty]
+        private string horaInicioTexto = "08:30";
+
+        [ObservableProperty]
+        private string horaFinTexto = "16:30";
 
         [ObservableProperty]
         private ObservableCollection<TipoLicencia> tiposLicencia = new();
@@ -65,9 +73,31 @@ namespace ClientCoopSoft.ViewModels.Licencias
                 return;
             }
 
-            if (FechaHoraFin < FechaHoraInicio)
+            // Parsear horas en formato HH:mm
+            if (!TimeSpan.TryParseExact(HoraInicioTexto, "hh\\:mm", CultureInfo.InvariantCulture, out var horaInicio))
             {
-                MessageBox.Show("La fecha y hora de fin no pueden ser menores que las de inicio.",
+                MessageBox.Show("La hora de inicio no es válida. Use el formato HH:mm (ej. 08:30).",
+                    "Validación", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (!TimeSpan.TryParseExact(HoraFinTexto, "hh\\:mm", CultureInfo.InvariantCulture, out var horaFin))
+            {
+                MessageBox.Show("La hora de fin no es válida. Use el formato HH:mm (ej. 16:30).",
+                    "Validación", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (FechaFin < FechaInicio)
+            {
+                MessageBox.Show("La fecha de fin no puede ser menor que la fecha de inicio.",
+                    "Validación", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (horaFin <= horaInicio)
+            {
+                MessageBox.Show("La hora de fin debe ser mayor a la hora de inicio.",
                     "Validación", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
@@ -77,11 +107,11 @@ namespace ClientCoopSoft.ViewModels.Licencias
                 IdTrabajador = _idTrabajador,
                 IdTipoLicencia = TipoSeleccionado.IdClasificador,
 
-                FechaInicio = FechaHoraInicio.Date,
-                FechaFin = FechaHoraFin.Date,
+                FechaInicio = FechaInicio.Date,
+                FechaFin = FechaFin.Date,
 
-                HoraInicio = FechaHoraInicio.TimeOfDay,
-                HoraFin = FechaHoraFin.TimeOfDay,
+                HoraInicio = horaInicio,
+                HoraFin = horaFin,
 
                 Motivo = Motivo.Trim(),
                 Observacion = Observacion
