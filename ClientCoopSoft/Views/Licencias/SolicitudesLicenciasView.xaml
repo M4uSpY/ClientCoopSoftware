@@ -142,6 +142,31 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="120" Header="Justificativo">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button
+                                Padding="4,2"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Command="{Binding DataContext.VerJustificativoCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                CommandParameter="{Binding}"
+                                IsEnabled="{Binding TieneArchivoJustificativo}">
+                                <StackPanel Orientation="Horizontal">
+                                    <md:PackIcon
+                                        Width="16"
+                                        Height="16"
+                                        Foreground="#1E0F74"
+                                        Kind="FilePdfBox" />
+                                    <TextBlock
+                                        Margin="5,0,0,0"
+                                        VerticalAlignment="Center"
+                                        Text="Ver PDF" />
+                                </StackPanel>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
 
             </DataGrid.Columns>
         </DataGrid>

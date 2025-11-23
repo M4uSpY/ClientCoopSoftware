@@ -824,5 +824,29 @@ public class ApiClient
         }
     }
 
+    public async Task<(bool ok, byte[]? archivo, string? error)>
+    DescargarJustificativoLicenciaAsync(int idLicencia)
+    {
+        try
+        {
+            var response = await _http.GetAsync($"api/licencias/{idLicencia}/archivo");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var error = await response.Content.ReadAsStringAsync();
+                return (false, null, error);
+            }
+
+            var bytes = await response.Content.ReadAsByteArrayAsync();
+
+            return (true, bytes, null);
+        }
+        catch (Exception ex)
+        {
+            return (false, null, ex.Message);
+        }
+    }
+
+
 }
 

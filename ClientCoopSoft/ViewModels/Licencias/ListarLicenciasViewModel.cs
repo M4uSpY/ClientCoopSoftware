@@ -111,5 +111,59 @@ namespace ClientCoopSoft.ViewModels.Licencias
 
             await CargarLicenciasListaAsync();
         }
+
+        [RelayCommand]
+        private async Task VerJustificativo(LicenciaListarDTO? licencia)
+        {
+            if (licencia is null)
+                return;
+
+            if (!licencia.TieneArchivoJustificativo)
+            {
+                MessageBox.Show("Esta licencia no tiene archivo justificativo adjunto.",
+                    "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            var (ok, archivo, error) =
+                await _apiClient.DescargarJustificativoLicenciaAsync(licencia.IdLicencia);
+
+            if (!ok || archivo == null || archivo.Length == 0)
+            {
+                MessageBox.Show(
+                    string.IsNullOrWhiteSpace(error)
+                        ? "No se pudo descargar el archivo justificativo."
+                        : error,
+                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            try
+            {
+                var tempPath = System.IO.Path.Combine(
+                    System.IO.Path.GetTempPath(),
+                    $"Justificativo_Licencia_{licencia.IdLicencia}.pdf"
+                );
+
+                System.IO.File.WriteAllBytes(tempPath, archivo);
+
+                // Abrir el archivo PDF con visor predeterminado
+                var psi = new System.Diagnostics.ProcessStartInfo(tempPath)
+                {
+                    UseShellExecute = true
+                };
+
+                System.Diagnostics.Process.Start(psi);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"El archivo se descargó, pero no se pudo abrir automáticamente.\nError: {ex.Message}",
+                    "Advertencia",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+            }
+        }
+
     }
 }
