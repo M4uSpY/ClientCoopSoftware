@@ -43,6 +43,20 @@ namespace ClientCoopSoft.ViewModels.Planillas
         // =======================
         // COMANDOS
         // =======================
+        // NUEVO: método para refrescar resumen (gestión, mes, estado)
+        private async Task ActualizarResumenPlanillaAsync()
+        {
+            if (IdPlanillaActual <= 0)
+                return;
+
+            var resumen = await _api.ObtenerResumenPlanillaSueldosAsync(IdPlanillaActual);
+            if (resumen != null)
+            {
+                Gestion = resumen.Gestion;
+                Mes = resumen.Mes;
+                EstaCerrada = resumen.EstaCerrada;
+            }
+        }
 
         // Crear nueva planilla (para gestión/mes), generar trabajadores, calcular y cargar
         [RelayCommand]
@@ -50,12 +64,14 @@ namespace ClientCoopSoft.ViewModels.Planillas
         {
             try
             {
-                // 1) Crear encabezado de planilla
+                // 1) Crear encabezado
                 var resumen = await _api.CrearPlanillaSueldosAsync(Gestion, Mes);
                 if (resumen == null)
                 {
-                    MessageBox.Show("No se pudo crear la planilla de sueldos y salarios.", "Error",
-                        MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(
+                        "No se pudo crear la planilla de Sueldos y Salarios.\n\n" +
+                        "Verifique la gestión y mes, y que no exista ya una planilla para ese periodo.",
+                        "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
@@ -66,8 +82,10 @@ namespace ClientCoopSoft.ViewModels.Planillas
                 var genOk = await _api.GenerarTrabajadoresPlanillaAsync(IdPlanillaActual);
                 if (!genOk)
                 {
-                    MessageBox.Show("No se pudieron generar los trabajadores para la planilla.", "Error",
-                        MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(
+                        "No se pudieron generar las filas de trabajadores para la planilla.\n" +
+                        "Revise que existan trabajadores activos.",
+                        "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
@@ -75,32 +93,39 @@ namespace ClientCoopSoft.ViewModels.Planillas
                 var calcOk = await _api.CalcularPlanillaSueldosAsync(IdPlanillaActual);
                 if (!calcOk)
                 {
-                    MessageBox.Show("No se pudo calcular la planilla.", "Error",
-                        MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(
+                        "No se pudo calcular la planilla.\n" +
+                        "Verifique que existan conceptos configurados en el sistema.",
+                        "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
-                // 4) Cargar filas en la grilla
+                // 4) Actualizar resumen y cargar filas
+                await ActualizarResumenPlanillaAsync();
                 await CargarPlanillaAsync();
 
-                MessageBox.Show($"Planilla {IdPlanillaActual} creada y calculada correctamente.",
+                MessageBox.Show(
+                    $"Planilla {IdPlanillaActual} creada y calculada correctamente.\n\n" +
+                    "Revise los montos en la tabla inferior.",
                     "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al crear/cargar la planilla: {ex.Message}", "Error",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Error al crear/cargar la planilla: {ex.Message}",
+                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
-        // Cargar una planilla existente por IdPlanillaActual
         [RelayCommand]
         private async Task CargarPlanillaAsync()
         {
             if (IdPlanillaActual <= 0)
             {
-                MessageBox.Show("Indique un Id de planilla válido.", "Aviso",
-                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(
+                    "Indique un Id de planilla válido.\n\n" +
+                    "Ejemplo: primero cree una planilla con 'Crear y calcular' " +
+                    "y anote el Id que se muestra.",
+                    "Aviso", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -108,11 +133,22 @@ namespace ClientCoopSoft.ViewModels.Planillas
             {
                 var lista = await _api.ObtenerDatosPlanillaSueldosAsync(IdPlanillaActual);
                 PlanillaSueldos = new ObservableCollection<PlanillaSueldosFilaModel>(lista ?? new());
+
+                // NUEVO: refrescar gestión/mes/estado
+                await ActualizarResumenPlanillaAsync();
+
+                if (PlanillaSueldos.Count == 0)
+                {
+                    MessageBox.Show(
+                        "La planilla existe pero no tiene trabajadores asociados.\n" +
+                        "Ejecute 'Crear y calcular' nuevamente o revise el backend.",
+                        "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al cargar la planilla: {ex.Message}", "Error",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Error al cargar la planilla: {ex.Message}",
+                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -122,8 +158,10 @@ namespace ClientCoopSoft.ViewModels.Planillas
         {
             if (IdPlanillaActual <= 0)
             {
-                MessageBox.Show("No hay una planilla seleccionada.", "Aviso",
-                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(
+                    "No hay una planilla seleccionada.\n\n" +
+                    "Cargue primero una planilla (Id Planilla) o cree una nueva.",
+                    "Aviso", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -154,8 +192,10 @@ namespace ClientCoopSoft.ViewModels.Planillas
         {
             if (IdPlanillaActual <= 0)
             {
-                MessageBox.Show("No hay una planilla seleccionada.", "Aviso",
-                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(
+                    "No hay una planilla seleccionada para cerrar.\n\n" +
+                    "Cargue primero la planilla que desea cerrar.",
+                    "Aviso", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 

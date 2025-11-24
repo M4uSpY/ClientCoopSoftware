@@ -16,6 +16,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -28,9 +29,59 @@
             Foreground="#303048"
             Text="Planilla de Sueldos y Salarios" />
 
+        <!--  PANEL DE AYUDA / PASOS  -->
+        <Border
+            Grid.Row="1"
+            Margin="0,0,0,10"
+            Padding="10"
+            Background="#F5F7FB"
+            BorderBrush="#D0D5E2"
+            BorderThickness="1"
+            CornerRadius="4">
+            <StackPanel>
+                <TextBlock
+                    FontSize="12"
+                    FontWeight="SemiBold"
+                    Foreground="#303048"
+                    Text="¿Cómo usar esta pantalla?" />
+                <TextBlock
+                    Margin="0,4,0,0"
+                    FontSize="11"
+                    Foreground="#555"
+                    TextWrapping="Wrap">
+                    1. Ingrese la Gestión y el Mes que desea procesar (ejemplo: 2025 / 11).
+                </TextBlock>
+                <TextBlock
+                    FontSize="11"
+                    Foreground="#555"
+                    TextWrapping="Wrap">
+                    2. Para una planilla nueva, haga clic en<Bold>“Crear y calcular”</Bold>
+                    .
+                    El sistema generará las filas de todos los trabajadores activos y calculará los montos.</TextBlock>
+                <TextBlock
+                    FontSize="11"
+                    Foreground="#555"
+                    TextWrapping="Wrap">
+                    3. Para ver una planilla existente, escriba el<Bold>Id Planilla</Bold>
+                    y presione<Bold>“Cargar”</Bold>
+                    .</TextBlock>
+                <TextBlock
+                    FontSize="11"
+                    Foreground="#555"
+                    TextWrapping="Wrap">
+                    4. Use<Bold>“Recalcular”</Bold>
+                    si cambió conceptos manuales en otra pantalla.</TextBlock>
+                <TextBlock
+                    FontSize="11"
+                    Foreground="#555"
+                    TextWrapping="Wrap">
+                    5. Cuando la planilla esté revisada, presione<Bold>“Cerrar”</Bold>
+                    para bloquear más cambios.</TextBlock>
+            </StackPanel>
+        </Border>
         <!--  FILTROS + BOTONES  -->
         <DockPanel
-            Grid.Row="1"
+            Grid.Row="2"
             Margin="0,0,0,10"
             LastChildFill="True">
 
@@ -46,7 +97,8 @@
                         Width="80"
                         Margin="0,2,0,0"
                         md:TextFieldAssist.DecorationVisibility="Hidden"
-                        Text="{Binding Gestion, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding Gestion, UpdateSourceTrigger=PropertyChanged}"
+                        ToolTip="Año de la planilla. Ejemplo: 2025" />
                 </StackPanel>
 
                 <!--  Mes  -->
@@ -59,7 +111,8 @@
                         Width="50"
                         Margin="0,2,0,0"
                         md:TextFieldAssist.DecorationVisibility="Hidden"
-                        Text="{Binding Mes, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding Mes, UpdateSourceTrigger=PropertyChanged}"
+                        ToolTip="Mes de la planilla (1 a 12)" />
                 </StackPanel>
 
                 <!--  Id Planilla  -->
@@ -72,7 +125,8 @@
                         Width="80"
                         Margin="0,2,0,0"
                         md:TextFieldAssist.DecorationVisibility="Hidden"
-                        Text="{Binding IdPlanillaActual, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding IdPlanillaActual, UpdateSourceTrigger=PropertyChanged}"
+                        ToolTip="Identificador de una planilla ya creada" />
                 </StackPanel>
 
                 <!--  Estado cerrada  -->
@@ -100,7 +154,8 @@
                     Background="#0078D7"
                     Command="{Binding CrearYCalcularPlanillaCommand}"
                     Foreground="White"
-                    Style="{StaticResource MaterialDesignRaisedButton}">
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    ToolTip="Crear una nueva planilla para la gestión y mes indicados">
                     <StackPanel Orientation="Horizontal">
                         <md:PackIcon Margin="0,0,6,0" Kind="PlusBox" />
                         <TextBlock Text="Crear y calcular" />
@@ -112,7 +167,8 @@
                     Margin="8,0,0,0"
                     Padding="12,4"
                     Command="{Binding CargarPlanillaCommand}"
-                    Style="{StaticResource MaterialDesignOutlinedButton}">
+                    Style="{StaticResource MaterialDesignOutlinedButton}"
+                    ToolTip="Cargar la planilla cuyo Id se muestra en 'Id Planilla'">
                     <StackPanel Orientation="Horizontal">
                         <md:PackIcon Margin="0,0,6,0" Kind="Refresh" />
                         <TextBlock Text="Cargar" />
@@ -173,7 +229,7 @@
 
         <!--  DATA GRID  -->
         <DataGrid
-            Grid.Row="2"
+            Grid.Row="3"
             Margin="0"
             AutoGenerateColumns="False"
             Background="White"
@@ -185,8 +241,8 @@
             ItemsSource="{Binding PlanillaSueldos}">
             <DataGrid.Resources>
                 <!--  Alineación derecha y formato numérico  -->
-                <Style x:Key="RightAlignNumericCell" TargetType="DataGridCell">
-                    <Setter Property="TextBlock.TextAlignment" Value="Right" />
+                <Style x:Key="RightAlignNumericCell" TargetType="TextBlock">
+                    <Setter Property="TextAlignment" Value="Right" />
                     <Setter Property="Padding" Value="4,0,4,0" />
                 </Style>
             </DataGrid.Resources>

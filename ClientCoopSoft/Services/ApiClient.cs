@@ -846,6 +846,24 @@ public class ApiClient
             return (false, null, ex.Message);
         }
     }
+    public async Task<PlanillaResumenModel?> ObtenerResumenPlanillaSueldosAsync(int idPlanilla)
+    {
+        try
+        {
+            SetBearer();
+            var response = await _http.GetAsync($"api/PlanillaSueldosSalarios/resumen/{idPlanilla}");
+
+            if (!response.IsSuccessStatusCode)
+                return null;
+
+            var raw = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<PlanillaResumenModel>(raw);
+        }
+        catch
+        {
+            return null;
+        }
+    }
 
 
 }
