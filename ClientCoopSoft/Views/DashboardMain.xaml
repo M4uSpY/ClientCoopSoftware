@@ -548,7 +548,7 @@
                             <TextBlock
                                 Grid.Column="1"
                                 VerticalAlignment="Center"
-                                Text="Vacaciones y permisos" />
+                                Text="Licencias y Vacaciones" />
                         </Grid>
                     </Button>
 
