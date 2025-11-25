@@ -29,6 +29,9 @@ namespace ClientCoopSoft.ViewModels
         [ObservableProperty] private string info = string.Empty;
         [ObservableProperty] private ObservableObject? currentView;
         [ObservableProperty] private string menuSeleccionado = string.Empty;
+        [ObservableProperty]
+        private bool isPlanillasExpandida;
+
 
         [ObservableProperty] private BitmapImage? fotoPerfil;
 
@@ -52,6 +55,12 @@ namespace ClientCoopSoft.ViewModels
         private bool IsAllowed()
         {
             return IsAdmin;
+        }
+        // Abrir / cerrar el submenú de planillas
+        [RelayCommand]
+        private void TogglePlanillas()
+        {
+            IsPlanillasExpandida = !IsPlanillasExpandida;
         }
         [RelayCommand]
         private Task AbrirInicioAsync() {
@@ -165,14 +174,40 @@ namespace ClientCoopSoft.ViewModels
             await listaFaltasVM.CargarFaltasAsync();
             CurrentView = listaFaltasVM;
         }
+        // PLANILLA DE SUELDOS Y SALARIOS
         [RelayCommand]
-        private async Task AbrirPlanillasAsync()
+        private async Task AbrirPlanillaSueldosAsync()
         {
-            MenuSeleccionado = "Planillas";
-            var listaPlanillasVM = new PlanillaSueldosSalariosViewModel(_apiClient);
+            if (!IsAllowed())
+            {
+                MessageBox.Show("No tiene permiso para ver Planillas.", "Acceso denegado",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
-            //await listaAsistenciasVM.CargarAsistenciasAsync();
-            CurrentView = listaPlanillasVM;
+            MenuSeleccionado = "PlanillaSueldos";
+            var vm = new PlanillaSueldosSalariosViewModel(_apiClient);
+            CurrentView = vm;
+
+            await Task.CompletedTask;
+        }
+
+        // PLANILLA DE APORTES Y BENEFICIOS (por ahora solo pantalla informativa)
+        [RelayCommand]
+        private async Task AbrirPlanillaAportesAsync()
+        {
+            if (!IsAllowed())
+            {
+                MessageBox.Show("No tiene permiso para ver Planillas.", "Acceso denegado",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            MenuSeleccionado = "PlanillaAportes";
+            var vm = new PlanillaAPatronalesBSocialesViewModel();
+            CurrentView = vm;
+
+            await Task.CompletedTask;
         }
 
         [RelayCommand]

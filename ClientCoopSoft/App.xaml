@@ -103,6 +103,12 @@
                 DataType="{x:Type vm:PlanillaSueldosSalariosViewModel}">
                 <views:PlanillaSueldosSalariosView />
             </DataTemplate>
+            <DataTemplate
+                xmlns:views="clr-namespace:ClientCoopSoft.Views.Planillas"
+                xmlns:vm="clr-namespace:ClientCoopSoft.ViewModels.Planillas"
+                DataType="{x:Type vm:PlanillaAPatronalesBSocialesViewModel}">
+                <views:PlanillaAPatronalesBSocialesView />
+            </DataTemplate>
 
 
 
