@@ -865,6 +865,26 @@ public class ApiClient
         }
     }
 
+    public async Task<List<PlanillaAportesFilaModel>?> ObtenerDatosPlanillaAportesAsync(int idPlanilla)
+    {
+        try
+        {
+            SetBearer();
+            var response = await _http.GetAsync($"api/PlanillaAportesPatronales/{idPlanilla}");
+            var raw = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+                return null;
+
+            return JsonConvert.DeserializeObject<List<PlanillaAportesFilaModel>>(raw);
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+
 
 }
 

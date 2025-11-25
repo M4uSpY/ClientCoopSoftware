@@ -204,7 +204,7 @@ namespace ClientCoopSoft.ViewModels
             }
 
             MenuSeleccionado = "PlanillaAportes";
-            var vm = new PlanillaAPatronalesBSocialesViewModel();
+            var vm = new PlanillaAPatronalesBSocialesViewModel(_apiClient);
             CurrentView = vm;
 
             await Task.CompletedTask;

@@ -5,10 +5,187 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:ClientCoopSoft.Views.Planillas"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:DesignHeight="450"
-    d:DesignWidth="800"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
     mc:Ignorable="d">
-    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBlock Text="Planilla de Aportes Patrnales y Beneficios Sociales" />
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!--  Título  -->
+        <TextBlock
+            Grid.Row="0"
+            Margin="0,0,0,10"
+            FontSize="24"
+            FontWeight="SemiBold"
+            Foreground="#303048"
+            Text="Planilla de Aportes Patronales y Beneficios Sociales" />
+
+        <!--  Filtros e instrucciones  -->
+        <DockPanel Grid.Row="1" Margin="0,0,0,10">
+            <!--  Controles  -->
+            <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
+                <StackPanel Margin="0,0,16,0">
+                    <TextBlock
+                        FontSize="11"
+                        Foreground="#666"
+                        Text="Gestión" />
+                    <TextBox
+                        Width="80"
+                        Margin="0,2,0,0"
+                        md:TextFieldAssist.DecorationVisibility="Hidden"
+                        Text="{Binding Gestion, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+
+                <StackPanel Margin="0,0,16,0">
+                    <TextBlock
+                        FontSize="11"
+                        Foreground="#666"
+                        Text="Mes" />
+                    <TextBox
+                        Width="50"
+                        Margin="0,2,0,0"
+                        md:TextFieldAssist.DecorationVisibility="Hidden"
+                        Text="{Binding Mes, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+
+                <StackPanel Margin="0,0,16,0">
+                    <TextBlock
+                        FontSize="11"
+                        Foreground="#666"
+                        Text="Id Planilla Sueldos" />
+                    <TextBox
+                        Width="90"
+                        Margin="0,2,0,0"
+                        md:TextFieldAssist.DecorationVisibility="Hidden"
+                        Text="{Binding IdPlanillaSueldos, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+
+                <Button
+                    Margin="8,16,0,0"
+                    Padding="12,4"
+                    Background="#0078D7"
+                    Command="{Binding CargarAportesCommand}"
+                    Foreground="White"
+                    Style="{StaticResource MaterialDesignRaisedButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <md:PackIcon Margin="0,0,6,0" Kind="Refresh" />
+                        <TextBlock Text="Cargar aportes" />
+                    </StackPanel>
+                </Button>
+
+                <Button
+                    Margin="8,16,0,0"
+                    Padding="12,4"
+                    Command="{Binding LimpiarCommand}"
+                    Style="{StaticResource MaterialDesignOutlinedButton}">
+                    <TextBlock Text="Limpiar" />
+                </Button>
+            </StackPanel>
+
+            <!--  Instrucciones  -->
+            <TextBlock
+                Margin="20,0,0,0"
+                VerticalAlignment="Center"
+                Foreground="#555"
+                Text="{Binding Instrucciones}"
+                TextWrapping="Wrap" />
+        </DockPanel>
+
+        <!--  DataGrid  -->
+        <DataGrid
+            Grid.Row="2"
+            AutoGenerateColumns="False"
+            Background="White"
+            BorderThickness="1"
+            CanUserAddRows="False"
+            CanUserDeleteRows="False"
+            HeadersVisibility="Column"
+            IsReadOnly="True"
+            ItemsSource="{Binding Aportes}">
+            <DataGrid.Resources>
+                <Style x:Key="RightAlignNumericCell" TargetType="TextBlock">
+                    <Setter Property="TextAlignment" Value="Right" />
+                    <Setter Property="Padding" Value="4,0,4,0" />
+                </Style>
+            </DataGrid.Resources>
+
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    Width="40"
+                    Binding="{Binding Id}"
+                    Header="No" />
+                <DataGridTextColumn
+                    Width="90"
+                    Binding="{Binding CarnetIdentidad}"
+                    Header="CI" />
+                <DataGridTextColumn
+                    Width="230"
+                    Binding="{Binding ApellidosNombres}"
+                    Header="Apellidos y Nombres" />
+                <DataGridTextColumn
+                    Width="80"
+                    Binding="{Binding Nacionalidad}"
+                    Header="Nac." />
+                <DataGridTextColumn
+                    Width="110"
+                    Binding="{Binding FechaNacimiento, StringFormat=d}"
+                    Header="F. Nac." />
+                <DataGridTextColumn
+                    Width="60"
+                    Binding="{Binding Sexo}"
+                    Header="Sexo" />
+                <DataGridTextColumn
+                    Width="160"
+                    Binding="{Binding Ocupacion}"
+                    Header="Ocupación" />
+                <DataGridTextColumn
+                    Width="110"
+                    Binding="{Binding FechaIngreso, StringFormat=d}"
+                    Header="F. Ingreso" />
+                <DataGridTextColumn
+                    Width="90"
+                    Binding="{Binding DiasPagados}"
+                    Header="Días pagados" />
+
+                <DataGridTextColumn
+                    Width="130"
+                    Binding="{Binding TotalGanado, StringFormat=N2}"
+                    ElementStyle="{StaticResource RightAlignNumericCell}"
+                    Header="Total Ganado" />
+
+                <DataGridTextColumn
+                    Width="120"
+                    Binding="{Binding Cps10, StringFormat=N2}"
+                    ElementStyle="{StaticResource RightAlignNumericCell}"
+                    Header="CPS 10%" />
+
+                <DataGridTextColumn
+                    Width="140"
+                    Binding="{Binding RiesgoPrima171, StringFormat=N2}"
+                    ElementStyle="{StaticResource RightAlignNumericCell}"
+                    Header="Riesgo de Prima 1.71%" />
+
+                <DataGridTextColumn
+                    Width="120"
+                    Binding="{Binding Provivienda2, StringFormat=N2}"
+                    ElementStyle="{StaticResource RightAlignNumericCell}"
+                    Header="Provivienda 2%" />
+
+                <DataGridTextColumn
+                    Width="140"
+                    Binding="{Binding AporteSolidario35, StringFormat=N2}"
+                    ElementStyle="{StaticResource RightAlignNumericCell}"
+                    Header="Aporte Solidario 3.5%" />
+
+                <DataGridTextColumn
+                    Width="130"
+                    Binding="{Binding TotalAportes, StringFormat=N2}"
+                    ElementStyle="{StaticResource RightAlignNumericCell}"
+                    Header="Total Aportes" />
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>
