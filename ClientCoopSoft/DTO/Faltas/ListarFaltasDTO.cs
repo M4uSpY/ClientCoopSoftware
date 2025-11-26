@@ -13,10 +13,12 @@ namespace ClientCoopSoft.DTO.Faltas
         public string ApellidosNombres { get; set; } = string.Empty;
 
         // Tabla clasificador
-        public int Tipo { get; set; }
+        public string Tipo { get; set; } = string.Empty;
 
         public DateTime Fecha { get; set; }
         public string Descripcion { get; set; } = string.Empty;
-        public byte[]? ArchivoJustificativo { get; set; }
+
+        public bool TieneArchivoJustificativo { get; set; }
+        public string EstadoArchivoJustificativo { get; set; } = string.Empty;
     }
 }

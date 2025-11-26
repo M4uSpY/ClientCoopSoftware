@@ -89,13 +89,13 @@
                         Height="25"
                         Margin="0,0,0,4"
                         HorizontalAlignment="Center"
-                        Foreground="#343BA8"
+                        Foreground="#3378BD"
                         Kind="AccountBox" />
 
                     <TextBlock
                         HorizontalAlignment="Center"
                         FontSize="11"
-                        Foreground="#343BA8"
+                        Foreground="#3378BD"
                         Text="Datos Personales" />
 
                     <!--  Línea inferior  -->
@@ -103,7 +103,7 @@
                         Height="3"
                         Margin="0,6,0,0"
                         HorizontalAlignment="Stretch"
-                        Background="#343BA8" />
+                        Background="#3378BD" />
                 </StackPanel>
             </Button>
 
@@ -124,14 +124,14 @@
                         Height="25"
                         Margin="0,0,0,4"
                         HorizontalAlignment="Center"
-                        Foreground="#2E3494"
+                        Foreground="#3378BD"
                         Kind="School" />
 
                     <!--  Texto  -->
                     <TextBlock
                         HorizontalAlignment="Center"
                         FontSize="11"
-                        Foreground="#2E3494"
+                        Foreground="#3378BD"
                         Text="Formación Académica" />
 
                     <!--  Línea inferior  -->
@@ -139,7 +139,7 @@
                         Height="3"
                         Margin="0,6,0,0"
                         HorizontalAlignment="Stretch"
-                        Background="#2E3494" />
+                        Background="#3378BD" />
                 </StackPanel>
             </Button>
 
@@ -160,14 +160,14 @@
                         Height="25"
                         Margin="0,0,0,4"
                         HorizontalAlignment="Center"
-                        Foreground="#2E3494"
+                        Foreground="#3378BD"
                         Kind="Certificate" />
 
                     <!--  Texto  -->
                     <TextBlock
                         HorizontalAlignment="Center"
                         FontSize="11"
-                        Foreground="#2E3494"
+                        Foreground="#3378BD"
                         Text="Cursos Realizados" />
 
                     <!--  Línea inferior  -->
@@ -175,7 +175,7 @@
                         Height="3"
                         Margin="0,6,0,0"
                         HorizontalAlignment="Stretch"
-                        Background="#2E3494" />
+                        Background="#3378BD" />
                 </StackPanel>
             </Button>
 
@@ -194,14 +194,14 @@
                         Height="25"
                         Margin="0,0,0,4"
                         HorizontalAlignment="Center"
-                        Foreground="#343BA8"
+                        Foreground="#3378BD"
                         Kind="FileDocument" />
 
                     <!--  Texto  -->
                     <TextBlock
                         HorizontalAlignment="Center"
                         FontSize="11"
-                        Foreground="#343BA8"
+                        Foreground="#3378BD"
                         Text="Contratación" />
 
                     <!--  Línea inferior  -->
@@ -209,7 +209,7 @@
                         Height="3"
                         Margin="0,6,0,0"
                         HorizontalAlignment="Stretch"
-                        Background="#343BA8" />
+                        Background="#3378BD" />
                 </StackPanel>
             </Button>
 

@@ -128,7 +128,7 @@ namespace ClientCoopSoft.ViewModels.InformacionPersonal
         {
             // Validaciones existentes...
             if (GeneroSeleccionado is null || NacionalidadSeleccionada is null ||
-                string.IsNullOrWhiteSpace(PrimerNombre) || string.IsNullOrWhiteSpace(SegundoNombre) ||
+                string.IsNullOrWhiteSpace(PrimerNombre) ||
                 string.IsNullOrWhiteSpace(ApellidoPaterno) || string.IsNullOrWhiteSpace(ApellidoMaterno) ||
                 string.IsNullOrWhiteSpace(CarnetIdentidad) || string.IsNullOrWhiteSpace(Telefono) ||
                 string.IsNullOrWhiteSpace(Direccion) || string.IsNullOrWhiteSpace(Email) ||
@@ -166,10 +166,6 @@ namespace ClientCoopSoft.ViewModels.InformacionPersonal
             window.DialogResult = false;
             window.Close();
         }
-
-
-
-
 
         // NUEVOS: comandos de navegación
         [RelayCommand]

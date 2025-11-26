@@ -5,13 +5,16 @@ using ClientCoopSoft.DTO.Contratacion;
 using ClientCoopSoft.DTO.Extras;
 using ClientCoopSoft.DTO.Faltas;
 using ClientCoopSoft.DTO.FormacionAcademica;
+using ClientCoopSoft.DTO.Historicos;
 using ClientCoopSoft.DTO.Licencias;
 using ClientCoopSoft.DTO.Personas;
 using ClientCoopSoft.DTO.Trabajadores;
 using ClientCoopSoft.DTO.VacacionesPermisos;
 using ClientCoopSoft.Models;
 using Newtonsoft.Json;
+using System.IO;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
 using System.Windows;
@@ -922,7 +925,88 @@ public class ApiClient
         }
     }
 
+    public async Task<byte[]?> DescargarArchivoJustificativoFaltaAsync(int idFalta)
+    {
+        var response = await _http.GetAsync($"api/Faltas/{idFalta}/justificativo");
+        if (!response.IsSuccessStatusCode)
+            return null;
 
+        return await response.Content.ReadAsByteArrayAsync();
+    }
+
+    public async Task<bool> SubirArchivoJustificativoFaltaAsync(int idFalta, string filePath)
+    {
+        using var form = new MultipartFormDataContent();
+        var bytes = await File.ReadAllBytesAsync(filePath);
+        var content = new ByteArrayContent(bytes);
+        content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
+
+        form.Add(content, "Archivo", Path.GetFileName(filePath));
+
+        var response = await _http.PostAsync($"api/Faltas/{idFalta}/justificativo", form);
+        return response.IsSuccessStatusCode;
+    }
+
+    public async Task<bool> EliminarFaltaAsync(int idFalta)
+    {
+        var response = await _http.DeleteAsync($"api/Faltas/{idFalta}");
+        return response.IsSuccessStatusCode;
+    }
+
+
+    // HISTORIALES
+    public async Task<List<HistoricoPersonaListarDTO>?> ObtenerHistorialPersonasAsync()
+    {
+        SetBearer();
+        var request = new HttpRequestMessage(HttpMethod.Get, "api/historicos/historicoPersonas");
+        var response = await _http.SendAsync(request);
+        var raw = await response.Content.ReadAsStringAsync();
+
+        if (response.IsSuccessStatusCode)
+        {
+            return JsonConvert.DeserializeObject<List<HistoricoPersonaListarDTO>>(raw);
+        }
+        return null;
+    }
+    public async Task<List<HistoricoUsuarioListarDTO>?> ObtenerHistorialUsuariosAsync()
+    {
+        SetBearer();
+        var request = new HttpRequestMessage(HttpMethod.Get, "api/historicos/historicoUsuarios");
+        var response = await _http.SendAsync(request);
+        var raw = await response.Content.ReadAsStringAsync();
+
+        if (response.IsSuccessStatusCode)
+        {
+            return JsonConvert.DeserializeObject<List<HistoricoUsuarioListarDTO>>(raw);
+        }
+        return null;
+    }
+    public async Task<List<HistoricoTrabajadorListarDTO>?> ObtenerHistorialTrabajadoresAsync()
+    {
+        SetBearer();
+        var request = new HttpRequestMessage(HttpMethod.Get, "api/historicos/historicoTrabajadores");
+        var response = await _http.SendAsync(request);
+        var raw = await response.Content.ReadAsStringAsync();
+
+        if (response.IsSuccessStatusCode)
+        {
+            return JsonConvert.DeserializeObject<List<HistoricoTrabajadorListarDTO>>(raw);
+        }
+        return null;
+    }
+    public async Task<List<HistoricoFaltaListarDTO>?> ObtenerHistorialFaltasAsync()
+    {
+        SetBearer();
+        var request = new HttpRequestMessage(HttpMethod.Get, "api/historicos/historicoFaltas");
+        var response = await _http.SendAsync(request);
+        var raw = await response.Content.ReadAsStringAsync();
+
+        if (response.IsSuccessStatusCode)
+        {
+            return JsonConvert.DeserializeObject<List<HistoricoFaltaListarDTO>>(raw);
+        }
+        return null;
+    }
 
 }
 

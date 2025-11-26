@@ -38,11 +38,11 @@
             ItemsSource="{Binding Faltas}">
             <DataGrid.Columns>
                 <DataGridTextColumn
-                    Width="auto"
+                    Width="50"
                     Binding="{Binding IdFalta}"
                     Header="No" />
                 <DataGridTextColumn
-                    Width="Auto"
+                    Width="*"
                     Binding="{Binding CI}"
                     Header="CI" />
                 <DataGridTextColumn
@@ -50,7 +50,7 @@
                     Binding="{Binding ApellidosNombres}"
                     Header="Apellidos y Nombres" />
                 <DataGridTextColumn
-                    Width="Auto"
+                    Width="*"
                     Binding="{Binding Tipo}"
                     Header="Tipo" />
                 <DataGridTextColumn
@@ -61,12 +61,49 @@
                     Width="*"
                     Binding="{Binding Descripcion}"
                     Header="Descripcion" />
-
                 <DataGridTextColumn
                     Width="*"
-                    Binding="{Binding ArchivoJustificativo}"
-                    Header="Archivo justificativo" />
+                    Binding="{Binding EstadoArchivoJustificativo}"
+                    Header="Tiene Archivo Justificativo" />
 
+                <DataGridTemplateColumn Width="*" Header="Archivo justificativo">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                <!--  Ver archivo  -->
+                                <Button
+                                    Margin="0,0,4,0"
+                                    Padding="8,2"
+                                    md:ButtonAssist.CornerRadius="4"
+                                    BorderThickness="0"
+                                    Command="{Binding DataContext.VerArchivoFaltaCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    CommandParameter="{Binding}"
+                                    Content="Ver" />
+
+                                <!--  Subir / Actualizar archivo  -->
+                                <Button
+                                    Margin="0,0,4,0"
+                                    Padding="8,2"
+                                    md:ButtonAssist.CornerRadius="4"
+                                    BorderThickness="0"
+                                    Command="{Binding DataContext.SubirArchivoFaltaCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    CommandParameter="{Binding}"
+                                    Content="Subir" />
+
+                                <!--  Eliminar falta  -->
+                                <Button
+                                    Padding="8,2"
+                                    md:ButtonAssist.CornerRadius="4"
+                                    Background="#E53935"
+                                    BorderThickness="0"
+                                    Command="{Binding DataContext.EliminarFaltaCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    CommandParameter="{Binding}"
+                                    Content="Eliminar"
+                                    Foreground="White" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

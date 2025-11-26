@@ -5,8 +5,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:ClientCoopSoft.Views.Reportes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:DesignHeight="450"
-    d:DesignWidth="800"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    d:DesignHeight="500"
+    d:DesignWidth="1000"
     mc:Ignorable="d">
     <Grid Margin="20">
         <Grid.ColumnDefinitions>
@@ -18,29 +19,173 @@
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
+
         <Button
             Grid.Row="0"
             Grid.Column="0"
-            Content="Usuarios" />
+            Width="300"
+            Height="400"
+            Background="Transparent"
+            BorderThickness="0"
+            Command="{Binding AbrirHistoricoFaltasCommand}"
+            Cursor="Hand">
+            <StackPanel
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Orientation="Vertical">
+                <md:PackIcon
+                    Width="300"
+                    Height="300"
+                    HorizontalAlignment="Center"
+                    Foreground="#3378BD"
+                    Kind="AccountBox" />
+
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontSize="30"
+                    FontWeight="Normal"
+                    Foreground="#3378BD"
+                    Text="Historico Faltas" />
+            </StackPanel>
+        </Button>
         <Button
             Grid.Row="1"
             Grid.Column="0"
-            Content="Trabajadores" />
+            Width="300"
+            Height="400"
+            Background="Transparent"
+            BorderThickness="0"
+            Command="{Binding AbrirHistoricoPersonasCommand}"
+            Cursor="Hand">
+            <StackPanel
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Orientation="Vertical">
+                <md:PackIcon
+                    Width="300"
+                    Height="300"
+                    HorizontalAlignment="Center"
+                    Foreground="#3378BD"
+                    Kind="AccountBox" />
+
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontSize="30"
+                    FontWeight="Normal"
+                    Foreground="#3378BD"
+                    Text="Historico Personas" />
+            </StackPanel>
+        </Button>
         <Button
             Grid.Row="1"
             Grid.Column="1"
-            Content="Personas" />
-        <Button
-            Grid.Row="0"
-            Grid.Column="1"
-            Content="Faltas" />
-        <Button
-            Grid.Row="0"
-            Grid.Column="2"
-            Content="Registros de Acceso" />
+            Width="330"
+            Height="400"
+            Background="Transparent"
+            BorderThickness="0"
+            Command="{Binding AbrirHistoricoTrabajadoresCommand}"
+            Cursor="Hand">
+            <StackPanel
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Orientation="Vertical">
+                <md:PackIcon
+                    Width="300"
+                    Height="300"
+                    HorizontalAlignment="Center"
+                    Foreground="#3378BD"
+                    Kind="AccountBox" />
+
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontSize="30"
+                    FontWeight="Normal"
+                    Foreground="#3378BD"
+                    Text="Historico Trabajadores" />
+            </StackPanel>
+        </Button>
         <Button
             Grid.Row="1"
             Grid.Column="2"
-            Content="Planilla de Sueldos y Salarios" />
+            Width="300"
+            Height="400"
+            Background="Transparent"
+            BorderThickness="0"
+            Cursor="Hand">
+            <StackPanel
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Orientation="Vertical">
+                <md:PackIcon
+                    Width="300"
+                    Height="300"
+                    HorizontalAlignment="Center"
+                    Foreground="#3378BD"
+                    Kind="AccountBox" />
+
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontSize="30"
+                    FontWeight="Normal"
+                    Foreground="#3378BD"
+                    Text="Historico Planillas" />
+            </StackPanel>
+        </Button>
+        <Button
+            Grid.Row="0"
+            Grid.Column="1"
+            Width="400"
+            Height="400"
+            Background="Transparent"
+            BorderThickness="0"
+            Cursor="Hand">
+            <StackPanel
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Orientation="Vertical">
+                <md:PackIcon
+                    Width="600"
+                    Height="300"
+                    HorizontalAlignment="Center"
+                    Foreground="#3378BD"
+                    Kind="AccountBox" />
+
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontSize="30"
+                    FontWeight="Normal"
+                    Foreground="#3378BD"
+                    Text="Historico Trabajador Planilla" />
+            </StackPanel>
+        </Button>
+        <Button
+            Grid.Row="0"
+            Grid.Column="2"
+            Width="300"
+            Height="400"
+            Background="Transparent"
+            BorderThickness="0"
+            Command="{Binding AbrirHistoricoUsuariosCommand}"
+            Cursor="Hand">
+            <StackPanel
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Orientation="Vertical">
+                <md:PackIcon
+                    Width="300"
+                    Height="300"
+                    HorizontalAlignment="Center"
+                    Foreground="#3378BD"
+                    Kind="AccountBox" />
+
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontSize="30"
+                    FontWeight="Normal"
+                    Foreground="#3378BD"
+                    Text="Historico Usuarios" />
+            </StackPanel>
+        </Button>
+
     </Grid>
 </UserControl>

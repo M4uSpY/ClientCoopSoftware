@@ -103,11 +103,7 @@ namespace ClientCoopSoft.ViewModels.Personas
                 MessageBox.Show("Ingresa el primer nombre", "Advertencia", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            if (string.IsNullOrWhiteSpace(SegundoNombre))
-            {
-                MessageBox.Show("Ingresa el segundo nombre", "Advertencia", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
+
             if (string.IsNullOrWhiteSpace(ApellidoPaterno))
             {
                 MessageBox.Show("Ingresa el apellido paterno", "Advertencia", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -148,8 +144,8 @@ namespace ClientCoopSoft.ViewModels.Personas
             {
                 IdNacionalidad = NacionalidadSeleccionada.IdClasificador,
                 PrimerNombre = PrimerNombre,
-                SegundoNombre = SegundoNombre,
-                ApellidoPaterno = ApellidoMaterno,
+                SegundoNombre = string.IsNullOrWhiteSpace(SegundoNombre) ? null : SegundoNombre,
+                ApellidoPaterno = ApellidoPaterno,
                 ApellidoMaterno = ApellidoMaterno,
                 Genero = GeneroSeleccionado.Value,
                 CarnetIdentidad = CarnetIdentidad,

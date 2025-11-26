@@ -1,0 +1,87 @@
+﻿<UserControl
+    x:Class="ClientCoopSoft.Views.Historicos.HistoricoTrabajadorView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:ClientCoopSoft.Views.Historicos"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    mc:Ignorable="d">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+        </Grid.ColumnDefinitions>
+        <StackPanel
+            Grid.Row="0"
+            Grid.Column="0"
+            Orientation="Horizontal">
+            <Button
+                Width="35"
+                Height="35"
+                Margin="0,0,0,10"
+                Background="#1E0F74"
+                BorderBrush="Transparent"
+                BorderThickness="0"
+                Command="{Binding VolverCommand}"
+                Foreground="#333"
+                Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}">
+                <md:PackIcon
+                    Width="20"
+                    Height="30"
+                    Foreground="White"
+                    Kind="ArrowLeft" />
+            </Button>
+            <TextBlock
+                Margin="10,0,0,0"
+                FontSize="24"
+                FontWeight="SemiBold"
+                Foreground="#303048"
+                Text="Historial de Modificaciones (Trabajadores)" />
+        </StackPanel>
+
+        <DataGrid
+            Grid.Row="1"
+            Grid.ColumnSpan="3"
+            Margin="0"
+            AutoGenerateColumns="False"
+            Background="White"
+            BorderThickness="1"
+            CanUserAddRows="False"
+            CanUserDeleteRows="False"
+            IsReadOnly="True"
+            ItemsSource="{Binding Historialt}">
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    Width="auto"
+                    Binding="{Binding IdHistorico}"
+                    Header="No" />
+                <DataGridTextColumn
+                    Width="Auto"
+                    Binding="{Binding IdTrabajador}"
+                    Header="IdUsuario" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding UsuarioModifico}"
+                    Header="Usuario que modifico" />
+                <DataGridTextColumn
+                    Width="Auto"
+                    Binding="{Binding FechaModificacion}"
+                    Header="Fecha de modificación" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Accion}"
+                    Header="Accion realizada" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding ApartadosModificados}"
+                    Header="Apartados modificados" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

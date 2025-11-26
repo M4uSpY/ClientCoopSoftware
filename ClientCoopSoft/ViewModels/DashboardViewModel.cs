@@ -240,9 +240,7 @@ namespace ClientCoopSoft.ViewModels
         private async Task AbrirReportesAsync()
         {
             MenuSeleccionado = "Reportes";
-            var reporteVM = new ReportesViewModel();
-
-            //await listaLogsVM.CargarLogsAccesoAsync();
+            var reporteVM = new ReportesViewModel(_apiClient,this);
             CurrentView = reporteVM;
         }
 
