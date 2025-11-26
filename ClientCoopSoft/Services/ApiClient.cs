@@ -884,6 +884,44 @@ public class ApiClient
         }
     }
 
+    public async Task<List<BoletaPagoModel>?> ObtenerBoletasPagoAsync(int idTrabajador)
+    {
+        try
+        {
+            SetBearer();
+            var response = await _http.GetAsync($"api/BoletasPago/trabajador/{idTrabajador}");
+            var raw = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+                return null;
+
+            return JsonConvert.DeserializeObject<List<BoletaPagoModel>>(raw);
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    public async Task<byte[]?> ObtenerBoletaPdfAsync(int idTrabajador, int idPlanilla)
+    {
+        try
+        {
+            SetBearer();
+            var response = await _http.GetAsync(
+                $"api/BoletasPago/trabajador/{idTrabajador}/planilla/{idPlanilla}/pdf");
+
+            if (!response.IsSuccessStatusCode)
+                return null;
+
+            return await response.Content.ReadAsByteArrayAsync();
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
 
 
 }

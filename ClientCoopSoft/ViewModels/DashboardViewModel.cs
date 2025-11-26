@@ -159,10 +159,21 @@ namespace ClientCoopSoft.ViewModels
         private async Task AbrirBoletasPagoAsync()
         {
             MenuSeleccionado = "BoletasPago";
-            var listaBoletasPagoVM = new ListaBoletasPagoViewModel(_apiClient);
 
-            //await listaAsistenciasVM.CargarAsistenciasAsync();
-            CurrentView = listaBoletasPagoVM;
+            var persona = await _apiClient.ObtenerPersonaAsync(_idPersonaActual);
+            if (persona?.Trabajador == null)
+            {
+                MessageBox.Show("No se encontró el trabajador asociado a la persona actual.",
+                    "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var idTrabajadorActual = persona.Trabajador.IdTrabajador;
+
+            var vm = new ListaBoletasPagoViewModel(_apiClient, idTrabajadorActual);
+            await vm.CargarBoletasPagoAsync();
+
+            CurrentView = vm;
         }
 
         [RelayCommand]
