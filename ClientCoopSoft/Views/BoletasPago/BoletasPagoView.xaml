@@ -31,84 +31,102 @@
             Margin="0,0,0,10"
             FontSize="12"
             Foreground="#555"
-            Text="Seleccione una boleta y presione 'Descargar PDF' para obtener la papeleta de pago del mes seleccionado." />
+            Text="Haga clic en el botón PDF de la fila para descargar la boleta de pago correspondiente." />
 
-        <!--  Tabla + Botón  -->
-        <DockPanel Grid.Row="2">
-            <Button
-                Margin="0,10,0,0"
-                Padding="12,4"
-                HorizontalAlignment="Right"
-                Command="{Binding DescargarPdfCommand}"
-                DockPanel.Dock="Bottom"
-                Style="{StaticResource MaterialDesignRaisedButton}">
-                <StackPanel Orientation="Horizontal">
-                    <md:PackIcon Margin="0,0,6,0" Kind="FilePdfBox" />
-                    <TextBlock Text="Descargar PDF" />
-                </StackPanel>
-            </Button>
+        <DataGrid
+            Grid.Row="2"
+            Margin="0"
+            AutoGenerateColumns="False"
+            Background="White"
+            BorderThickness="1"
+            CanUserAddRows="False"
+            CanUserDeleteRows="False"
+            IsReadOnly="True"
+            ItemsSource="{Binding BoletasPago}"
+            SelectedItem="{Binding BoletaSeleccionada}">
+            <DataGrid.Resources>
+                <!--  Estilo para alinear a la izquierda todas las celdas de texto  -->
+                <Style x:Key="LeftAlignCell" TargetType="TextBlock">
+                    <Setter Property="TextAlignment" Value="Left" />
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                    <Setter Property="Padding" Value="4,0,4,0" />
+                </Style>
 
-            <DataGrid
-                Margin="0"
-                AutoGenerateColumns="False"
-                Background="White"
-                BorderThickness="1"
-                CanUserAddRows="False"
-                CanUserDeleteRows="False"
-                IsReadOnly="True"
-                ItemsSource="{Binding BoletasPago}"
-                SelectedItem="{Binding BoletaSeleccionada}">
-                <DataGrid.Resources>
-                    <Style x:Key="RightAlignCell" TargetType="TextBlock">
-                        <Setter Property="TextAlignment" Value="Right" />
-                        <Setter Property="Padding" Value="4,0,4,0" />
-                    </Style>
-                </DataGrid.Resources>
+                <Style x:Key="RightAlignCell" TargetType="TextBlock">
+                    <Setter Property="TextAlignment" Value="Right" />
+                    <Setter Property="Padding" Value="4,0,4,0" />
+                </Style>
+            </DataGrid.Resources>
 
-                <DataGrid.Columns>
-                    <DataGridTextColumn
-                        Width="70"
-                        Binding="{Binding IdPlanilla}"
-                        Header="Id Planilla" />
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding IdPlanilla}"
+                    ElementStyle="{StaticResource LeftAlignCell}"
+                    Header="Id Planilla" />
 
-                    <DataGridTextColumn
-                        Width="80"
-                        Binding="{Binding Gestion}"
-                        Header="Gestión" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Gestion}"
+                    ElementStyle="{StaticResource LeftAlignCell}"
+                    Header="Gestión" />
 
-                    <DataGridTextColumn
-                        Width="100"
-                        Binding="{Binding MesNombre}"
-                        Header="Mes" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding MesNombre}"
+                    ElementStyle="{StaticResource LeftAlignCell}"
+                    Header="Mes" />
 
-                    <DataGridTextColumn
-                        Width="220"
-                        Binding="{Binding NombreCompleto}"
-                        Header="Trabajador" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding NombreCompleto}"
+                    ElementStyle="{StaticResource LeftAlignCell}"
+                    Header="Trabajador" />
 
-                    <DataGridTextColumn
-                        Width="160"
-                        Binding="{Binding Cargo}"
-                        Header="Cargo" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Cargo}"
+                    ElementStyle="{StaticResource LeftAlignCell}"
+                    Header="Cargo" />
 
-                    <DataGridTextColumn
-                        Width="80"
-                        Binding="{Binding DiasTrabajados}"
-                        Header="Días Trab." />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding DiasTrabajados}"
+                    ElementStyle="{StaticResource LeftAlignCell}"
+                    Header="Días Trab." />
 
-                    <DataGridTextColumn
-                        Width="120"
-                        Binding="{Binding TotalGanado, StringFormat=N2}"
-                        ElementStyle="{StaticResource RightAlignCell}"
-                        Header="Total Ganado" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding TotalGanado, StringFormat=N2}"
+                    ElementStyle="{StaticResource LeftAlignCell}"
+                    Header="Total Ganado" />
 
-                    <DataGridTextColumn
-                        Width="120"
-                        Binding="{Binding LiquidoPagable, StringFormat=N2}"
-                        ElementStyle="{StaticResource RightAlignCell}"
-                        Header="Líquido Pagable" />
-                </DataGrid.Columns>
-            </DataGrid>
-        </DockPanel>
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding LiquidoPagable, StringFormat=N2}"
+                    ElementStyle="{StaticResource LeftAlignCell}"
+                    Header="Líquido Pagable" />
+
+                <DataGridTemplateColumn Width="*" Header="Archivo PDF">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button
+                                Width="80"
+                                Padding="6,2"
+                                HorizontalAlignment="Left"
+                                HorizontalContentAlignment="Left"
+                                Command="{Binding DataContext.DescargarPdfCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                CommandParameter="{Binding}"
+                                Style="{StaticResource MaterialDesignFlatButton}">
+                                <StackPanel Orientation="Horizontal">
+                                    <md:PackIcon Margin="0,0,4,0" Kind="FilePdfBox" />
+                                    <TextBlock Text="PDF" />
+                                </StackPanel>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>

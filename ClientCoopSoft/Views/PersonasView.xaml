@@ -155,32 +155,32 @@
                 <DataGridTemplateColumn Width="150" Header="Acciones">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
                                 <Button
-                                    Width="auto"
-                                    Height="auto"
+                                    Width="30"
+                                    Height="30"
+                                    Padding="0"
                                     Background="Transparent"
-                                    BorderBrush="Transparent"
                                     BorderThickness="0"
                                     Command="{Binding DataContext.EditarPersonaCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                     CommandParameter="{Binding}">
-                                    <md:PackIcon
-                                        Width="auto"
-                                        Height="auto"
-                                        Foreground="#EFB214"
-                                        Kind="PencilOutline" />
+
+                                    <Viewbox Stretch="Uniform">
+                                        <md:PackIcon Foreground="#EFB214" Kind="PencilBox" />
+                                    </Viewbox>
                                 </Button>
+
                                 <Button
+                                    Width="30"
+                                    Height="30"
+                                    Padding="0"
                                     Background="Transparent"
-                                    BorderBrush="Transparent"
                                     BorderThickness="0"
                                     Command="{Binding DataContext.EliminarPersonaCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                     CommandParameter="{Binding}">
-                                    <md:PackIcon
-                                        Width="auto"
-                                        Height="auto"
-                                        Foreground="#D9534F"
-                                        Kind="Delete" />
+                                    <Viewbox Stretch="Uniform">
+                                        <md:PackIcon Foreground="#D9534F" Kind="Delete" />
+                                    </Viewbox>
                                 </Button>
                             </StackPanel>
                         </DataTemplate>

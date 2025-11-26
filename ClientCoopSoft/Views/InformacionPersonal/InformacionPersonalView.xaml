@@ -37,7 +37,7 @@
                 FontSize="24"
                 FontWeight="SemiBold"
                 Foreground="#303048"
-                Text="MI INFORMACION PERSONAL" />
+                Text="Mi Información Personal" />
 
             <TextBlock
                 Grid.Column="1"
@@ -85,17 +85,17 @@
 
                 <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
                     <md:PackIcon
-                        Width="32"
-                        Height="32"
+                        Width="25"
+                        Height="25"
                         Margin="0,0,0,4"
                         HorizontalAlignment="Center"
-                        Foreground="#3D8284"
+                        Foreground="#343BA8"
                         Kind="AccountBox" />
 
                     <TextBlock
                         HorizontalAlignment="Center"
-                        FontSize="14"
-                        Foreground="#3D8284"
+                        FontSize="11"
+                        Foreground="#343BA8"
                         Text="Datos Personales" />
 
                     <!--  Línea inferior  -->
@@ -103,7 +103,7 @@
                         Height="3"
                         Margin="0,6,0,0"
                         HorizontalAlignment="Stretch"
-                        Background="#3D8284" />
+                        Background="#343BA8" />
                 </StackPanel>
             </Button>
 
@@ -120,18 +120,18 @@
                 <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
                     <!--  Icono  -->
                     <md:PackIcon
-                        Width="32"
-                        Height="32"
+                        Width="25"
+                        Height="25"
                         Margin="0,0,0,4"
                         HorizontalAlignment="Center"
-                        Foreground="#3D8284"
+                        Foreground="#2E3494"
                         Kind="School" />
 
                     <!--  Texto  -->
                     <TextBlock
                         HorizontalAlignment="Center"
-                        FontSize="14"
-                        Foreground="#3D8284"
+                        FontSize="11"
+                        Foreground="#2E3494"
                         Text="Formación Académica" />
 
                     <!--  Línea inferior  -->
@@ -139,7 +139,7 @@
                         Height="3"
                         Margin="0,6,0,0"
                         HorizontalAlignment="Stretch"
-                        Background="#3D8284" />
+                        Background="#2E3494" />
                 </StackPanel>
             </Button>
 
@@ -156,18 +156,18 @@
                 <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
                     <!--  Icono  -->
                     <md:PackIcon
-                        Width="32"
-                        Height="32"
+                        Width="25"
+                        Height="25"
                         Margin="0,0,0,4"
                         HorizontalAlignment="Center"
-                        Foreground="#3D8284"
+                        Foreground="#2E3494"
                         Kind="Certificate" />
 
                     <!--  Texto  -->
                     <TextBlock
                         HorizontalAlignment="Center"
-                        FontSize="14"
-                        Foreground="#3D8284"
+                        FontSize="11"
+                        Foreground="#2E3494"
                         Text="Cursos Realizados" />
 
                     <!--  Línea inferior  -->
@@ -175,7 +175,7 @@
                         Height="3"
                         Margin="0,6,0,0"
                         HorizontalAlignment="Stretch"
-                        Background="#3D8284" />
+                        Background="#2E3494" />
                 </StackPanel>
             </Button>
 
@@ -190,18 +190,18 @@
                 <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
                     <!--  Icono  -->
                     <md:PackIcon
-                        Width="32"
-                        Height="32"
+                        Width="25"
+                        Height="25"
                         Margin="0,0,0,4"
                         HorizontalAlignment="Center"
-                        Foreground="#3D8284"
+                        Foreground="#343BA8"
                         Kind="FileDocument" />
 
                     <!--  Texto  -->
                     <TextBlock
                         HorizontalAlignment="Center"
-                        FontSize="14"
-                        Foreground="#3D8284"
+                        FontSize="11"
+                        Foreground="#343BA8"
                         Text="Contratación" />
 
                     <!--  Línea inferior  -->
@@ -209,7 +209,7 @@
                         Height="3"
                         Margin="0,6,0,0"
                         HorizontalAlignment="Stretch"
-                        Background="#3D8284" />
+                        Background="#343BA8" />
                 </StackPanel>
             </Button>
 

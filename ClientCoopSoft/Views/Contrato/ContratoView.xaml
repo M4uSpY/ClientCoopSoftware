@@ -46,7 +46,7 @@
                 FontSize="24"
                 FontWeight="SemiBold"
                 Foreground="#303048"
-                Text="INFORMACION DE CONTRATO" />
+                Text="Mi Información de Contrato" />
 
             <Button
                 Grid.Column="1"

@@ -1,14 +1,8 @@
 ﻿using ClientCoopSoft.DTO.FormacionAcademica;
-using ClientCoopSoft.Models;
 using ClientCoopSoft.Views.FormacionAcademica;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace ClientCoopSoft.ViewModels.FormacionAcademica
@@ -22,7 +16,7 @@ namespace ClientCoopSoft.ViewModels.FormacionAcademica
         private ObservableCollection<FormacionAcademicaResumenDTO> formaciones = new();
 
         [ObservableProperty]
-        private string tituloCabecera = "FORMACIÓN ACADÉMICA";
+        private string tituloCabecera = "Mi Formación Académica";
 
         public FormacionAcademicaViewModel(int idTrabajador, ApiClient apiClient)
         {
@@ -36,7 +30,7 @@ namespace ClientCoopSoft.ViewModels.FormacionAcademica
         {
             if (_idTrabajador == 0)
             {
-                TituloCabecera = "FORMACIÓN ACADÉMICA (sin trabajador)";
+                TituloCabecera = "Formación Académica (sin trabajador)";
                 Formaciones.Clear();
                 return;
             }

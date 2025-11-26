@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using ClientCoopSoft;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using ClientCoopSoft.ViewModels.Reportes;
 
 namespace ClientCoopSoft.ViewModels
 {
@@ -179,6 +180,11 @@ namespace ClientCoopSoft.ViewModels
         [RelayCommand]
         private async Task AbrirFaltasAsync()
         {
+            if (!IsAllowed())
+            {
+                System.Windows.MessageBox.Show("No tiene permiso para ver Usuarios.", "Acceso denegado", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+                return;
+            }
             MenuSeleccionado = "Faltas";
             var listaFaltasVM = new ListaFaltasViewModel(_apiClient);
 
@@ -229,6 +235,15 @@ namespace ClientCoopSoft.ViewModels
 
             await listaLogsVM.CargarLogsAccesoAsync();
             CurrentView = listaLogsVM;
+        }
+        [RelayCommand]
+        private async Task AbrirReportesAsync()
+        {
+            MenuSeleccionado = "Reportes";
+            var reporteVM = new ReportesViewModel();
+
+            //await listaLogsVM.CargarLogsAccesoAsync();
+            CurrentView = reporteVM;
         }
 
         [RelayCommand]

@@ -85,7 +85,11 @@
                                     ClipToBounds="True"
                                     CornerRadius="8,8,100,100">
                                     <Grid ClipToBounds="True">
-                                        <Image Source="{Binding ArchivoCertificado}" Stretch="UniformToFill" />
+                                        <Image
+                                            Width="340"
+                                            RenderOptions.BitmapScalingMode="HighQuality"
+                                            Source="{Binding ArchivoCertificado}"
+                                            Stretch="UniformToFill" />
                                     </Grid>
                                 </Border>
 

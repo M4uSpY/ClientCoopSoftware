@@ -24,7 +24,7 @@ namespace ClientCoopSoft.ViewModels.Capacitaciones
         private ObservableCollection<CapacitacionResumenDTO> capacitaciones = new();
 
         [ObservableProperty]
-        private string tituloCabecera = "CAPACITACIONES";
+        private string tituloCabecera = "Mis Cursos o Capacitaciones";
 
         public CapacitacionResumenViewModel(int idTrabajador, ApiClient apiClient)
         {
@@ -37,7 +37,7 @@ namespace ClientCoopSoft.ViewModels.Capacitaciones
         {
             if(_idTrabajador == 0)
             {
-                TituloCabecera = "CAPACITACIONES (sin trabajador)";
+                TituloCabecera = "Cursos o Capacitaciones (sin trabajador)";
                 Capacitaciones.Clear();
                 return;
             }
