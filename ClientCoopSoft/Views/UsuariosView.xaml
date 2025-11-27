@@ -17,6 +17,7 @@
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -84,8 +85,32 @@
                 <md:PackIcon Foreground="White" Kind="FilePdfBox" />
             </Button>
         </StackPanel>
-        <DataGrid
+
+        <Border
             Grid.Row="1"
+            Grid.ColumnSpan="3"
+            Margin="0,0,0,10"
+            Padding="8"
+            Background="#F5F5F7"
+            CornerRadius="8">
+            <DockPanel>
+                <md:PackIcon
+                    Width="20"
+                    Height="20"
+                    Margin="0,0,8,0"
+                    VerticalAlignment="Center"
+                    Foreground="#757575"
+                    Kind="Magnify" />
+                <TextBox
+                    Width="280"
+                    md:HintAssist.Hint="Buscar por CI, usuario, rol, nombre..."
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Text="{Binding TextoBusqueda, UpdateSourceTrigger=PropertyChanged}" />
+            </DockPanel>
+        </Border>
+        <DataGrid
+            Grid.Row="2"
             Grid.ColumnSpan="3"
             Margin="0"
             AutoGenerateColumns="False"
@@ -94,7 +119,7 @@
             CanUserAddRows="False"
             CanUserDeleteRows="False"
             IsReadOnly="True"
-            ItemsSource="{Binding Usuarios}">
+            ItemsSource="{Binding UsuariosView}">
 
             <DataGrid.Columns>
                 <DataGridTextColumn

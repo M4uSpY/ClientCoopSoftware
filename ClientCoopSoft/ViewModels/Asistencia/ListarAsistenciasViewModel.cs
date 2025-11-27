@@ -6,9 +6,11 @@ using Microsoft.Win32;
 using PdfSharpCore.Drawing;
 using PdfSharpCore.Pdf;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
+using System.Windows.Data;
 
 namespace ClientCoopSoft.ViewModels.Asistencia
 {
@@ -19,9 +21,22 @@ namespace ClientCoopSoft.ViewModels.Asistencia
         [ObservableProperty]
         private ObservableCollection<AsistenciaListarDTO> asistencias = new();
 
+        [ObservableProperty]
+        private ICollectionView asistenciasView;
+
+        // 👉 Texto del buscador
+        [ObservableProperty]
+        private string textoBusqueda = string.Empty;
+
         public ListarAsistenciasViewModel(ApiClient apiCient)
         {
             _apiClient = apiCient;
+
+            AsistenciasView = CollectionViewSource.GetDefaultView(Asistencias);
+            if (AsistenciasView != null)
+            {
+                AsistenciasView.Filter = AsistenciasFilter;
+            }
         }
 
         public async Task CargarAsistenciasAsync()
@@ -32,7 +47,53 @@ namespace ClientCoopSoft.ViewModels.Asistencia
                 Asistencias = new ObservableCollection<AsistenciaListarDTO>(list);
             }
         }
+        partial void OnAsistenciasChanged(ObservableCollection<AsistenciaListarDTO> value)
+        {
+            AsistenciasView = CollectionViewSource.GetDefaultView(value);
+            if (AsistenciasView != null)
+            {
+                AsistenciasView.Filter = AsistenciasFilter;
+                AsistenciasView.Refresh();
+            }
+        }
 
+        // Cuando cambia el texto del buscador
+        partial void OnTextoBusquedaChanged(string value)
+        {
+            AsistenciasView?.Refresh();
+        }
+
+        // ====== FILTRO ======
+        private bool AsistenciasFilter(object obj)
+        {
+            if (obj is not AsistenciaListarDTO a)
+                return false;
+
+            if (string.IsNullOrWhiteSpace(TextoBusqueda))
+                return true;
+
+            var filtro = TextoBusqueda.Trim().ToLower();
+
+            string fecha = a.Fecha.ToString("yyyy-MM-dd");
+            string hora = a.Hora.ToString(@"hh\:mm"); // o @"hh\:mm" según tu tipo
+            string tipo = a.EsEntrada ? "entrada" : "salida";
+
+            bool coincideCI = (a.CI ?? string.Empty).ToLower().Contains(filtro);
+            bool coincideNombre = (a.ApellidosNombres ?? string.Empty).ToLower().Contains(filtro);
+            bool coincideCargo = (a.Cargo ?? string.Empty).ToLower().Contains(filtro);
+            bool coincideOficina = (a.Oficina ?? string.Empty).ToLower().Contains(filtro);
+            bool coincideFecha = fecha.ToLower().Contains(filtro);
+            bool coincideHora = hora.ToLower().Contains(filtro);
+            bool coincideTipo = tipo.Contains(filtro);
+
+            return coincideCI
+                || coincideNombre
+                || coincideCargo
+                || coincideOficina
+                || coincideFecha
+                || coincideHora
+                || coincideTipo;
+        }
         [RelayCommand]
         private async Task ExportarPdfAsync()
         {

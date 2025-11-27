@@ -6,12 +6,14 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 
 namespace ClientCoopSoft.ViewModels.Faltas
 {
@@ -22,9 +24,22 @@ namespace ClientCoopSoft.ViewModels.Faltas
         [ObservableProperty]
         private ObservableCollection<ListarFaltasDTO> faltas = new();
 
+        [ObservableProperty]
+        private ICollectionView faltasView;
+
+        // 👉 Texto de búsqueda
+        [ObservableProperty]
+        private string textoBusqueda = string.Empty;
+
         public ListaFaltasViewModel(ApiClient apiCient)
         {
             _apiClient = apiCient;
+
+            FaltasView = CollectionViewSource.GetDefaultView(Faltas);
+            if (FaltasView != null)
+            {
+                FaltasView.Filter = FaltasFilter;
+            }
         }
 
         public async Task CargarFaltasAsync()
@@ -34,6 +49,51 @@ namespace ClientCoopSoft.ViewModels.Faltas
             {
                 Faltas = new ObservableCollection<ListarFaltasDTO>(list);
             }
+        }
+
+        partial void OnFaltasChanged(ObservableCollection<ListarFaltasDTO> value)
+        {
+            FaltasView = CollectionViewSource.GetDefaultView(value);
+            if (FaltasView != null)
+            {
+                FaltasView.Filter = FaltasFilter;
+                FaltasView.Refresh();
+            }
+        }
+
+        // Cuando cambia el texto del buscador
+        partial void OnTextoBusquedaChanged(string value)
+        {
+            FaltasView?.Refresh();
+        }
+
+        // ====== FILTRO ======
+        private bool FaltasFilter(object obj)
+        {
+            if (obj is not ListarFaltasDTO f)
+                return false;
+
+            if (string.IsNullOrWhiteSpace(TextoBusqueda))
+                return true;
+
+            var filtro = TextoBusqueda.Trim().ToLower();
+
+            string fecha = f.Fecha.ToString("yyyy-MM-dd");
+            string estadoArchivo = (f.EstadoArchivoJustificativo ?? string.Empty).ToLower();
+
+            bool coincideCI = (f.CI ?? string.Empty).ToLower().Contains(filtro);
+            bool coincideNombre = (f.ApellidosNombres ?? string.Empty).ToLower().Contains(filtro);
+            bool coincideTipo = (f.Tipo ?? string.Empty).ToLower().Contains(filtro);
+            bool coincideFecha = fecha.Contains(filtro);
+            bool coincideDescripcion = (f.Descripcion ?? string.Empty).ToLower().Contains(filtro);
+            bool coincideEstadoArchivo = estadoArchivo.Contains(filtro);
+
+            return coincideCI
+                || coincideNombre
+                || coincideTipo
+                || coincideFecha
+                || coincideDescripcion
+                || coincideEstadoArchivo;
         }
 
         [RelayCommand]

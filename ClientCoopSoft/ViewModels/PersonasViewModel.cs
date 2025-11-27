@@ -11,11 +11,13 @@ using Newtonsoft.Json;
 using PdfSharpCore.Drawing;
 using PdfSharpCore.Pdf;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 using static System.Net.WebRequestMethods;
 
 
@@ -29,9 +31,20 @@ namespace ClientCoopSoft.ViewModels
         [ObservableProperty]
         private ObservableCollection<Persona> personas = new();
 
+        [ObservableProperty]
+        private ICollectionView personasView;
+
+        [ObservableProperty]
+        private string textoBusqueda = string.Empty;
+
         public PersonasViewModel(ApiClient apiClient)
         {
             _apiClient = apiClient;
+            PersonasView = CollectionViewSource.GetDefaultView(Personas);
+            if (PersonasView != null)
+            {
+                PersonasView.Filter = PersonasFilter;
+            }
         }
 
         public async Task CargarPersonasAsync()
@@ -41,6 +54,50 @@ namespace ClientCoopSoft.ViewModels
             {
                 Personas = new ObservableCollection<Persona>(list);
             }
+        }
+        partial void OnPersonasChanged(ObservableCollection<Persona> value)
+        {
+            PersonasView = CollectionViewSource.GetDefaultView(value);
+            if (PersonasView != null)
+            {
+                PersonasView.Filter = PersonasFilter;
+                PersonasView.Refresh();
+            }
+        }
+
+        // Se ejecuta cuando cambia TextoBusqueda
+        partial void OnTextoBusquedaChanged(string value)
+        {
+            PersonasView?.Refresh();
+        }
+
+        // ====== FILTRO DE PERSONAS ======
+        private bool PersonasFilter(object obj)
+        {
+            if (obj is not Persona p)
+                return false;
+
+            if (string.IsNullOrWhiteSpace(TextoBusqueda))
+                return true;
+
+            var filtro = TextoBusqueda.Trim().ToLower();
+
+            // Puedes ajustar las propiedades según tu modelo
+            bool coincideCI = (p.CarnetIdentidad ?? string.Empty).ToLower().Contains(filtro);
+            bool coincideApPaterno = (p.ApellidoPaterno ?? string.Empty).ToLower().Contains(filtro);
+            bool coincideApMaterno = (p.ApellidoMaterno ?? string.Empty).ToLower().Contains(filtro);
+            bool coincideNombre = (p.NombreCompleto ?? string.Empty).ToLower().Contains(filtro);
+            bool coincideDireccion = (p.Direccion ?? string.Empty).ToLower().Contains(filtro);
+            bool coincideTelefono = (p.Telefono ?? string.Empty).ToLower().Contains(filtro);
+            bool coincideEmail = (p.Email ?? string.Empty).ToLower().Contains(filtro);
+
+            return coincideCI
+                || coincideApPaterno
+                || coincideApMaterno
+                || coincideNombre
+                || coincideDireccion
+                || coincideTelefono
+                || coincideEmail;
         }
 
         [RelayCommand]

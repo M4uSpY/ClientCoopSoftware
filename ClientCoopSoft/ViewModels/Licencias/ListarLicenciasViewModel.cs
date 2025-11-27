@@ -4,10 +4,12 @@ using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 
 namespace ClientCoopSoft.ViewModels.Licencias
 {
@@ -19,10 +21,22 @@ namespace ClientCoopSoft.ViewModels.Licencias
         [ObservableProperty]
         private ObservableCollection<LicenciaListarDTO> licenciasLista = new();
 
+        [ObservableProperty]
+        private ICollectionView licenciasView;
+
+        [ObservableProperty]
+        private string textoBusqueda = string.Empty;
+
         public ListarLicenciasViewModel(ApiClient apiClient, Action? onVolver = null)
         {
             _apiClient = apiClient;
             _onVolver = onVolver;
+
+            LicenciasView = CollectionViewSource.GetDefaultView(LicenciasLista);
+            if (LicenciasView != null)
+            {
+                LicenciasView.Filter = LicenciasFilter;
+            }
         }
 
         public async Task CargarLicenciasListaAsync()
@@ -33,6 +47,65 @@ namespace ClientCoopSoft.ViewModels.Licencias
                 LicenciasLista = new ObservableCollection<LicenciaListarDTO>(list);
             }
         }
+
+        partial void OnLicenciasListaChanged(ObservableCollection<LicenciaListarDTO> value)
+        {
+            LicenciasView = CollectionViewSource.GetDefaultView(value);
+            if (LicenciasView != null)
+            {
+                LicenciasView.Filter = LicenciasFilter;
+                LicenciasView.Refresh();
+            }
+        }
+
+        // Cuando cambia el texto del buscador
+        partial void OnTextoBusquedaChanged(string value)
+        {
+            LicenciasView?.Refresh();
+        }
+
+        // ====== FILTRO ======
+        private bool LicenciasFilter(object obj)
+        {
+            if (obj is not LicenciaListarDTO l)
+                return false;
+
+            if (string.IsNullOrWhiteSpace(TextoBusqueda))
+                return true;
+
+            var filtro = TextoBusqueda.Trim().ToLower();
+
+            string fechaInicio = l.FechaInicio.ToString("yyyy-MM-dd");
+            string fechaFin = l.FechaFin.ToString("yyyy-MM-dd");
+            string horaInicio = l.HoraInicio.ToString();   // seguro para cualquier tipo
+            string horaFin = l.HoraFin.ToString();
+            string jornadas = l.CantidadJornadas.ToString();
+
+            bool coincideCI = (l.CI ?? string.Empty).ToLower().Contains(filtro);
+            bool coincideNombre = (l.ApellidosNombres ?? string.Empty).ToLower().Contains(filtro);
+            bool coincideCargo = (l.Cargo ?? string.Empty).ToLower().Contains(filtro);
+            bool coincideTipo = (l.TipoLicencia ?? string.Empty).ToLower().Contains(filtro);
+            bool coincideEstado = (l.Estado ?? string.Empty).ToLower().Contains(filtro);
+            bool coincideFechaInicio = fechaInicio.Contains(filtro);
+            bool coincideFechaFin = fechaFin.Contains(filtro);
+            bool coincideHoraInicio = horaInicio.ToLower().Contains(filtro);
+            bool coincideHoraFin = horaFin.ToLower().Contains(filtro);
+            bool coincideJornadas = jornadas.Contains(filtro);
+            bool coincideMotivo = (l.Motivo ?? string.Empty).ToLower().Contains(filtro);
+
+            return coincideCI
+                || coincideNombre
+                || coincideCargo
+                || coincideTipo
+                || coincideEstado
+                || coincideFechaInicio
+                || coincideFechaFin
+                || coincideHoraInicio
+                || coincideHoraFin
+                || coincideJornadas
+                || coincideMotivo;
+        }
+
 
         [RelayCommand]
         private void Volver()

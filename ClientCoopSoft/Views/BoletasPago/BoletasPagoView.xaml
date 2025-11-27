@@ -13,6 +13,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -33,8 +34,51 @@
             Foreground="#555"
             Text="Haga clic en el botón PDF de la fila para descargar la boleta de pago correspondiente." />
 
-        <DataGrid
+        <StackPanel
             Grid.Row="2"
+            Margin="0,0,0,10"
+            VerticalAlignment="Center"
+            Orientation="Horizontal">
+            <TextBlock
+                Margin="0,0,8,0"
+                VerticalAlignment="Center"
+                FontSize="12"
+                Text="Filtrar por:" />
+
+            <!--  Año / Gestión  -->
+            <StackPanel Margin="0,0,16,0" Orientation="Horizontal">
+                <TextBlock
+                    Margin="0,0,4,0"
+                    VerticalAlignment="Center"
+                    FontSize="12"
+                    Text="Año:" />
+                <ComboBox
+                    Width="90"
+                    md:HintAssist.Hint="Año"
+                    IsEditable="False"
+                    ItemsSource="{Binding Anios}"
+                    SelectedItem="{Binding AnioSeleccionado, Mode=TwoWay}" />
+            </StackPanel>
+
+            <!--  Mes  -->
+            <StackPanel Orientation="Horizontal">
+                <TextBlock
+                    Margin="0,0,4,0"
+                    VerticalAlignment="Center"
+                    FontSize="12"
+                    Text="Mes:" />
+                <ComboBox
+                    Width="130"
+                    md:HintAssist.Hint="Mes"
+                    DisplayMemberPath="Nombre"
+                    IsEditable="False"
+                    ItemsSource="{Binding Meses}"
+                    SelectedItem="{Binding MesSeleccionado, Mode=TwoWay}" />
+            </StackPanel>
+        </StackPanel>
+
+        <DataGrid
+            Grid.Row="3"
             Margin="0"
             AutoGenerateColumns="False"
             Background="White"
@@ -42,7 +86,7 @@
             CanUserAddRows="False"
             CanUserDeleteRows="False"
             IsReadOnly="True"
-            ItemsSource="{Binding BoletasPago}"
+            ItemsSource="{Binding BoletasView}"
             SelectedItem="{Binding BoletaSeleccionada}">
             <DataGrid.Resources>
                 <!--  Estilo para alinear a la izquierda todas las celdas de texto  -->

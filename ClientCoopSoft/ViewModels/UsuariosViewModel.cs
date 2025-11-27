@@ -11,10 +11,12 @@ using Microsoft.Win32;
 using PdfSharpCore.Drawing;
 using PdfSharpCore.Pdf;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 using Run = DocumentFormat.OpenXml.Wordprocessing.Run;
 using Text = DocumentFormat.OpenXml.Wordprocessing.Text;
 
@@ -27,9 +29,21 @@ namespace ClientCoopSoft.ViewModels
         [ObservableProperty]
         private ObservableCollection<Usuario> usuarios = new();
 
+        [ObservableProperty]
+        private ICollectionView usuariosView;
+
+        [ObservableProperty]
+        private string textoBusqueda = string.Empty;
+
         public UsuariosViewModel(ApiClient apiClient)
         {
             _apiClient = apiClient;
+
+            UsuariosView = CollectionViewSource.GetDefaultView(Usuarios);
+            if (UsuariosView != null)
+            {
+                UsuariosView.Filter = UsuariosFilter;
+            }
         }
         public async Task LoadUsuariosAsync()
         {
@@ -39,6 +53,56 @@ namespace ClientCoopSoft.ViewModels
                 Usuarios = new ObservableCollection<Usuario>(list);
             }
         }
+
+        partial void OnUsuariosChanged(ObservableCollection<Usuario> value)
+        {
+            UsuariosView = CollectionViewSource.GetDefaultView(value);
+            if (UsuariosView != null)
+            {
+                UsuariosView.Filter = UsuariosFilter;
+                UsuariosView.Refresh();
+            }
+        }
+
+        partial void OnTextoBusquedaChanged(string value)
+        {
+            UsuariosView?.Refresh();
+        }
+
+        private bool UsuariosFilter(object obj)
+        {
+            if (obj is not Usuario u)
+                return false;
+
+            if (string.IsNullOrWhiteSpace(TextoBusqueda))
+                return true;
+
+            var filtro = TextoBusqueda.Trim().ToLower();
+
+            // Campos a considerar en la búsqueda
+            bool coincideCI = (u.CI ?? string.Empty).ToLower().Contains(filtro);
+            bool coincideNombreUsuario = (u.NombreUsuario ?? string.Empty).ToLower().Contains(filtro);
+            bool coincideRol = (u.Rol ?? string.Empty).ToLower().Contains(filtro);
+            bool coincideDescripcionRol = (u.DescripcionRol ?? string.Empty).ToLower().Contains(filtro);
+            bool coincideNombreCompleto = (u.NombreCompleto ?? string.Empty).ToLower().Contains(filtro);
+
+            // Estado: usar tus converters visuales, pero aquí para búsqueda:
+            string estadoTexto = u.Activo ? "activo" : "inactivo";
+            bool coincideEstado = estadoTexto.Contains(filtro);
+
+            // Género: usamos texto descriptivo
+            string generoTexto = u.Genero ? "masculino" : "femenino";
+            bool coincideGenero = generoTexto.Contains(filtro);
+
+            return coincideCI
+                || coincideNombreUsuario
+                || coincideRol
+                || coincideDescripcionRol
+                || coincideNombreCompleto
+                || coincideEstado
+                || coincideGenero;
+        }
+
         [RelayCommand]
         private async Task AgregarUsuarioAsync()
         {
