@@ -41,10 +41,12 @@
                         Width="120"
                         Height="auto"
                         Margin="0,0,20,0"
+                        RenderOptions.BitmapScalingMode="HighQuality"
                         Source="/Assets/Logo_Cooperativa.png" />
                     <Image
                         Width="100"
                         Height="auto"
+                        RenderOptions.BitmapScalingMode="HighQuality"
                         Source="/Assets/iconSoft.png" />
                 </StackPanel>
                 <TextBlock
@@ -199,6 +201,7 @@
                 Grid.Row="1"
                 Grid.Column="1"
                 Height="450"
+                RenderOptions.BitmapScalingMode="HighQuality"
                 Source="/Assets/WallMain.png"
                 Stretch="Fill" />
         </Grid>

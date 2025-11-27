@@ -145,6 +145,7 @@
                                 <Image
                                     Width="60"
                                     Height="60"
+                                    RenderOptions.BitmapScalingMode="HighQuality"
                                     Source="{Binding Foto}"
                                     Stretch="UniformToFill" />
                             </Border>
