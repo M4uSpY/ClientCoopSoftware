@@ -187,6 +187,19 @@
                     </StackPanel>
                 </Button>
 
+                <!--  Guardar RC-IVA  -->
+                <Button
+                    Margin="8,0,0,0"
+                    Padding="12,4"
+                    Command="{Binding GuardarRcIvaCommand}"
+                    Style="{StaticResource MaterialDesignOutlinedButton}"
+                    ToolTip="Guardar valores manuales de RC-IVA e inmediatamente recalcular la planilla">
+                    <StackPanel Orientation="Horizontal">
+                        <md:PackIcon Margin="0,0,6,0" Kind="ContentSave" />
+                        <TextBlock Text="Guardar RC-IVA" />
+                    </StackPanel>
+                </Button>
+
                 <!--  Cerrar planilla  -->
                 <Button
                     Margin="8,0,0,0"
@@ -237,7 +250,7 @@
             CanUserAddRows="False"
             CanUserDeleteRows="False"
             HeadersVisibility="Column"
-            IsReadOnly="True"
+            IsReadOnly="False"
             ItemsSource="{Binding PlanillaSueldos}">
             <DataGrid.Resources>
                 <!--  Alineación derecha y formato numérico  -->
@@ -324,11 +337,21 @@
                     ElementStyle="{StaticResource RightAlignNumericCell}"
                     Header="Gestora 12.21%" />
 
-                <DataGridTextColumn
+                <DataGridTemplateColumn
                     Width="120"
-                    Binding="{Binding RcIva13, StringFormat=N2}"
-                    ElementStyle="{StaticResource RightAlignNumericCell}"
-                    Header="RC-IVA 13%" />
+                    Header="RC-IVA 13%"
+                    IsReadOnly="False">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock HorizontalAlignment="Right" Text="{Binding RcIva13, StringFormat=N2}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <TextBox HorizontalAlignment="Stretch" Text="{Binding RcIva13, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
 
                 <DataGridTextColumn
                     Width="120"

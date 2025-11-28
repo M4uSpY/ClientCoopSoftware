@@ -235,5 +235,76 @@ namespace ClientCoopSoft.ViewModels.Planillas
             MessageBox.Show("Exportar a PDF aún no está implementado.", "Info",
                 MessageBoxButton.OK, MessageBoxImage.Information);
         }
+
+        [RelayCommand]
+        private async Task GuardarRcIvaAsync()
+        {
+            if (IdPlanillaActual <= 0)
+            {
+                MessageBox.Show(
+                    "No hay una planilla seleccionada.\n\n" +
+                    "Cargue primero una planilla o cree una nueva.",
+                    "Aviso", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (PlanillaSueldos == null || PlanillaSueldos.Count == 0)
+            {
+                MessageBox.Show(
+                    "No hay filas de planilla para actualizar.",
+                    "Aviso", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            try
+            {
+                int errores = 0;
+
+                foreach (var fila in PlanillaSueldos)
+                {
+                    // puedes aplicar validaciones aquí (por ejemplo RC-IVA >= 0)
+                    if (fila.IdTrabajadorPlanilla <= 0)
+                        continue;
+
+                    var ok = await _api.ActualizarRcIvaAsync(
+                        fila.IdTrabajadorPlanilla,
+                        fila.RcIva13);
+
+                    if (!ok)
+                        errores++;
+                }
+
+                // Recalcular planilla con los nuevos RC-IVA manuales
+                var recalculoOk = await _api.CalcularPlanillaSueldosAsync(IdPlanillaActual);
+                if (!recalculoOk)
+                {
+                    MessageBox.Show(
+                        "Se guardó RC-IVA pero no se pudo recalcular la planilla.",
+                        "Advertencia", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                else
+                {
+                    await CargarPlanillaAsync();
+                }
+
+                if (errores == 0)
+                {
+                    MessageBox.Show(
+                        "RC-IVA guardado correctamente y planilla recalculada.",
+                        "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    MessageBox.Show(
+                        $"Se presentaron errores en {errores} fila(s) al guardar RC-IVA.",
+                        "Advertencia", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al guardar RC-IVA: {ex.Message}",
+                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
     }
 }

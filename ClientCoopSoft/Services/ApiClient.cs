@@ -8,6 +8,7 @@ using ClientCoopSoft.DTO.FormacionAcademica;
 using ClientCoopSoft.DTO.Historicos;
 using ClientCoopSoft.DTO.Licencias;
 using ClientCoopSoft.DTO.Personas;
+using ClientCoopSoft.DTO.Planillas;
 using ClientCoopSoft.DTO.Trabajadores;
 using ClientCoopSoft.DTO.VacacionesPermisos;
 using ClientCoopSoft.Models;
@@ -1006,6 +1007,29 @@ public class ApiClient
             return JsonConvert.DeserializeObject<List<HistoricoFaltaListarDTO>>(raw);
         }
         return null;
+    }
+
+    public async Task<bool> ActualizarRcIvaAsync(int idTrabajadorPlanilla, decimal montoRcIva)
+    {
+        try
+        {
+            var dto = new RcIvaActualizarDTO
+            {
+                MontoRcIva = montoRcIva
+            };
+
+            var response = await _http.PutAsJsonAsync(
+                $"api/PlanillaSueldosSalarios/trabajador-planilla/{idTrabajadorPlanilla}/rc-iva",
+                dto);
+
+            return response.IsSuccessStatusCode;
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Error al actualizar RC-IVA: {ex.Message}",
+                "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            return false;
+        }
     }
 
 }

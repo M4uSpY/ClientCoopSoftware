@@ -9,6 +9,7 @@ namespace ClientCoopSoft.Models
     public class PlanillaSueldosFilaModel
     {
         public int Id { get; set; }
+        public int IdTrabajadorPlanilla { get; set; }
 
         public string CarnetIdentidad { get; set; } = string.Empty;
         public string ApellidosNombres { get; set; } = string.Empty;
