@@ -94,26 +94,86 @@
                 <DataGridTemplateColumn Width="*" Header="Archivo justificativo">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                            <StackPanel Margin="1" Orientation="Horizontal">
                                 <!--  Ver archivo  -->
                                 <Button
                                     Margin="0,0,4,0"
-                                    Padding="8,2"
-                                    md:ButtonAssist.CornerRadius="4"
+                                    Padding="6"
+                                    Background="Transparent"
                                     BorderThickness="0"
                                     Command="{Binding DataContext.VerArchivoFaltaCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                     CommandParameter="{Binding}"
-                                    Content="Ver" />
+                                    Cursor="Hand">
+
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="Background" Value="Transparent" />
+                                            <Setter Property="Foreground" Value="#303048" />
+
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="Button">
+                                                        <Border
+                                                            Padding="{TemplateBinding Padding}"
+                                                            Background="{TemplateBinding Background}"
+                                                            CornerRadius="6">
+
+                                                            <md:PackIcon
+                                                                Width="20"
+                                                                Height="20"
+                                                                Foreground="{TemplateBinding Foreground}"
+                                                                Kind="EyeOutline" />
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+
+                                            <!--  Zoom suave  -->
+                                            <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
+                                            <Setter Property="RenderTransform">
+                                                <Setter.Value>
+                                                    <ScaleTransform ScaleX="1" ScaleY="1" />
+                                                </Setter.Value>
+                                            </Setter>
+
+                                            <Style.Triggers>
+                                                <!--  HOVER  -->
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="#20EFB214" />
+                                                    <!--  fondo suave  -->
+                                                    <Setter Property="Foreground" Value="#EFB214" />
+                                                    <!--  icono amarillo  -->
+                                                    <Setter Property="RenderTransform">
+                                                        <Setter.Value>
+                                                            <ScaleTransform ScaleX="1.12" ScaleY="1.12" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Trigger>
+
+                                                <!--  CLICK  -->
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Setter Property="Background" Value="#40EFB214" />
+                                                    <Setter Property="Foreground" Value="#C89610" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+
+
+
 
                                 <!--  Subir / Actualizar archivo  -->
                                 <Button
                                     Margin="0,0,4,0"
                                     Padding="8,2"
                                     md:ButtonAssist.CornerRadius="4"
+                                    Background="#323AA3"
                                     BorderThickness="0"
                                     Command="{Binding DataContext.SubirArchivoFaltaCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                     CommandParameter="{Binding}"
-                                    Content="Subir" />
+                                    Content="Subir"
+                                    Foreground="White" />
 
                                 <!--  Eliminar falta  -->
                                 <Button

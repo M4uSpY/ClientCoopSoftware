@@ -47,33 +47,35 @@
 
             <!--  Año / Gestión  -->
             <StackPanel Margin="0,0,16,0" Orientation="Horizontal">
-                <TextBlock
-                    Margin="0,0,4,0"
-                    VerticalAlignment="Center"
-                    FontSize="12"
-                    Text="Año:" />
                 <ComboBox
                     Width="90"
+                    Height="Auto"
+                    Margin="0,5,0,0"
                     md:HintAssist.Hint="Año"
+                    md:HintAssist.HintPaddingBrush="White"
+                    md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                    BorderBrush="#CCC"
                     IsEditable="False"
                     ItemsSource="{Binding Anios}"
-                    SelectedItem="{Binding AnioSeleccionado, Mode=TwoWay}" />
+                    SelectedItem="{Binding AnioSeleccionado, Mode=TwoWay}"
+                    Style="{StaticResource MaterialDesignOutlinedComboBox}" />
             </StackPanel>
 
             <!--  Mes  -->
             <StackPanel Orientation="Horizontal">
-                <TextBlock
-                    Margin="0,0,4,0"
-                    VerticalAlignment="Center"
-                    FontSize="12"
-                    Text="Mes:" />
                 <ComboBox
                     Width="130"
+                    Height="Auto"
+                    Margin="0,5,0,0"
                     md:HintAssist.Hint="Mes"
+                    md:HintAssist.HintPaddingBrush="White"
+                    md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                    BorderBrush="#CCC"
                     DisplayMemberPath="Nombre"
                     IsEditable="False"
                     ItemsSource="{Binding Meses}"
-                    SelectedItem="{Binding MesSeleccionado, Mode=TwoWay}" />
+                    SelectedItem="{Binding MesSeleccionado, Mode=TwoWay}"
+                    Style="{StaticResource MaterialDesignOutlinedComboBox}" />
             </StackPanel>
         </StackPanel>
 
@@ -158,13 +160,17 @@
                                 Width="80"
                                 Padding="6,2"
                                 HorizontalAlignment="Left"
-                                HorizontalContentAlignment="Left"
+                                HorizontalContentAlignment="Center"
+                                Background="Red"
                                 Command="{Binding DataContext.DescargarPdfCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
                                 CommandParameter="{Binding}"
                                 Style="{StaticResource MaterialDesignFlatButton}">
                                 <StackPanel Orientation="Horizontal">
-                                    <md:PackIcon Margin="0,0,4,0" Kind="FilePdfBox" />
-                                    <TextBlock Text="PDF" />
+                                    <md:PackIcon
+                                        Margin="0,0,4,0"
+                                        Foreground="White"
+                                        Kind="FilePdfBox" />
+                                    <TextBlock Foreground="White" Text="PDF" />
                                 </StackPanel>
                             </Button>
                         </DataTemplate>

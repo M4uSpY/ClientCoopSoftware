@@ -59,6 +59,7 @@
     <None Remove="Assets\IconosDashboard\usuriosIcon.png" />
     <None Remove="Assets\iconPassword.png" />
     <None Remove="Assets\iconSoft.png" />
+    <None Remove="Assets\imgDefaultCapacitacion.png" />
     <None Remove="Assets\imgFormAcademicaAdd.png" />
     <None Remove="Assets\Login_Fondo.png" />
     <None Remove="Assets\Logo_Cooperativa.png" />
@@ -119,6 +120,7 @@
     <Resource Include="Assets\IconosDashboard\usuriosIcon.png" />
     <Resource Include="Assets\iconPassword.png" />
     <Resource Include="Assets\iconSoft.png" />
+    <Resource Include="Assets\imgDefaultCapacitacion.png" />
     <Resource Include="Assets\imgFormAcademicaAdd.png" />
     <Resource Include="Assets\Login_Fondo.png" />
     <Resource Include="Assets\Logo_Cooperativa.png" />

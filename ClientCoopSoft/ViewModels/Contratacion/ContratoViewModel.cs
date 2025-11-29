@@ -149,7 +149,7 @@ namespace ClientCoopSoft.ViewModels.Contratacion
 
 
         [RelayCommand]
-        private async Task GuardarAsync(Window window)
+        private async Task GuardarAsync()
         {
             if (_contrato is null)
             {

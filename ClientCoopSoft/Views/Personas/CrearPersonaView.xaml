@@ -377,6 +377,10 @@
                     Command="{Binding SubirFotoCommand}"
                     Content="Subir Foto"
                     Foreground="White" />
+                <TextBlock
+                    Margin="0,10,0,0"
+                    Foreground="#FF214F"
+                    Text="Limite de tamanio de foto: 2 MB" />
             </StackPanel>
 
             <!--  AGREGAR Huella  -->

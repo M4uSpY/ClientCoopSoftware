@@ -11,10 +11,11 @@
     <Grid>
         <!--  4 columnas: datos, datos, fechas, panel derecho  -->
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
+            <ColumnDefinition Width="393*" />
+            <ColumnDefinition Width="403*" />
+            <ColumnDefinition Width="103*" />
+            <ColumnDefinition Width="20*" />
+            <ColumnDefinition Width="82*" />
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -33,7 +34,7 @@
         <!--  ENCABEZADO  -->
         <Grid
             Grid.Row="0"
-            Grid.ColumnSpan="4"
+            Grid.ColumnSpan="5"
             Margin="0,-15,0,30">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -57,7 +58,6 @@
                 BorderBrush="Transparent"
                 BorderThickness="0"
                 Command="{Binding GuardarCommand}"
-                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
                 Content="Guardar"
                 Foreground="White"
                 Style="{StaticResource MaterialDesignRaisedButton}" />
@@ -68,7 +68,7 @@
             Grid.Row="1"
             Grid.ColumnSpan="2"
             Margin="0,0,0,30"
-            HorizontalAlignment="Center"
+            HorizontalAlignment="Left"
             Orientation="Vertical">
             <TextBlock
                 Margin="2,0,0,3"
@@ -76,7 +76,7 @@
                 Foreground="#666"
                 Text="Ingrese el número de contrato:" />
             <TextBox
-                Width="810"
+                Width="500"
                 Margin="0,5,0,0"
                 md:HintAssist.Hint=""
                 md:HintAssist.HintPaddingBrush="Transparent"
@@ -90,9 +90,9 @@
 
         <!--  Tipo de contrato  -->
         <StackPanel
-            Grid.Row="2"
-            Grid.Column="0"
-            Margin="0,0,0,30"
+            Grid.Row="1"
+            Grid.RowSpan="2"
+            Margin="0,101,0,30"
             HorizontalAlignment="Center"
             Orientation="Vertical">
             <TextBlock
@@ -101,7 +101,7 @@
                 Foreground="#666"
                 Text="Seleccione el tipo de contrato:" />
             <ComboBox
-                Width="400"
+                Width="290"
                 Height="auto"
                 Margin="0,5,0,0"
                 md:HintAssist.Foreground="Transparent"
@@ -119,10 +119,11 @@
 
         <!--  Periodo de pago  -->
         <StackPanel
-            Grid.Row="2"
+            Grid.Row="1"
+            Grid.RowSpan="2"
             Grid.Column="1"
-            Margin="10,0,0,35"
-            HorizontalAlignment="Center"
+            Margin="10,101,0,35"
+            HorizontalAlignment="Left"
             Orientation="Vertical">
             <TextBlock
                 Margin="2,0,0,3"
@@ -130,7 +131,7 @@
                 Foreground="#666"
                 Text="Seleccione el periodo de pago:" />
             <ComboBox
-                Width="395"
+                Width="290"
                 Height="auto"
                 Margin="0,5,0,0"
                 md:HintAssist.Foreground="Transparent"
@@ -149,7 +150,6 @@
         <!--  Fecha inicio  -->
         <StackPanel
             Grid.Row="3"
-            Grid.Column="0"
             Margin="0,0,0,35"
             HorizontalAlignment="Center"
             Orientation="Vertical">
@@ -159,7 +159,7 @@
                 Foreground="#666"
                 Text="Indique la fecha de inicio del contrato:" />
             <DatePicker
-                Width="400"
+                Width="290"
                 Margin="0,5,0,0"
                 md:HintAssist.Hint=""
                 md:HintAssist.HintPaddingBrush="Transparent"
@@ -174,7 +174,7 @@
             Grid.Row="3"
             Grid.Column="1"
             Margin="10,0,0,35"
-            HorizontalAlignment="Center"
+            HorizontalAlignment="Left"
             Orientation="Vertical">
             <TextBlock
                 Margin="2,0,0,3"
@@ -182,7 +182,7 @@
                 Foreground="#666"
                 Text="Indique la fecha de finalización del contrato:" />
             <DatePicker
-                Width="395"
+                Width="290"
                 Margin="0,5,0,0"
                 md:HintAssist.Hint=""
                 md:HintAssist.HintPaddingBrush="Transparent"
@@ -242,9 +242,10 @@
 
         <Image
             Grid.RowSpan="5"
-            Grid.ColumnSpan="4"
+            Grid.ColumnSpan="5"
             Width="1000"
             Height="600"
+            Margin="0,10,0,11"
             HorizontalAlignment="Right"
             Source="/Assets/iconContratoView.png" />
     </Grid>

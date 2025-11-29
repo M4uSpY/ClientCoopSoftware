@@ -119,6 +119,19 @@ namespace ClientCoopSoft.ViewModels.Personas
                 if (openFileDialog.ShowDialog() == true)
                 {
                     var filePath = openFileDialog.FileName;
+
+                    var fileInfo = new FileInfo(filePath);
+                    const long maxBytes = 2 * 1024 * 1024; // 2 MB
+                    if (fileInfo.Length > maxBytes)
+                    {
+                        MessageBox.Show(
+                            "La foto no puede ser mayor a 2 MB.",
+                            "Advertencia",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning);
+                        return;
+                    }
+
                     FotoBytes = File.ReadAllBytes(filePath);
 
                     // Crear previsualización

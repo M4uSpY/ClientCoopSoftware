@@ -60,6 +60,8 @@
                     <TextBox
                         Width="400"
                         Margin="0,5,0,0"
+                        md:HintAssist.Hint=""
+                        md:HintAssist.HintPaddingBrush="Transparent"
                         md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
                         md:TextFieldAssist.UnderlineBrush="#0078D7"
                         BorderBrush="Gray"
@@ -80,6 +82,8 @@
                     <TextBox
                         Width="400"
                         Margin="0,5,0,0"
+                        md:HintAssist.Hint=""
+                        md:HintAssist.HintPaddingBrush="Transparent"
                         md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
                         md:TextFieldAssist.UnderlineBrush="#0078D7"
                         BorderBrush="Gray"
@@ -100,6 +104,8 @@
                     <TextBox
                         Width="400"
                         Margin="0,5,0,0"
+                        md:HintAssist.Hint=""
+                        md:HintAssist.HintPaddingBrush="Transparent"
                         md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
                         md:TextFieldAssist.UnderlineBrush="#0078D7"
                         BorderBrush="Gray"
@@ -186,6 +192,11 @@
                     Command="{Binding SubirFotoCommand}"
                     Content="Subir Foto"
                     Foreground="White" />
+                <TextBlock
+                    Margin="0,10,0,0"
+                    HorizontalAlignment="Center"
+                    Foreground="#FF214F"
+                    Text="Limite de tamanio de foto: 2 MB" />
 
             </StackPanel>
         </Grid>

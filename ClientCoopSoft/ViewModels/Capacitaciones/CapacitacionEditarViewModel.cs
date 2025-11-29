@@ -57,7 +57,22 @@ namespace ClientCoopSoft.ViewModels.Capacitaciones
 
                 if (openFileDialog.ShowDialog() == true)
                 {
-                    FotoBytes = File.ReadAllBytes(openFileDialog.FileName);
+
+                    var filePath = openFileDialog.FileName;
+
+                    var info = new FileInfo(filePath);
+                    const long maxBytes = 2 * 1024 * 1024; // 2 MB
+                    if (info.Length > maxBytes)
+                    {
+                        MessageBox.Show(
+                            "El archivo del certificado no puede ser mayor a 2 MB.",
+                            "Advertencia",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning);
+                        return;
+                    }
+
+                    FotoBytes = File.ReadAllBytes(filePath);
 
                     var bitmap = new BitmapImage();
                     using (var stream = new MemoryStream(FotoBytes))

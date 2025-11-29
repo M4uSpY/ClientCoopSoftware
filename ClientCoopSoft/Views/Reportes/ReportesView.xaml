@@ -34,17 +34,17 @@
                 VerticalAlignment="Center"
                 Orientation="Vertical">
                 <md:PackIcon
-                    Width="300"
-                    Height="300"
+                    Width="250"
+                    Height="250"
                     HorizontalAlignment="Center"
-                    Foreground="#3378BD"
-                    Kind="AccountBox" />
+                    Foreground="#3D8284"
+                    Kind="Warning" />
 
                 <TextBlock
                     HorizontalAlignment="Center"
                     FontSize="30"
-                    FontWeight="Normal"
-                    Foreground="#3378BD"
+                    FontWeight="ExtraLight"
+                    Foreground="#303048"
                     Text="Historico Faltas" />
             </StackPanel>
         </Button>
@@ -62,17 +62,17 @@
                 VerticalAlignment="Center"
                 Orientation="Vertical">
                 <md:PackIcon
-                    Width="300"
-                    Height="300"
+                    Width="250"
+                    Height="250"
                     HorizontalAlignment="Center"
-                    Foreground="#3378BD"
-                    Kind="AccountBox" />
+                    Foreground="#3D8284"
+                    Kind="People" />
 
                 <TextBlock
                     HorizontalAlignment="Center"
                     FontSize="30"
-                    FontWeight="Normal"
-                    Foreground="#3378BD"
+                    FontWeight="ExtraLight"
+                    Foreground="#303048"
                     Text="Historico Personas" />
             </StackPanel>
         </Button>
@@ -90,17 +90,17 @@
                 VerticalAlignment="Center"
                 Orientation="Vertical">
                 <md:PackIcon
-                    Width="300"
-                    Height="300"
+                    Width="250"
+                    Height="250"
                     HorizontalAlignment="Center"
-                    Foreground="#3378BD"
-                    Kind="AccountBox" />
+                    Foreground="#3D8284"
+                    Kind="WorkerOutline" />
 
                 <TextBlock
                     HorizontalAlignment="Center"
                     FontSize="30"
-                    FontWeight="Normal"
-                    Foreground="#3378BD"
+                    FontWeight="ExtraLight"
+                    Foreground="#303048"
                     Text="Historico Trabajadores" />
             </StackPanel>
         </Button>
@@ -117,17 +117,17 @@
                 VerticalAlignment="Center"
                 Orientation="Vertical">
                 <md:PackIcon
-                    Width="300"
-                    Height="300"
+                    Width="250"
+                    Height="250"
                     HorizontalAlignment="Center"
-                    Foreground="#3378BD"
-                    Kind="AccountBox" />
+                    Foreground="#3D8284"
+                    Kind="Payment" />
 
                 <TextBlock
                     HorizontalAlignment="Center"
                     FontSize="30"
-                    FontWeight="Normal"
-                    Foreground="#3378BD"
+                    FontWeight="ExtraLight"
+                    Foreground="#303048"
                     Text="Historico Planillas" />
             </StackPanel>
         </Button>
@@ -144,17 +144,17 @@
                 VerticalAlignment="Center"
                 Orientation="Vertical">
                 <md:PackIcon
-                    Width="600"
-                    Height="300"
+                    Width="250"
+                    Height="250"
                     HorizontalAlignment="Center"
-                    Foreground="#3378BD"
+                    Foreground="#3D8284"
                     Kind="AccountBox" />
 
                 <TextBlock
                     HorizontalAlignment="Center"
                     FontSize="30"
-                    FontWeight="Normal"
-                    Foreground="#3378BD"
+                    FontWeight="ExtraLight"
+                    Foreground="#303048"
                     Text="Historico Trabajador Planilla" />
             </StackPanel>
         </Button>
@@ -172,17 +172,17 @@
                 VerticalAlignment="Center"
                 Orientation="Vertical">
                 <md:PackIcon
-                    Width="300"
-                    Height="300"
+                    Width="250"
+                    Height="250"
                     HorizontalAlignment="Center"
-                    Foreground="#3378BD"
-                    Kind="AccountBox" />
+                    Foreground="#3D8284"
+                    Kind="UsersGroup" />
 
                 <TextBlock
                     HorizontalAlignment="Center"
                     FontSize="30"
-                    FontWeight="Normal"
-                    Foreground="#3378BD"
+                    FontWeight="ExtraLight"
+                    Foreground="#303048"
                     Text="Historico Usuarios" />
             </StackPanel>
         </Button>

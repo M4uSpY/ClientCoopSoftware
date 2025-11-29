@@ -34,8 +34,13 @@
                         Text="Gestión" />
                     <TextBox
                         Width="80"
-                        Margin="0,2,0,0"
+                        Margin="0,5,0,0"
+                        md:HintAssist.Hint=""
+                        md:HintAssist.HintPaddingBrush="Transparent"
                         md:TextFieldAssist.DecorationVisibility="Hidden"
+                        md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                        BorderBrush="#CCC"
+                        Style="{StaticResource MaterialDesignOutlinedTextBox}"
                         Text="{Binding Gestion, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
 
@@ -46,8 +51,13 @@
                         Text="Mes" />
                     <TextBox
                         Width="50"
-                        Margin="0,2,0,0"
+                        Margin="0,5,0,0"
+                        md:HintAssist.Hint=""
+                        md:HintAssist.HintPaddingBrush="Transparent"
                         md:TextFieldAssist.DecorationVisibility="Hidden"
+                        md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                        BorderBrush="#CCC"
+                        Style="{StaticResource MaterialDesignOutlinedTextBox}"
                         Text="{Binding Mes, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
 
@@ -58,8 +68,13 @@
                         Text="Id Planilla Sueldos" />
                     <TextBox
                         Width="90"
-                        Margin="0,2,0,0"
+                        Margin="0,5,0,0"
+                        md:HintAssist.Hint=""
+                        md:HintAssist.HintPaddingBrush="Transparent"
                         md:TextFieldAssist.DecorationVisibility="Hidden"
+                        md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                        BorderBrush="#CCC"
+                        Style="{StaticResource MaterialDesignOutlinedTextBox}"
                         Text="{Binding IdPlanillaSueldos, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
 

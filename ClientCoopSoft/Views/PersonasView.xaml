@@ -10,6 +10,7 @@
     mc:Ignorable="d">
     <UserControl.Resources>
         <conv:BoolToGeneroConverter x:Key="BoolToGeneroConverter" />
+        <conv:BytesToImageConverter x:Key="BytesToImageConverter" />
     </UserControl.Resources>
     <Grid Margin="20">
         <Grid.RowDefinitions>
@@ -171,7 +172,7 @@
                                     Width="60"
                                     Height="60"
                                     RenderOptions.BitmapScalingMode="HighQuality"
-                                    Source="{Binding Foto}"
+                                    Source="{Binding Foto, Converter={StaticResource BytesToImageConverter}}"
                                     Stretch="UniformToFill" />
                             </Border>
                         </DataTemplate>

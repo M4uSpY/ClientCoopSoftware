@@ -23,15 +23,18 @@
         <Button
             Grid.Row="0"
             Grid.Column="2"
-            Width="40"
+            Width="45"
             Height="40"
             Margin="8,0,0,0"
+            Padding="4"
             Background="#D9534F"
             BorderBrush="Transparent"
             Command="{Binding ExportarPdfCommand}"
-            Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+            Style="{StaticResource MaterialDesignRaisedButton}"
             ToolTip="Exportar a PDF">
-            <md:PackIcon Foreground="White" Kind="FilePdfBox" />
+            <Viewbox Stretch="Uniform">
+                <md:PackIcon Foreground="White" Kind="FilePdfBox" />
+            </Viewbox>
         </Button>
         <TextBlock
             Grid.Row="0"

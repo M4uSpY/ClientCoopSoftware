@@ -95,8 +95,13 @@
                         Text="Gestión" />
                     <TextBox
                         Width="80"
-                        Margin="0,2,0,0"
+                        Margin="0,5,0,0"
+                        md:HintAssist.Hint=""
+                        md:HintAssist.HintPaddingBrush="Transparent"
                         md:TextFieldAssist.DecorationVisibility="Hidden"
+                        md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                        BorderBrush="#CCC"
+                        Style="{StaticResource MaterialDesignOutlinedTextBox}"
                         Text="{Binding Gestion, UpdateSourceTrigger=PropertyChanged}"
                         ToolTip="Año de la planilla. Ejemplo: 2025" />
                 </StackPanel>
@@ -109,8 +114,13 @@
                         Text="Mes" />
                     <TextBox
                         Width="50"
-                        Margin="0,2,0,0"
+                        Margin="0,5,0,0"
+                        md:HintAssist.Hint=""
+                        md:HintAssist.HintPaddingBrush="Transparent"
                         md:TextFieldAssist.DecorationVisibility="Hidden"
+                        md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                        BorderBrush="#CCC"
+                        Style="{StaticResource MaterialDesignOutlinedTextBox}"
                         Text="{Binding Mes, UpdateSourceTrigger=PropertyChanged}"
                         ToolTip="Mes de la planilla (1 a 12)" />
                 </StackPanel>
@@ -123,8 +133,13 @@
                         Text="Id Planilla" />
                     <TextBox
                         Width="80"
-                        Margin="0,2,0,0"
+                        Margin="0,5,0,0"
+                        md:HintAssist.Hint=""
+                        md:HintAssist.HintPaddingBrush="Transparent"
                         md:TextFieldAssist.DecorationVisibility="Hidden"
+                        md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                        BorderBrush="#CCC"
+                        Style="{StaticResource MaterialDesignOutlinedTextBox}"
                         Text="{Binding IdPlanillaActual, UpdateSourceTrigger=PropertyChanged}"
                         ToolTip="Identificador de una planilla ya creada" />
                 </StackPanel>
