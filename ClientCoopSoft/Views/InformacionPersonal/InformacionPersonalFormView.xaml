@@ -76,7 +76,10 @@
                                 Margin="0,0,0,4"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Top">
-                                <Ellipse Width="200" Height="200">
+                                <Ellipse
+                                    Width="200"
+                                    Height="200"
+                                    RenderOptions.BitmapScalingMode="HighQuality">
                                     <Ellipse.Fill>
                                         <ImageBrush ImageSource="{Binding FotoBytes}" Stretch="UniformToFill" />
                                     </Ellipse.Fill>
@@ -107,9 +110,10 @@
                                     Foreground="#E5E7EB"
                                     Text="Tarjeta de perfil" />
                                 <TextBlock
+                                    HorizontalAlignment="Center"
                                     FontSize="11"
                                     Foreground="#9CA3AF"
-                                    Text="Foto, C.I. y fecha de nacimiento." />
+                                    Text="Datos personales" />
                             </StackPanel>
 
                             <!--  CI + FECHA  -->

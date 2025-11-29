@@ -38,7 +38,7 @@
                 Grid.Column="1"
                 Width="180"
                 md:ButtonAssist.CornerRadius="5"
-                Background="#4CAF50"
+                Background="#303048"
                 BorderBrush="Transparent"
                 BorderThickness="0"
                 Command="{Binding NuevaCapacitacionCommand}"

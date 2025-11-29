@@ -43,7 +43,7 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="230" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0" Background="#232A33">
@@ -64,12 +64,12 @@
                         Text="{Binding Bienvenida}" />
                     <StackPanel Orientation="Horizontal">
 
-                        <Ellipse Width="71" Height="70">
+                        <Ellipse
+                            Width="71"
+                            Height="70"
+                            RenderOptions.BitmapScalingMode="HighQuality">
                             <Ellipse.Fill>
-                                <ImageBrush
-                                    ImageSource="{Binding FotoPerfil}"
-                                    RenderOptions.BitmapScalingMode="HighQuality"
-                                    Stretch="UniformToFill" />
+                                <ImageBrush ImageSource="{Binding FotoPerfil}" Stretch="UniformToFill" />
                             </Ellipse.Fill>
                         </Ellipse>
                         <StackPanel
@@ -138,6 +138,7 @@
                                 Height="20"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
+                                RenderOptions.BitmapScalingMode="HighQuality"
                                 Source="/Assets/IconosDashboard/iconInicio.png" />
 
                             <TextBlock
@@ -198,6 +199,7 @@
                                 Height="20"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
+                                RenderOptions.BitmapScalingMode="HighQuality"
                                 Source="/Assets/IconosDashboard/informacionPersonal.png" />
 
                             <TextBlock
@@ -256,6 +258,7 @@
                                 Height="20"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
+                                RenderOptions.BitmapScalingMode="HighQuality"
                                 Source="/Assets/IconosDashboard/boletasPagoIcon.png" />
                             <TextBlock
                                 Grid.Column="1"
@@ -316,6 +319,7 @@
                                 Height="20"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
+                                RenderOptions.BitmapScalingMode="HighQuality"
                                 Source="/Assets/IconosDashboard/personasIcon.png" />
                             <TextBlock
                                 Grid.Column="1"
@@ -375,6 +379,7 @@
                                 Height="20"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
+                                RenderOptions.BitmapScalingMode="HighQuality"
                                 Source="/Assets/IconosDashboard/trabajadoresIcon.png" />
                             <TextBlock
                                 Grid.Column="1"
@@ -434,6 +439,7 @@
                                 Height="20"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
+                                RenderOptions.BitmapScalingMode="HighQuality"
                                 Source="/Assets/IconosDashboard/usuriosIcon.png" />
                             <TextBlock
                                 Grid.Column="2"
@@ -494,6 +500,7 @@
                                 Height="20"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
+                                RenderOptions.BitmapScalingMode="HighQuality"
                                 Source="/Assets/IconosDashboard/asistenciaIcon.png" />
                             <TextBlock
                                 Grid.Column="1"
@@ -550,6 +557,7 @@
                                 Height="20"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
+                                RenderOptions.BitmapScalingMode="HighQuality"
                                 Source="/Assets/IconosDashboard/calendarioIcon.png" />
                             <TextBlock
                                 Grid.Column="1"
@@ -610,6 +618,7 @@
                                 Height="20"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
+                                RenderOptions.BitmapScalingMode="HighQuality"
                                 Source="/Assets/IconosDashboard/faltasIcon.png" />
                             <TextBlock
                                 Grid.Column="1"
@@ -676,6 +685,7 @@
                                     Height="20"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
+                                    RenderOptions.BitmapScalingMode="HighQuality"
                                     Source="/Assets/IconosDashboard/planillasIcon.png" />
 
                                 <TextBlock
@@ -756,6 +766,7 @@
                                 Height="20"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
+                                RenderOptions.BitmapScalingMode="HighQuality"
                                 Source="/Assets/IconosDashboard/reportesIcon.png" />
                             <TextBlock
                                 Grid.Column="2"
@@ -815,6 +826,7 @@
                                 Height="20"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
+                                RenderOptions.BitmapScalingMode="HighQuality"
                                 Source="/Assets/IconosDashboard/reportesIcon.png" />
                             <TextBlock
                                 Grid.Column="2"
@@ -870,6 +882,7 @@
                                 Height="20"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
+                                RenderOptions.BitmapScalingMode="HighQuality"
                                 Source="/Assets/IconosDashboard/salirIcon.png" />
                             <TextBlock
                                 Grid.Column="1"

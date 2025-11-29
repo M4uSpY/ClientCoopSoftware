@@ -117,13 +117,14 @@
             <!--  Calendario  -->
             <syncfusion:SfScheduler
                 x:Name="Schedule"
+                AppointmentEditFlag="None"
                 ItemsSource="{Binding Eventos}"
                 ViewType="Month">
                 <syncfusion:SfScheduler.MonthViewSettings>
                     <syncfusion:MonthViewSettings
                         AppointmentDisplayCount="3"
                         AppointmentDisplayMode="Appointment"
-                        ShowAgendaView="True" />
+                        ShowAgendaView="False" />
                 </syncfusion:SfScheduler.MonthViewSettings>
             </syncfusion:SfScheduler>
 

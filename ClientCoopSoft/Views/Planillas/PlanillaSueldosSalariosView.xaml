@@ -152,6 +152,7 @@
                     Margin="8,0,0,0"
                     Padding="12,4"
                     Background="#0078D7"
+                    BorderThickness="0"
                     Command="{Binding CrearYCalcularPlanillaCommand}"
                     Foreground="White"
                     Style="{StaticResource MaterialDesignRaisedButton}"
