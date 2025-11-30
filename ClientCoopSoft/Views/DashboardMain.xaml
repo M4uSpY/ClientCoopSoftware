@@ -219,7 +219,10 @@
                 </Border>
 
                 <!--  Boletas de pago  -->
-                <Border Margin="2,1,1,2" CornerRadius="5">
+                <Border
+                    Margin="2,1,1,2"
+                    CornerRadius="5"
+                    Visibility="{Binding CanSeeBoletas, Converter={StaticResource BoolToVis}}">
                     <Border.Style>
                         <Style TargetType="Border">
                             <Setter Property="Background" Value="Transparent" />
@@ -527,7 +530,7 @@
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="Background" Value="#5CAEB0" />
                                 </Trigger>
-                                <DataTrigger Binding="{Binding MenuSeleccionado}" Value="VacacionesPermisos">
+                                <DataTrigger Binding="{Binding MenuSeleccionado}" Value="VacacionesLicencias">
                                     <Setter Property="Background" Value="#3D8284" />
                                 </DataTrigger>
                             </Style.Triggers>

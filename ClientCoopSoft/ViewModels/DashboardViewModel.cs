@@ -47,9 +47,11 @@ namespace ClientCoopSoft.ViewModels
     string.Equals(Rol?.Trim(), "Consejo de Administración", StringComparison.OrdinalIgnoreCase) ||
     string.Equals(Rol?.Trim(), "Consejo de Administracion", StringComparison.OrdinalIgnoreCase);
 
+        public bool CanSeeBoletas => !IsConsejo;
 
         public bool CanSeeAdminModules => IsAdmin || IsConsejo;
         public bool CanSeeReportesLogs => IsConsejo;
+
 
 
         public DashboardViewModel(ApiClient apiClient, string rolName, string NombreCompleto, int idPersonaActual, int idUsuarioActual)
@@ -201,6 +203,14 @@ namespace ClientCoopSoft.ViewModels
         [RelayCommand]
         private async Task AbrirBoletasPagoAsync()
         {
+
+            if (!CanSeeBoletas)
+            {
+                MessageBox.Show("No tiene permiso para ver sus boletas de pago.",
+                    "Acceso denegado", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
             MenuSeleccionado = "BoletasPago";
 
             var persona = await _apiClient.ObtenerPersonaAsync(_idPersonaActual);
