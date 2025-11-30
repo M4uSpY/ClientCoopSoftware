@@ -72,7 +72,7 @@
                     Header="Usuario que modifico" />
                 <DataGridTextColumn
                     Width="Auto"
-                    Binding="{Binding FechaModificacion}"
+                    Binding="{Binding FechaModificacion, StringFormat=\{0:dd/MM/yyyy HH:mm\}}"
                     Header="Fecha de modificación" />
                 <DataGridTextColumn
                     Width="*"
@@ -80,8 +80,16 @@
                     Header="Accion realizada" />
                 <DataGridTextColumn
                     Width="*"
-                    Binding="{Binding ApartadosModificados}"
-                    Header="Apartados modificados" />
+                    Binding="{Binding Campo}"
+                    Header="Campo" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding ValorAnterior}"
+                    Header="Valor anterior" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding ValorActual}"
+                    Header="Valor actual" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

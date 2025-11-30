@@ -79,8 +79,16 @@
                     Header="Accion realizada" />
                 <DataGridTextColumn
                     Width="*"
-                    Binding="{Binding ApartadosModificados}"
-                    Header="Apartados modificados" />
+                    Binding="{Binding Campo}"
+                    Header="Campo" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding ValorAnterior}"
+                    Header="Valor anterior" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding ValorActual}"
+                    Header="Valor actual" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
