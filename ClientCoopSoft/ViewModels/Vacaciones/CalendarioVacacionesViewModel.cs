@@ -1,16 +1,15 @@
-﻿using ClientCoopSoft.ViewModels.Licencias;
-using ClientCoopSoft.ViewModels.VacacionesPermisos;
-using ClientCoopSoft.Views.Licencias;
-using ClientCoopSoft.Views.VacacionesPermisos;
+﻿using ClientCoopSoft.Views.Licencias;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Syncfusion.UI.Xaml.Scheduler;
 using System.Windows.Controls;
 using System.Windows.Media;
+using ClientCoopSoft.ViewModels.Licencias;
+using ClientCoopSoft.Views.Vacaciones;
 
-namespace ClientCoopSoft.ViewModels.VacacionesPemisos
+namespace ClientCoopSoft.ViewModels.Vacaciones
 {
-    public partial class CalendarioVacacionesPermisosViewModel : ObservableObject
+    public partial class CalendarioVacacionesViewModel : ObservableObject
     {
         private readonly ApiClient _apiClient;
         private readonly int _idTrabajadorActual;
@@ -24,7 +23,7 @@ namespace ClientCoopSoft.ViewModels.VacacionesPemisos
         [ObservableProperty]
         private bool esAdmin;
 
-        public CalendarioVacacionesPermisosViewModel(ApiClient apiClient, int idTrabajadorActual, bool esAdmin)
+        public CalendarioVacacionesViewModel(ApiClient apiClient, int idTrabajadorActual, bool esAdmin)
         {
             _apiClient = apiClient;
             _idTrabajadorActual = idTrabajadorActual;
@@ -38,7 +37,7 @@ namespace ClientCoopSoft.ViewModels.VacacionesPemisos
             Eventos.Clear();
 
             // 1) Vacaciones (Solicitudes)
-            var solicitudes = await _apiClient.ObtenerVacacionesPermisosAsync();
+            var solicitudes = await _apiClient.ObtenerVacacionesAsync();
 
             if (solicitudes != null)
             {
@@ -97,7 +96,7 @@ namespace ClientCoopSoft.ViewModels.VacacionesPemisos
 
             await vm.CargarSolicitudesListaAsync();
 
-            ContenidoActual = new SolicitudesVacPerView
+            ContenidoActual = new SolicitudesVacView
             {
                 DataContext = vm
             };
@@ -106,11 +105,11 @@ namespace ClientCoopSoft.ViewModels.VacacionesPemisos
         [RelayCommand]
         private async Task SolicitarAsync()
         {
-            var vm = new CrearSolicitudVacPermViewModel(_apiClient, _idTrabajadorActual);
+            var vm = new CrearSolicitudVacacionViewModel(_apiClient, _idTrabajadorActual);
 
             await vm.CargarResumenVacacionesAsync();
 
-            var win = new CrearSolicitudVacPermWindow
+            var win = new CrearSolicitudVacView
             {
                 DataContext = vm,
                 Owner = App.Current.MainWindow

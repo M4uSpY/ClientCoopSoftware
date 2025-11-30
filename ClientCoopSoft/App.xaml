@@ -63,11 +63,13 @@
             </DataTemplate>
 
             <DataTemplate
-                xmlns:views="clr-namespace:ClientCoopSoft.Views.VacacionesPermisos"
-                xmlns:vm="clr-namespace:ClientCoopSoft.ViewModels.VacacionesPemisos"
-                DataType="{x:Type vm:CalendarioVacacionesPermisosViewModel}">
-                <views:CalendarioVacacionesPermisosView />
+                xmlns:views="clr-namespace:ClientCoopSoft.Views.Vacaciones"
+                xmlns:vm="clr-namespace:ClientCoopSoft.ViewModels.Vacaciones"
+                DataType="{x:Type vm:CalendarioVacacionesViewModel}">
+                <views:CalendarioVacacionesLicenciasView />
             </DataTemplate>
+
+
 
 
             <DataTemplate
@@ -119,8 +121,6 @@
                 <views:ReportesView />
             </DataTemplate>
 
-
-
             <DataTemplate
                 xmlns:views="clr-namespace:ClientCoopSoft.Views.Historicos"
                 xmlns:vm="clr-namespace:ClientCoopSoft.ViewModels.Historicos"
@@ -145,12 +145,6 @@
                 DataType="{x:Type vm:HistoricoUsuarioViewModel}">
                 <views:HistoricoUsuarioView />
             </DataTemplate>
-
-
-
-
-
-
         </ResourceDictionary>
     </Application.Resources>
 </Application>

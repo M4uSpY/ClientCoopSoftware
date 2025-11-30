@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ClientCoopSoft.Views.VacacionesPermisos
+namespace ClientCoopSoft.Views.Vacaciones
 {
     /// <summary>
-    /// Lógica de interacción para SolicitudesVacPerView.xaml
+    /// Lógica de interacción para SolicitudesVacView.xaml
     /// </summary>
-    public partial class SolicitudesVacPerView : UserControl
+    public partial class SolicitudesVacView : UserControl
     {
-        public SolicitudesVacPerView()
+        public SolicitudesVacView()
         {
             InitializeComponent();
         }

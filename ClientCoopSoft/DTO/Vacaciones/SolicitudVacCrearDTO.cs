@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClientCoopSoft.DTO.VacacionesPermisos
+namespace ClientCoopSoft.DTO.Vacaciones
 {
-    public class SolicitudVacPermCrearDTO
+    public class SolicitudVacCrearDTO
     {
         public int IdTrabajador { get; set; }
         public DateTime FechaInicio { get; set; }

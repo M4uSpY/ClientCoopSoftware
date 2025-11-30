@@ -1,4 +1,4 @@
-﻿namespace ClientCoopSoft.DTO.VacacionesPermisos
+﻿namespace ClientCoopSoft.DTO.Vacaciones
 {
     public class ResumenVacacionesDTO
     {

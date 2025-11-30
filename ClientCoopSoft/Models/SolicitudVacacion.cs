@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ClientCoopSoft.Models
 {
-    public class SolicitudVacPermiso
+    public class SolicitudVacacion
     {
-        public int IdSolicitud { get; set; }
+        public int IdVacacion { get; set; }
         public string Trabajador { get; set; } = string.Empty;
         public string TipoSolicitud { get; set; } = string.Empty;
         public string EstadoSolicitud { get; set; } = string.Empty;

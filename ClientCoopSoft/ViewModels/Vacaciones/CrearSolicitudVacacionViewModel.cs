@@ -1,12 +1,16 @@
-﻿using ClientCoopSoft.DTO.VacacionesPermisos;
+﻿using ClientCoopSoft.DTO.Vacaciones;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 
-namespace ClientCoopSoft.ViewModels.VacacionesPermisos
+namespace ClientCoopSoft.ViewModels.Vacaciones
 {
-    public partial class CrearSolicitudVacPermViewModel : ObservableObject
+    public partial class CrearSolicitudVacacionViewModel : ObservableObject
     {
         private readonly ApiClient _apiClient;
         private readonly int _idTrabajador;
@@ -26,7 +30,7 @@ namespace ClientCoopSoft.ViewModels.VacacionesPermisos
 
         public event Action? SolicitudCreada;
 
-        public CrearSolicitudVacPermViewModel(ApiClient apiClient, int idTrabajador)
+        public CrearSolicitudVacacionViewModel(ApiClient apiClient, int idTrabajador)
         {
             _apiClient = apiClient;
             _idTrabajador = idTrabajador;
@@ -50,7 +54,7 @@ namespace ClientCoopSoft.ViewModels.VacacionesPermisos
                 return;
             }
 
-            var dto = new SolicitudVacPermCrearDTO
+            var dto = new SolicitudVacCrearDTO
             {
                 IdTrabajador = _idTrabajador,
                 FechaInicio = FechaInicio.Date,

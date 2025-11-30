@@ -12,14 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace ClientCoopSoft.Views.VacacionesPermisos
+namespace ClientCoopSoft.Views.Vacaciones
 {
     /// <summary>
-    /// Lógica de interacción para CrearSolicitudVacPermWindow.xaml
+    /// Lógica de interacción para CrearSolicitudVacView.xaml
     /// </summary>
-    public partial class CrearSolicitudVacPermWindow : Window
+    public partial class CrearSolicitudVacView : Window
     {
-        public CrearSolicitudVacPermWindow()
+        public CrearSolicitudVacView()
         {
             InitializeComponent();
         }

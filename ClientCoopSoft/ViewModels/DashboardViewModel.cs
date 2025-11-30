@@ -6,7 +6,6 @@ using ClientCoopSoft.ViewModels.Inicio;
 using ClientCoopSoft.ViewModels.LogsAcceso;
 using ClientCoopSoft.ViewModels.Planillas;
 using ClientCoopSoft.ViewModels.Trabajadores;
-using ClientCoopSoft.ViewModels.VacacionesPemisos;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Linq;
@@ -15,6 +14,8 @@ using ClientCoopSoft;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using ClientCoopSoft.ViewModels.Reportes;
+using ClientCoopSoft.Views.Vacaciones;
+using ClientCoopSoft.ViewModels.Vacaciones;
 
 namespace ClientCoopSoft.ViewModels
 {
@@ -126,9 +127,9 @@ namespace ClientCoopSoft.ViewModels
         }
 
         [RelayCommand]
-        private async Task AbrirVacacionesPermisosAsync()
+        private async Task AbrirVacacionesLicenciasAsync()
         {
-            MenuSeleccionado = "VacacionesPermisos";
+            MenuSeleccionado = "VacacionesLicencias";
 
             var persona = await _apiClient.ObtenerPersonaAsync(_idPersonaActual);
             if (persona?.Trabajador == null)
@@ -140,8 +141,8 @@ namespace ClientCoopSoft.ViewModels
 
             var idTrabajadorActual = persona.Trabajador.IdTrabajador;
 
-            var calendarioVM = new CalendarioVacacionesPermisosViewModel(_apiClient, idTrabajadorActual, IsAdmin);
-            await calendarioVM.CargarEventosAsync();
+            var calendarioVM = new CalendarioVacacionesViewModel(_apiClient, idTrabajadorActual, IsAdmin);
+            //await calendarioVM.CargarEventosAsync();
             CurrentView = calendarioVM;
         }
 

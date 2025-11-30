@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClientCoopSoft.DTO.VacacionesPermisos
+namespace ClientCoopSoft.DTO.Vacaciones
 {
-    public class SolicitudVacPermListarDTO
+    public class SolicitudVacListarDTO
     {
-        public int IdSolicitud { get; set; }
+        public int IdVacacion { get; set; }
         public string CI { get; set; } = string.Empty;
         public string ApellidosNombres { get; set; } = string.Empty;
         public string Cargo { get; set; } = string.Empty;

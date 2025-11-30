@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ClientCoopSoft.Views.VacacionesPermisos
+namespace ClientCoopSoft.Views.Vacaciones
 {
     /// <summary>
-    /// Lógica de interacción para CalendarioVacacionesPermisosView.xaml
+    /// Lógica de interacción para CalendarioVacacionesLicenciasView.xaml
     /// </summary>
-    public partial class CalendarioVacacionesPermisosView : UserControl
+    public partial class CalendarioVacacionesLicenciasView : UserControl
     {
-        public CalendarioVacacionesPermisosView()
+        public CalendarioVacacionesLicenciasView()
         {
             InitializeComponent();
         }

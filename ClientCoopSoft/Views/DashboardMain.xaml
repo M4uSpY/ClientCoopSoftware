@@ -540,8 +540,8 @@
                         VerticalAlignment="Center"
                         Background="Transparent"
                         BorderThickness="0"
-                        Command="{Binding AbrirVacacionesPermisosCommand}"
-                        CommandParameter="VacacionesPermisos"
+                        Command="{Binding AbrirVacacionesLicenciasCommand}"
+                        CommandParameter="VacacionesLicencias"
                         Focusable="False"
                         FontSize="12"
                         FontWeight="UltraLight"
@@ -568,8 +568,8 @@
 
                     <Border.InputBindings>
                         <MouseBinding
-                            Command="{Binding AbrirVacacionesPermisosCommand}"
-                            CommandParameter="VacacionesPermisos"
+                            Command="{Binding AbrirVacacionesLicenciasCommand}"
+                            CommandParameter="VacacionesLicencias"
                             MouseAction="LeftClick" />
                     </Border.InputBindings>
                 </Border>

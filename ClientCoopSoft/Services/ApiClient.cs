@@ -10,7 +10,7 @@ using ClientCoopSoft.DTO.Licencias;
 using ClientCoopSoft.DTO.Personas;
 using ClientCoopSoft.DTO.Planillas;
 using ClientCoopSoft.DTO.Trabajadores;
-using ClientCoopSoft.DTO.VacacionesPermisos;
+using ClientCoopSoft.DTO.Vacaciones;
 using ClientCoopSoft.Models;
 using Newtonsoft.Json;
 using System.IO;
@@ -297,25 +297,25 @@ public class ApiClient
         return null;
     }
 
-    public async Task<List<SolicitudVacPermiso>?> ObtenerVacacionesPermisosAsync()
+    public async Task<List<SolicitudVacacion>?> ObtenerVacacionesAsync()
     {
         SetBearer();
-        var response = await _http.GetAsync("api/VacacionesPermisos/SolicitudesCalendario");
+        var response = await _http.GetAsync("api/Vacaciones/SolicitudesCalendario");
         var raw = await response.Content.ReadAsStringAsync();
 
         if (response.IsSuccessStatusCode)
-            return JsonConvert.DeserializeObject<List<SolicitudVacPermiso>>(raw);
+            return JsonConvert.DeserializeObject<List<SolicitudVacacion>>(raw);
 
         return null;
     }
-    public async Task<List<SolicitudVacPermListarDTO>?> ObtenerListaVacacionesPermisosAsync()
+    public async Task<List<SolicitudVacListarDTO>?> ObtenerListaVacacionesAsync()
     {
         SetBearer();
-        var response = await _http.GetAsync("api/VacacionesPermisos");
+        var response = await _http.GetAsync("api/Vacaciones");
         var raw = await response.Content.ReadAsStringAsync();
 
         if (response.IsSuccessStatusCode)
-            return JsonConvert.DeserializeObject<List<SolicitudVacPermListarDTO>>(raw);
+            return JsonConvert.DeserializeObject<List<SolicitudVacListarDTO>>(raw);
 
         return null;
     }
@@ -574,7 +574,8 @@ public class ApiClient
 
     public async Task<(bool ok, string? error)> AprobarSolicitudAsync(int idSolicitud)
     {
-        var resp = await _http.PutAsync($"api/VacacionesPermisos/{idSolicitud}/aprobar", null);
+        SetBearer();
+        var resp = await _http.PutAsync($"api/Vacaciones/{idSolicitud}/aprobar", null);
 
         if (resp.IsSuccessStatusCode)
             return (true, null);
@@ -587,7 +588,7 @@ public class ApiClient
     {
         SetBearer();
 
-        var response = await _http.GetAsync($"api/VacacionesPermisos/Resumen/{idTrabajador}");
+        var response = await _http.GetAsync($"api/Vacaciones/Resumen/{idTrabajador}");
 
         if (!response.IsSuccessStatusCode)
             return null;
@@ -598,7 +599,8 @@ public class ApiClient
 
     public async Task<(bool ok, string? error)> RechazarSolicitudAsync(int idSolicitud)
     {
-        var resp = await _http.PutAsync($"api/VacacionesPermisos/{idSolicitud}/rechazar", null);
+        SetBearer();
+        var resp = await _http.PutAsync($"api/Vacaciones/{idSolicitud}/rechazar", null);
 
         if (resp.IsSuccessStatusCode)
             return (true, null);
@@ -607,14 +609,14 @@ public class ApiClient
         return (false, contenido);
     }
 
-    public async Task<(bool ok, string? error)> CrearSolicitudVacPermAsync(SolicitudVacPermCrearDTO dto)
+    public async Task<(bool ok, string? error)> CrearSolicitudVacPermAsync(SolicitudVacCrearDTO dto)
     {
         SetBearer();
 
         var json = JsonConvert.SerializeObject(dto);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-        var response = await _http.PostAsync("api/VacacionesPermisos", content);
+        var response = await _http.PostAsync("api/Vacaciones", content);
 
         if (response.IsSuccessStatusCode)
             return (true, null);
@@ -622,20 +624,6 @@ public class ApiClient
         // Intentamos capturar mensaje del backend
         var contenido = await response.Content.ReadAsStringAsync();
         return (false, contenido);
-    }
-
-
-    public async Task<List<TipoSolicitud>?> ObtenerClasificadorPorTipoSolicitudAsync()
-    {
-        SetBearer();
-        var response = await _http.GetAsync("api/TipoSolicitud");
-        var raw = await response.Content.ReadAsStringAsync();
-
-        if (response.IsSuccessStatusCode)
-        {
-            return JsonConvert.DeserializeObject<List<TipoSolicitud>>(raw);
-        }
-        return null;
     }
 
     public async Task<bool> LogoutAsync(int idUsuario)

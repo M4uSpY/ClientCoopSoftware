@@ -1,12 +1,17 @@
-﻿using ClientCoopSoft.DTO.VacacionesPermisos;
+﻿using ClientCoopSoft.DTO.Vacaciones;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
-namespace ClientCoopSoft.ViewModels.VacacionesPemisos
+namespace ClientCoopSoft.ViewModels.Vacaciones
 {
     public partial class ListarSolicitudesViewModel : ObservableObject
     {
@@ -14,7 +19,7 @@ namespace ClientCoopSoft.ViewModels.VacacionesPemisos
         private readonly Action? _onVolver;
 
         [ObservableProperty]
-        private ObservableCollection<SolicitudVacPermListarDTO> solicitudesLista = new();
+        private ObservableCollection<SolicitudVacListarDTO> solicitudesLista = new();
 
         [ObservableProperty]
         private ICollectionView solicitudesView;
@@ -37,14 +42,14 @@ namespace ClientCoopSoft.ViewModels.VacacionesPemisos
 
         public async Task CargarSolicitudesListaAsync()
         {
-            var list = await _apiClient.ObtenerListaVacacionesPermisosAsync();
+            var list = await _apiClient.ObtenerListaVacacionesAsync();
             if (list != null)
             {
-                SolicitudesLista = new ObservableCollection<SolicitudVacPermListarDTO>(list);
+                SolicitudesLista = new ObservableCollection<SolicitudVacListarDTO>(list);
             }
         }
 
-        partial void OnSolicitudesListaChanged(ObservableCollection<SolicitudVacPermListarDTO> value)
+        partial void OnSolicitudesListaChanged(ObservableCollection<SolicitudVacListarDTO> value)
         {
             SolicitudesView = CollectionViewSource.GetDefaultView(value);
             if (SolicitudesView != null)
@@ -63,7 +68,7 @@ namespace ClientCoopSoft.ViewModels.VacacionesPemisos
         // ====== FILTRO ======
         private bool SolicitudesFilter(object obj)
         {
-            if (obj is not SolicitudVacPermListarDTO s)
+            if (obj is not SolicitudVacListarDTO s)
                 return false;
 
             if (string.IsNullOrWhiteSpace(TextoBusqueda))
@@ -96,15 +101,15 @@ namespace ClientCoopSoft.ViewModels.VacacionesPemisos
         [RelayCommand]
         private void Volver()
         {
-            _onVolver?.Invoke();  
+            _onVolver?.Invoke();
         }
         [RelayCommand]
-        private async Task AprobarSolicitud(SolicitudVacPermListarDTO? solicitud)
+        private async Task AprobarSolicitud(SolicitudVacListarDTO? solicitud)
         {
             if (solicitud is null)
                 return;
 
-            var mensaje = $"¿Está seguro que desea APROBAR la solicitud N° {solicitud.IdSolicitud} " +
+            var mensaje = $"¿Está seguro que desea APROBAR la solicitud N° {solicitud.IdVacacion} " +
                           $"de {solicitud.ApellidosNombres} del {solicitud.FechaInicio:dd/MM/yyyy} " +
                           $"al {solicitud.FechaFin:dd/MM/yyyy}?";
 
@@ -117,7 +122,7 @@ namespace ClientCoopSoft.ViewModels.VacacionesPemisos
             if (resultado != MessageBoxResult.Yes)
                 return;
 
-            var (ok, error) = await _apiClient.AprobarSolicitudAsync(solicitud.IdSolicitud);
+            var (ok, error) = await _apiClient.AprobarSolicitudAsync(solicitud.IdVacacion);
 
             if (!ok)
             {
@@ -137,12 +142,12 @@ namespace ClientCoopSoft.ViewModels.VacacionesPemisos
 
 
         [RelayCommand]
-        private async Task RechazarSolicitud(SolicitudVacPermListarDTO? solicitud)
+        private async Task RechazarSolicitud(SolicitudVacListarDTO? solicitud)
         {
             if (solicitud is null)
                 return;
 
-            var mensaje = $"¿Está seguro que desea RECHAZAR la solicitud N° {solicitud.IdSolicitud} " +
+            var mensaje = $"¿Está seguro que desea RECHAZAR la solicitud N° {solicitud.IdVacacion} " +
                           $"de {solicitud.ApellidosNombres} del {solicitud.FechaInicio:dd/MM/yyyy} " +
                           $"al {solicitud.FechaFin:dd/MM/yyyy}?";
 
@@ -155,7 +160,7 @@ namespace ClientCoopSoft.ViewModels.VacacionesPemisos
             if (resultado != MessageBoxResult.Yes)
                 return;
 
-            var (ok, error) = await _apiClient.RechazarSolicitudAsync(solicitud.IdSolicitud);
+            var (ok, error) = await _apiClient.RechazarSolicitudAsync(solicitud.IdVacacion);
 
             if (!ok)
             {
