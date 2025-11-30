@@ -80,71 +80,72 @@
             </StackPanel>
         </Border>
         <!--  FILTROS + BOTONES  -->
+        <!--  FILTROS + BOTONES  -->
         <DockPanel
             Grid.Row="2"
             Margin="0,0,0,10"
             LastChildFill="True">
 
-            <!--  Controles de gestión/mes/id  -->
-            <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
-                <!--  Gestión  -->
-                <StackPanel Margin="0,0,16,0">
-                    <TextBlock
-                        FontSize="11"
-                        Foreground="#666"
-                        Text="Gestión" />
-                    <TextBox
-                        Width="80"
+            <!--  FILTROS: AÑO + MES + INFO PLANILLA  -->
+            <StackPanel
+                VerticalAlignment="Center"
+                DockPanel.Dock="Left"
+                Orientation="Horizontal">
+
+                <TextBlock
+                    Margin="0,0,8,0"
+                    VerticalAlignment="Center"
+                    FontSize="12"
+                    Text="Filtrar planilla por:" />
+
+                <!--  Año / Gestión  -->
+                <StackPanel Margin="0,0,16,0" Orientation="Horizontal">
+                    <ComboBox
+                        Width="90"
+                        Height="Auto"
                         Margin="0,5,0,0"
-                        md:HintAssist.Hint=""
-                        md:HintAssist.HintPaddingBrush="Transparent"
-                        md:TextFieldAssist.DecorationVisibility="Hidden"
+                        md:HintAssist.Hint="Año"
+                        md:HintAssist.HintPaddingBrush="White"
                         md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
                         BorderBrush="#CCC"
-                        Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                        Text="{Binding Gestion, UpdateSourceTrigger=PropertyChanged}"
-                        ToolTip="Año de la planilla. Ejemplo: 2025" />
+                        IsEditable="False"
+                        ItemsSource="{Binding Anios}"
+                        SelectedItem="{Binding AnioSeleccionado, Mode=TwoWay}"
+                        Style="{StaticResource MaterialDesignOutlinedComboBox}" />
                 </StackPanel>
 
                 <!--  Mes  -->
-                <StackPanel Margin="0,0,16,0">
-                    <TextBlock
-                        FontSize="11"
-                        Foreground="#666"
-                        Text="Mes" />
-                    <TextBox
-                        Width="50"
+                <StackPanel Margin="0,0,16,0" Orientation="Horizontal">
+                    <ComboBox
+                        Width="130"
+                        Height="Auto"
                         Margin="0,5,0,0"
-                        md:HintAssist.Hint=""
-                        md:HintAssist.HintPaddingBrush="Transparent"
-                        md:TextFieldAssist.DecorationVisibility="Hidden"
+                        md:HintAssist.Hint="Mes"
+                        md:HintAssist.HintPaddingBrush="White"
                         md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
                         BorderBrush="#CCC"
-                        Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                        Text="{Binding Mes, UpdateSourceTrigger=PropertyChanged}"
-                        ToolTip="Mes de la planilla (1 a 12)" />
+                        DisplayMemberPath="Nombre"
+                        IsEditable="False"
+                        ItemsSource="{Binding Meses}"
+                        SelectedItem="{Binding MesSeleccionado, Mode=TwoWay}"
+                        Style="{StaticResource MaterialDesignOutlinedComboBox}" />
                 </StackPanel>
 
-                <!--  Id Planilla  -->
+                <!--  Id Planilla (solo lectura, opcional)  -->
                 <StackPanel Margin="0,0,16,0">
                     <TextBlock
                         FontSize="11"
                         Foreground="#666"
                         Text="Id Planilla" />
-                    <TextBox
-                        Width="80"
+                    <TextBlock
                         Margin="0,5,0,0"
-                        md:HintAssist.Hint=""
-                        md:HintAssist.HintPaddingBrush="Transparent"
-                        md:TextFieldAssist.DecorationVisibility="Hidden"
-                        md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
-                        BorderBrush="#CCC"
-                        Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                        Text="{Binding IdPlanillaActual, UpdateSourceTrigger=PropertyChanged}"
-                        ToolTip="Identificador de una planilla ya creada" />
+                        FontSize="13"
+                        FontWeight="SemiBold"
+                        Foreground="#303048"
+                        Text="{Binding IdPlanillaActual}" />
                 </StackPanel>
 
-                <!--  Estado cerrada  -->
+                <!--  Estado cerrada / abierta  -->
                 <StackPanel Margin="0,0,16,0" VerticalAlignment="Center">
                     <TextBlock
                         FontSize="11"
@@ -160,7 +161,7 @@
                 </StackPanel>
             </StackPanel>
 
-            <!--  Botones de acciones  -->
+            <!--  BOTONES DE ACCIÓN  -->
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                 <!--  Crear + calcular  -->
                 <Button
@@ -171,7 +172,7 @@
                     Command="{Binding CrearYCalcularPlanillaCommand}"
                     Foreground="White"
                     Style="{StaticResource MaterialDesignRaisedButton}"
-                    ToolTip="Crear una nueva planilla para la gestión y mes indicados">
+                    ToolTip="Crear una nueva planilla para el año y mes indicados">
                     <StackPanel Orientation="Horizontal">
                         <md:PackIcon Margin="0,0,6,0" Kind="PlusBox" />
                         <TextBlock Text="Crear y calcular" />
@@ -184,7 +185,7 @@
                     Padding="12,4"
                     Command="{Binding CargarPlanillaCommand}"
                     Style="{StaticResource MaterialDesignOutlinedButton}"
-                    ToolTip="Cargar la planilla cuyo Id se muestra en 'Id Planilla'">
+                    ToolTip="Cargar la planilla para el año y mes seleccionados">
                     <StackPanel Orientation="Horizontal">
                         <md:PackIcon Margin="0,0,6,0" Kind="Refresh" />
                         <TextBlock Text="Cargar" />
@@ -255,6 +256,7 @@
                 </Button>
             </StackPanel>
         </DockPanel>
+
 
         <!--  DATA GRID  -->
         <DataGrid

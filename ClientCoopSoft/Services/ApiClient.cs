@@ -1043,6 +1043,25 @@ public class ApiClient
         var contenido = await response.Content.ReadAsStringAsync();
         return (false, string.IsNullOrWhiteSpace(contenido) ? response.ReasonPhrase : contenido);
     }
+    public async Task<PlanillaResumenModel?> BuscarPlanillaSueldosPorPeriodoAsync(int gestion, int mes)
+    {
+        try
+        {
+            SetBearer();
+            var response = await _http.GetAsync(
+                $"api/PlanillaSueldosSalarios/buscar?gestion={gestion}&mes={mes}");
+
+            if (!response.IsSuccessStatusCode)
+                return null;
+
+            var raw = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<PlanillaResumenModel>(raw);
+        }
+        catch
+        {
+            return null;
+        }
+    }
 
 
 }
