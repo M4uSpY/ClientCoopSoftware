@@ -45,7 +45,7 @@
                 Command="{Binding SolicitudesCommand}"
                 Content="Solicitudes de Vacaciones"
                 Foreground="White"
-                Visibility="{Binding EsAdmin, Converter={StaticResource BoolToVis}}" />
+                Visibility="{Binding PuedeAdministrar, Converter={StaticResource BoolToVis}}" />
 
             <!--  Stack con 2 botones: Vacación y Licencia  -->
             <StackPanel
@@ -61,7 +61,8 @@
                     BorderThickness="0"
                     Command="{Binding SolicitarCommand}"
                     Content="Solicitar vacación"
-                    Foreground="White" />
+                    Foreground="White"
+                    Visibility="{Binding PuedeSolicitar, Converter={StaticResource BoolToVis}}" />
 
                 <Button
                     Width="170"
@@ -72,7 +73,8 @@
                     BorderThickness="0"
                     Command="{Binding SolicitarLicenciaCommand}"
                     Content="Solicitar licencia"
-                    Foreground="White" />
+                    Foreground="White"
+                    Visibility="{Binding PuedeSolicitar, Converter={StaticResource BoolToVis}}" />
 
                 <Button
                     Width="190"
@@ -84,7 +86,7 @@
                     Command="{Binding LicenciasCommand}"
                     Content="Solicitudes de Licencias"
                     Foreground="White"
-                    Visibility="{Binding EsAdmin, Converter={StaticResource BoolToVis}}" />
+                    Visibility="{Binding PuedeAdministrar, Converter={StaticResource BoolToVis}}" />
             </StackPanel>
         </Grid>
 

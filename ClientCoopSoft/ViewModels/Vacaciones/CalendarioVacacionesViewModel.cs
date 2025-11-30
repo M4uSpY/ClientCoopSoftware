@@ -21,13 +21,17 @@ namespace ClientCoopSoft.ViewModels.Vacaciones
         private UserControl? contenidoActual; // Solo para mostrar la lista
 
         [ObservableProperty]
-        private bool esAdmin;
+        private bool puedeAdministrar;
 
-        public CalendarioVacacionesViewModel(ApiClient apiClient, int idTrabajadorActual, bool esAdmin)
+        [ObservableProperty]
+        private bool puedeSolicitar;
+
+        public CalendarioVacacionesViewModel(ApiClient apiClient, int idTrabajadorActual, bool puedeAdministrar,bool puedeSolicitar)
         {
             _apiClient = apiClient;
             _idTrabajadorActual = idTrabajadorActual;
-            EsAdmin = esAdmin;
+            PuedeAdministrar = puedeAdministrar;
+            PuedeSolicitar = puedeSolicitar;
 
             _ = CargarEventosAsync();
         }
@@ -92,6 +96,9 @@ namespace ClientCoopSoft.ViewModels.Vacaciones
         [RelayCommand]
         private async Task SolicitudesAsync()
         {
+            if (!PuedeAdministrar)
+                return;
+
             var vm = new ListarSolicitudesViewModel(_apiClient, () => ContenidoActual = null);
 
             await vm.CargarSolicitudesListaAsync();
@@ -105,6 +112,9 @@ namespace ClientCoopSoft.ViewModels.Vacaciones
         [RelayCommand]
         private async Task SolicitarAsync()
         {
+            if (!PuedeSolicitar)
+                return;
+
             var vm = new CrearSolicitudVacacionViewModel(_apiClient, _idTrabajadorActual);
 
             await vm.CargarResumenVacacionesAsync();
@@ -127,6 +137,9 @@ namespace ClientCoopSoft.ViewModels.Vacaciones
         [RelayCommand]
         private async Task SolicitarLicenciaAsync()
         {
+            if (!PuedeSolicitar)
+                return;
+
             var vm = new CrearLicenciaViewModel(_apiClient, _idTrabajadorActual);
 
             await vm.CargarTiposLicenciaAsync();
@@ -149,6 +162,9 @@ namespace ClientCoopSoft.ViewModels.Vacaciones
         [RelayCommand]
         private async Task LicenciasAsync()
         {
+            if (!PuedeAdministrar)
+                return;
+
             var vm = new ListarLicenciasViewModel(_apiClient, () => ContenidoActual = null);
 
             await vm.CargarLicenciasListaAsync();

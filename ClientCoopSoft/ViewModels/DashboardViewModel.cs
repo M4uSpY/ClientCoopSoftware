@@ -37,7 +37,20 @@ namespace ClientCoopSoft.ViewModels
 
         [ObservableProperty] private BitmapImage? fotoPerfil;
 
+
+        // usuario administrador
+
         public bool IsAdmin => string.Equals(Rol, "Administrador", System.StringComparison.OrdinalIgnoreCase) || string.Equals(Rol, "Admin", System.StringComparison.OrdinalIgnoreCase);
+
+        public bool IsConsejo =>
+    string.Equals(Rol?.Trim(), "Consejo", StringComparison.OrdinalIgnoreCase) ||
+    string.Equals(Rol?.Trim(), "Consejo de Administración", StringComparison.OrdinalIgnoreCase) ||
+    string.Equals(Rol?.Trim(), "Consejo de Administracion", StringComparison.OrdinalIgnoreCase);
+
+
+        public bool CanSeeAdminModules => IsAdmin || IsConsejo;
+        public bool CanSeeReportesLogs => IsConsejo;
+
 
         public DashboardViewModel(ApiClient apiClient, string rolName, string NombreCompleto, int idPersonaActual, int idUsuarioActual)
         {
@@ -56,7 +69,7 @@ namespace ClientCoopSoft.ViewModels
         }
         private bool IsAllowed()
         {
-            return IsAdmin;
+            return CanSeeAdminModules;
         }
         // Abrir / cerrar el submenú de planillas
         [RelayCommand]
@@ -131,20 +144,48 @@ namespace ClientCoopSoft.ViewModels
         {
             MenuSeleccionado = "VacacionesLicencias";
 
+            int idTrabajadorActual = 0;
+
             var persona = await _apiClient.ObtenerPersonaAsync(_idPersonaActual);
-            if (persona?.Trabajador == null)
+
+            // Solo obligamos a tener Trabajador si el usuario puede solicitar vacaciones
+            if (!IsConsejo)
             {
-                MessageBox.Show("No se encontró el trabajador asociado a la persona actual.",
-                    "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
+                if (persona?.Trabajador == null)
+                {
+                    MessageBox.Show(
+                        "No se encontró el trabajador asociado a la persona actual.",
+                        "Error",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
+
+                    return;
+                }
+
+                idTrabajadorActual = persona.Trabajador.IdTrabajador;
+            }
+            else
+            {
+                // Consejo puede no tener trabajador; si lo tiene, lo usamos por si luego lo necesitas
+                if (persona?.Trabajador != null)
+                    idTrabajadorActual = persona.Trabajador.IdTrabajador;
             }
 
-            var idTrabajadorActual = persona.Trabajador.IdTrabajador;
+            // 👉 Puede administrar = ver listas, aprobar y rechazar solicitudes
+            bool puedeAdministrar = IsAdmin || IsConsejo;
 
-            var calendarioVM = new CalendarioVacacionesViewModel(_apiClient, idTrabajadorActual, IsAdmin);
-            //await calendarioVM.CargarEventosAsync();
+            // 👉 Puede solicitar = NO Consejo y además tener trabajador válido
+            bool puedeSolicitar = !IsConsejo && idTrabajadorActual > 0;
+
+            var calendarioVM = new CalendarioVacacionesViewModel(
+                _apiClient,
+                idTrabajadorActual,
+                puedeAdministrar,
+                puedeSolicitar);
+
             CurrentView = calendarioVM;
         }
+
 
 
         [RelayCommand]
@@ -231,6 +272,15 @@ namespace ClientCoopSoft.ViewModels
         [RelayCommand]
         private async Task AbrirLogsAsync()
         {
+
+            if (!CanSeeReportesLogs)
+            {
+                MessageBox.Show("No tiene permiso para ver los logs de acceso.",
+                    "Acceso denegado", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+
             MenuSeleccionado = "Logs";
             var listaLogsVM = new LogsViewModel(_apiClient);
 
@@ -240,6 +290,14 @@ namespace ClientCoopSoft.ViewModels
         [RelayCommand]
         private async Task AbrirReportesAsync()
         {
+
+            if (!CanSeeReportesLogs)
+            {
+                MessageBox.Show("No tiene permiso para ver los reportes.",
+                    "Acceso denegado", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
             MenuSeleccionado = "Reportes";
             var reporteVM = new ReportesViewModel(_apiClient,this);
             CurrentView = reporteVM;

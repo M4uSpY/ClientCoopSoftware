@@ -280,7 +280,7 @@
                 <Border
                     Margin="2,1,1,2"
                     CornerRadius="5"
-                    Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVis}}">
+                    Visibility="{Binding CanSeeAdminModules, Converter={StaticResource BoolToVis}}">
                     <Border.Style>
                         <Style TargetType="Border">
                             <Setter Property="Background" Value="Transparent" />
@@ -340,7 +340,7 @@
                 <Border
                     Margin="2,1,1,2"
                     CornerRadius="5"
-                    Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVis}}">
+                    Visibility="{Binding CanSeeAdminModules, Converter={StaticResource BoolToVis}}">
                     <Border.Style>
                         <Style TargetType="Border">
                             <Setter Property="Background" Value="Transparent" />
@@ -400,7 +400,7 @@
                 <Border
                     Margin="2,1,1,2"
                     CornerRadius="5"
-                    Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVis}}">
+                    Visibility="{Binding CanSeeAdminModules, Converter={StaticResource BoolToVis}}">
                     <Border.Style>
                         <Style TargetType="Border">
                             <Setter Property="Background" Value="Transparent" />
@@ -460,7 +460,7 @@
                 <Border
                     Margin="2,1,1,2"
                     CornerRadius="5"
-                    Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVis}}">
+                    Visibility="{Binding CanSeeAdminModules, Converter={StaticResource BoolToVis}}">
                     <Border.Style>
                         <Style TargetType="Border">
                             <Setter Property="Background" Value="Transparent" />
@@ -578,7 +578,7 @@
                 <Border
                     Margin="2,1,1,2"
                     CornerRadius="5"
-                    Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVis}}">
+                    Visibility="{Binding CanSeeAdminModules, Converter={StaticResource BoolToVis}}">
 
                     <Border.Style>
                         <Style TargetType="Border">
@@ -637,7 +637,7 @@
 
                 <!--  Planillas  -->
                 <!--  Planillas (menú desplegable)  -->
-                <StackPanel Margin="2,1,1,2" Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVis}}">
+                <StackPanel Margin="2,1,1,2" Visibility="{Binding CanSeeAdminModules, Converter={StaticResource BoolToVis}}">
 
                     <!--  CABECERA PLANILLAS  -->
                     <Border CornerRadius="5">
@@ -727,7 +727,7 @@
                 <Border
                     Margin="2,1,1,2"
                     CornerRadius="5"
-                    Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVis}}">
+                    Visibility="{Binding CanSeeReportesLogs, Converter={StaticResource BoolToVis}}">
                     <Border.Style>
                         <Style TargetType="Border">
                             <Setter Property="Background" Value="Transparent" />
@@ -787,7 +787,7 @@
                 <Border
                     Margin="2,1,1,2"
                     CornerRadius="5"
-                    Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVis}}">
+                    Visibility="{Binding CanSeeReportesLogs, Converter={StaticResource BoolToVis}}">
                     <Border.Style>
                         <Style TargetType="Border">
                             <Setter Property="Background" Value="Transparent" />
