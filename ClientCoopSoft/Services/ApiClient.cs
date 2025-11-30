@@ -1020,5 +1020,30 @@ public class ApiClient
         }
     }
 
+    // VACACIONES
+    public async Task<(bool ok, string? error)> EliminarSolicitudVacacionAsync(int idVacacion)
+    {
+        var response = await _http.DeleteAsync($"api/Vacaciones/{idVacacion}");
+
+        if (response.IsSuccessStatusCode)
+            return (true, null);
+
+        var contenido = await response.Content.ReadAsStringAsync();
+        return (false, string.IsNullOrWhiteSpace(contenido) ? response.ReasonPhrase : contenido);
+    }
+
+    // LICENCIAS
+    public async Task<(bool ok, string? error)> EliminarLicenciaAsync(int idLicencia)
+    {
+        var response = await _http.DeleteAsync($"api/Licencias/{idLicencia}");
+
+        if (response.IsSuccessStatusCode)
+            return (true, null);
+
+        var contenido = await response.Content.ReadAsStringAsync();
+        return (false, string.IsNullOrWhiteSpace(contenido) ? response.ReasonPhrase : contenido);
+    }
+
+
 }
 

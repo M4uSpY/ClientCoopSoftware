@@ -238,5 +238,43 @@ namespace ClientCoopSoft.ViewModels.Licencias
             }
         }
 
+        [RelayCommand]
+        private async Task EliminarLicencia(LicenciaListarDTO? licencia)
+        {
+            if (licencia is null)
+                return;
+
+            var mensaje = $"¿Está seguro que desea ELIMINAR la licencia N° {licencia.IdLicencia} " +
+                          $"de {licencia.ApellidosNombres} del {licencia.FechaInicio:dd/MM/yyyy} " +
+                          $"al {licencia.FechaFin:dd/MM/yyyy}?\n\n" +
+                          "Solo se pueden eliminar licencias en estado 'Pendiente'.";
+
+            var resultado = MessageBox.Show(
+                mensaje,
+                "Confirmar eliminación",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Warning);
+
+            if (resultado != MessageBoxResult.Yes)
+                return;
+
+            var (ok, error) = await _apiClient.EliminarLicenciaAsync(licencia.IdLicencia);
+
+            if (!ok)
+            {
+                MessageBox.Show(
+                    string.IsNullOrWhiteSpace(error)
+                        ? "No se pudo eliminar la licencia. Intente nuevamente."
+                        : error,
+                    "Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+                return;
+            }
+
+            await CargarLicenciasListaAsync();
+        }
+
+
     }
 }

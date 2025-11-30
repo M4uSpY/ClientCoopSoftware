@@ -176,6 +176,42 @@ namespace ClientCoopSoft.ViewModels.Vacaciones
 
             await CargarSolicitudesListaAsync();
         }
+        [RelayCommand]
+        private async Task EliminarSolicitud(SolicitudVacListarDTO? solicitud)
+        {
+            if (solicitud is null)
+                return;
+
+            var mensaje = $"¿Está seguro que desea ELIMINAR la solicitud N° {solicitud.IdVacacion} " +
+                          $"de {solicitud.ApellidosNombres} del {solicitud.FechaInicio:dd/MM/yyyy} " +
+                          $"al {solicitud.FechaFin:dd/MM/yyyy}?\n\n" +
+                          "Solo se pueden eliminar solicitudes en estado 'Pendiente'.";
+
+            var resultado = MessageBox.Show(
+                mensaje,
+                "Confirmar eliminación",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Warning);
+
+            if (resultado != MessageBoxResult.Yes)
+                return;
+
+            var (ok, error) = await _apiClient.EliminarSolicitudVacacionAsync(solicitud.IdVacacion);
+
+            if (!ok)
+            {
+                MessageBox.Show(
+                    string.IsNullOrWhiteSpace(error)
+                        ? "No se pudo eliminar la solicitud. Intente nuevamente."
+                        : error,
+                    "Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+                return;
+            }
+
+            await CargarSolicitudesListaAsync();
+        }
 
 
     }

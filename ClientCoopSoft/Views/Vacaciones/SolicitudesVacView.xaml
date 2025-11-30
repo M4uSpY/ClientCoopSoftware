@@ -149,6 +149,21 @@
                                         Foreground="#D9534F"
                                         Kind="Delete" />
                                 </Button>
+                                <!--  ELIMINAR  -->
+                                <Button
+                                    Background="Transparent"
+                                    BorderBrush="Transparent"
+                                    BorderThickness="0"
+                                    Command="{Binding DataContext.EliminarSolicitudCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    CommandParameter="{Binding}">
+                                    <md:PackIcon
+                                        Width="16"
+                                        Height="16"
+                                        Foreground="#B71C1C"
+                                        Kind="TrashCan" />
+                                </Button>
+
+
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
