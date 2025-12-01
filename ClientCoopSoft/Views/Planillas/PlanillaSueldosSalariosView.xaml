@@ -216,6 +216,19 @@
                         <TextBlock Text="Guardar RC-IVA" />
                     </StackPanel>
                 </Button>
+                <!--  Guardar Otros Desc.  -->
+                <Button
+                    Margin="8,0,0,0"
+                    Padding="12,4"
+                    Command="{Binding GuardarOtrosDescuentosCommand}"
+                    Style="{StaticResource MaterialDesignOutlinedButton}"
+                    ToolTip="Guardar valores manuales de Otros Descuentos e inmediatamente recalcular la planilla">
+                    <StackPanel Orientation="Horizontal">
+                        <md:PackIcon Margin="0,0,6,0" Kind="ContentSaveEdit" />
+                        <TextBlock Text="Guardar Otros Desc." />
+                    </StackPanel>
+                </Button>
+
 
                 <!--  Cerrar planilla  -->
                 <Button
@@ -372,11 +385,22 @@
                     ElementStyle="{StaticResource RightAlignNumericCell}"
                     Header="Otros 6.68%" />
 
-                <DataGridTextColumn
+                <DataGridTemplateColumn
                     Width="120"
-                    Binding="{Binding OtrosDescuentos, StringFormat=N2}"
-                    ElementStyle="{StaticResource RightAlignNumericCell}"
-                    Header="Otros Desc." />
+                    Header="Otros Desc."
+                    IsReadOnly="False">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock HorizontalAlignment="Right" Text="{Binding OtrosDescuentos, StringFormat=N2}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <TextBox HorizontalAlignment="Stretch" Text="{Binding OtrosDescuentos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+
 
                 <DataGridTextColumn
                     Width="120"

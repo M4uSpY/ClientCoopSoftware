@@ -10,6 +10,7 @@
     mc:Ignorable="d">
     <UserControl.Resources>
         <conv:BoolToGeneroConverter x:Key="BoolToGeneroConverter" />
+        <conv:IndexToNumeroConverter x:Key="IndexToNumeroConverter" />
     </UserControl.Resources>
     <Grid Margin="20">
         <Grid.RowDefinitions>
@@ -86,6 +87,7 @@
             Grid.Row="2"
             Grid.ColumnSpan="3"
             Margin="0"
+            AlternationCount="1000000"
             AutoGenerateColumns="False"
             Background="White"
             BorderThickness="1"
@@ -94,10 +96,27 @@
             IsReadOnly="True"
             ItemsSource="{Binding TrabajadoresView}">
             <DataGrid.Columns>
+
+                <DataGridTemplateColumn Width="Auto" Header="No">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock.Text>
+                                    <Binding
+                                        Converter="{StaticResource IndexToNumeroConverter}"
+                                        Path="AlternationIndex"
+                                        RelativeSource="{RelativeSource AncestorType=DataGridRow}" />
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
                 <DataGridTextColumn
                     Width="*"
                     Binding="{Binding IdTrabajador}"
-                    Header="No" />
+                    Header="No"
+                    Visibility="Collapsed" />
                 <DataGridTextColumn
                     Width="*"
                     Binding="{Binding CI}"

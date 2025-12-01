@@ -517,5 +517,76 @@ namespace ClientCoopSoft.ViewModels.Planillas
                     "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        [RelayCommand]
+        private async Task GuardarOtrosDescuentosAsync()
+        {
+            if (IdPlanillaActual <= 0)
+            {
+                MessageBox.Show(
+                    "No hay una planilla seleccionada.\n\n" +
+                    "Cargue primero una planilla o cree una nueva.",
+                    "Aviso", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (PlanillaSueldos == null || PlanillaSueldos.Count == 0)
+            {
+                MessageBox.Show(
+                    "No hay filas de planilla para actualizar.",
+                    "Aviso", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            try
+            {
+                int errores = 0;
+
+                foreach (var fila in PlanillaSueldos)
+                {
+                    if (fila.IdTrabajadorPlanilla <= 0)
+                        continue;
+
+                    var ok = await _api.ActualizarOtrosDescAsync(
+                        fila.IdTrabajadorPlanilla,
+                        fila.OtrosDescuentos);
+
+                    if (!ok)
+                        errores++;
+                }
+
+                // Recalcular planilla con los nuevos OTROS_DESC manuales
+                var recalculoOk = await _api.CalcularPlanillaSueldosAsync(IdPlanillaActual);
+                if (!recalculoOk)
+                {
+                    MessageBox.Show(
+                        "Se guardaron Otros Descuentos pero no se pudo recalcular la planilla.",
+                        "Advertencia", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                else
+                {
+                    await CargarPlanillaAsync();
+                }
+
+                if (errores == 0)
+                {
+                    MessageBox.Show(
+                        "Otros Descuentos guardados correctamente y planilla recalculada.",
+                        "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    MessageBox.Show(
+                        $"Se presentaron errores en {errores} fila(s) al guardar Otros Descuentos.",
+                        "Advertencia", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al guardar Otros Descuentos: {ex.Message}",
+                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
     }
 }

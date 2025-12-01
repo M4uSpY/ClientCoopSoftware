@@ -1020,6 +1020,21 @@ public class ApiClient
         }
     }
 
+    public async Task<bool> ActualizarOtrosDescAsync(int idTrabajadorPlanilla, decimal montoOtrosDesc)
+    {
+        var dto = new OtrosDescActualizarDTO
+        {
+            MontoOtrosDesc = montoOtrosDesc
+        };
+
+        var response = await _http.PutAsJsonAsync(
+            $"api/PlanillaSueldosSalarios/trabajador-planilla/{idTrabajadorPlanilla}/otros-desc",
+            dto);
+
+        return response.IsSuccessStatusCode;
+    }
+
+
     // VACACIONES
     public async Task<(bool ok, string? error)> EliminarSolicitudVacacionAsync(int idVacacion)
     {
