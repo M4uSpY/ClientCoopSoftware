@@ -31,7 +31,7 @@ namespace ClientCoopSoft.Models
 
         public string NombreCompleto =>
         string.Join(" ",
-            new[] { PrimerNombre, SegundoNombre}
+            new[] { PrimerNombre, SegundoNombre, ApellidoPaterno, ApellidoMaterno}
             .Where(s => !string.IsNullOrWhiteSpace(s))
         ).Trim();
 
