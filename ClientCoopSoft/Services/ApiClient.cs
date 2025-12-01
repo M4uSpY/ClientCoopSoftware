@@ -1063,6 +1063,25 @@ public class ApiClient
         }
     }
 
+    public async Task<(bool ok, string? error)> ActualizarSolicitudVacacionAsync(
+    int idVacacion,
+    SolicitudVacEditarDTO dto)
+    {
+        SetBearer();
+
+        var json = JsonConvert.SerializeObject(dto);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+        var response = await _http.PutAsync($"api/Vacaciones/{idVacacion}", content);
+
+        if (response.IsSuccessStatusCode)
+            return (true, null);
+
+        var contenido = await response.Content.ReadAsStringAsync();
+        return (false, string.IsNullOrWhiteSpace(contenido) ? response.ReasonPhrase : contenido);
+    }
+
+
 
 }
 

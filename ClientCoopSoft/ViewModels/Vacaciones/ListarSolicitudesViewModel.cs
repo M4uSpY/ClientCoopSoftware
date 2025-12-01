@@ -1,4 +1,5 @@
 ﻿using ClientCoopSoft.DTO.Vacaciones;
+using ClientCoopSoft.Views.Vacaciones;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
@@ -214,5 +215,27 @@ namespace ClientCoopSoft.ViewModels.Vacaciones
         }
 
 
+        [RelayCommand]
+        private void EditarSolicitud(SolicitudVacListarDTO? solicitud)
+        {
+            if (solicitud is null)
+                return;
+
+            // Crear el VM de edición con el DTO (ya trae IdTrabajador)
+            var vm = new EditarSolicitudVacacionViewModel(_apiClient, solicitud);
+
+            var ventana = new EditarSolicitudVacView(vm)
+            {
+                Owner = Application.Current.MainWindow
+            };
+
+            bool? resultado = ventana.ShowDialog();
+
+            if (resultado == true)
+            {
+                // Si se guardó, recargar la lista
+                _ = CargarSolicitudesListaAsync();
+            }
+        }
     }
 }

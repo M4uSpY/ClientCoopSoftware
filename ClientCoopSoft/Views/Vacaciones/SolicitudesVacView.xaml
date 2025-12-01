@@ -118,10 +118,23 @@
                     Width="*"
                     Binding="{Binding Estado}"
                     Header="Estado" />
-                <DataGridTemplateColumn Width="150" Header="Acciones">
+                <DataGridTemplateColumn Width="250" Header="Acciones">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+
+                                <!--  EDITAR  -->
+                                <Button
+                                    Background="Transparent"
+                                    BorderBrush="Transparent"
+                                    Command="{Binding DataContext.EditarSolicitudCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    CommandParameter="{Binding}">
+                                    <md:PackIcon
+                                        Width="16"
+                                        Height="16"
+                                        Foreground="#1976D2"
+                                        Kind="Pencil" />
+                                </Button>
                                 <!--  AprobAR  -->
                                 <Button
                                     Background="Transparent"
@@ -149,6 +162,9 @@
                                         Foreground="#D9534F"
                                         Kind="Delete" />
                                 </Button>
+
+
+
                                 <!--  ELIMINAR  -->
                                 <Button
                                     Background="Transparent"

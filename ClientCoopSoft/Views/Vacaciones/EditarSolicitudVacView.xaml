@@ -1,0 +1,245 @@
+﻿<Window
+    x:Class="ClientCoopSoft.Views.Vacaciones.EditarSolicitudVacView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:ClientCoopSoft.Views.Vacaciones"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    Title="Editar solicitud de vacación"
+    AllowsTransparency="True"
+    Background="Transparent"
+    ResizeMode="NoResize"
+    SizeToContent="WidthAndHeight"
+    WindowStartupLocation="CenterOwner"
+    WindowStyle="None"
+    mc:Ignorable="d">
+    <Border
+        Width="1000"
+        Height="820"
+        Background="White"
+        BorderBrush="Gray"
+        BorderThickness="1"
+        CornerRadius="10">
+
+        <Grid Margin="30">
+            <!--  COLUMNAS  -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+
+            <!--  FILAS  -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!--  TÍTULO + RESUMEN VACACIONES  -->
+            <StackPanel
+                Grid.Row="0"
+                Grid.ColumnSpan="3"
+                Margin="0,0,0,30">
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontSize="36"
+                    FontWeight="SemiBold"
+                    Foreground="#695858"
+                    Text="Editar vacación" />
+
+                <Border
+                    Margin="0,20,0,0"
+                    Padding="10"
+                    Background="#F5F5F5"
+                    CornerRadius="8">
+                    <StackPanel>
+                        <TextBlock
+                            Margin="0,0,0,5"
+                            FontSize="13"
+                            FontWeight="SemiBold"
+                            Foreground="#444"
+                            Text="Resumen de días de vacación" />
+
+                        <TextBlock
+                            FontSize="12"
+                            Foreground="#666"
+                            Text="{Binding Gestion, StringFormat='Gestión: {0}'}" />
+
+                        <TextBlock
+                            FontSize="12"
+                            Foreground="#666"
+                            Text="{Binding AntiguedadAnios, StringFormat='Antigüedad: {0} año(s)'}" />
+
+                        <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                            <TextBlock
+                                FontSize="12"
+                                FontWeight="SemiBold"
+                                Foreground="#333"
+                                Text="Días anuales: " />
+                            <TextBlock
+                                Margin="2,0,10,0"
+                                FontSize="12"
+                                Foreground="#333"
+                                Text="{Binding DiasAnuales}" />
+
+                            <TextBlock
+                                FontSize="12"
+                                FontWeight="SemiBold"
+                                Foreground="#333"
+                                Text="Usados: " />
+                            <TextBlock
+                                Margin="2,0,10,0"
+                                FontSize="12"
+                                Foreground="#333"
+                                Text="{Binding DiasUsados}" />
+
+                            <TextBlock
+                                FontSize="12"
+                                FontWeight="SemiBold"
+                                Foreground="#333"
+                                Text="Disponibles: " />
+                            <TextBlock
+                                Margin="2,0,0,0"
+                                FontSize="12"
+                                Foreground="#22B14C"
+                                Text="{Binding DiasDisponibles}" />
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!--  FECHAS  -->
+            <StackPanel
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="0,0,20,20">
+                <TextBlock
+                    Margin="0,0,0,10"
+                    FontSize="11"
+                    Foreground="#666"
+                    Text="Fecha Inicio:" />
+                <DatePicker
+                    Width="290"
+                    md:HintAssist.Hint=""
+                    md:HintAssist.HintPaddingBrush="Transparent"
+                    BorderBrush="#CCC"
+                    BorderThickness="1"
+                    SelectedDate="{Binding FechaInicio}"
+                    Style="{StaticResource MaterialDesignOutlinedDatePicker}" />
+            </StackPanel>
+
+            <StackPanel
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="0,0,20,20">
+                <TextBlock
+                    Margin="0,0,0,10"
+                    FontSize="11"
+                    Foreground="#666"
+                    Text="Fecha Fin:" />
+                <DatePicker
+                    md:HintAssist.Hint=""
+                    md:HintAssist.HintPaddingBrush="Transparent"
+                    BorderBrush="#CCC"
+                    BorderThickness="1"
+                    SelectedDate="{Binding FechaFin}"
+                    Style="{StaticResource MaterialDesignOutlinedDatePicker}" />
+            </StackPanel>
+
+            <!--  CALENDARIO VISUAL  -->
+            <StackPanel
+                Grid.Row="1"
+                Grid.RowSpan="3"
+                Grid.Column="2"
+                Margin="10,0,0,20"
+                HorizontalAlignment="Center">
+                <TextBlock
+                    Margin="0,0,0,5"
+                    HorizontalAlignment="Center"
+                    FontSize="20"
+                    Foreground="#666"
+                    Text="Calendario" />
+
+                <Calendar
+                    Width="260"
+                    Margin="0,5,0,0"
+                    BorderThickness="0"
+                    SelectedDate="{Binding FechaInicio, Mode=TwoWay}"
+                    SelectionMode="SingleDate" />
+
+                <StackPanel Margin="0,20,0,0">
+                    <Button
+                        Width="180"
+                        Height="40"
+                        Background="#303048"
+                        BorderBrush="Transparent"
+                        BorderThickness="0"
+                        Command="{Binding GuardarCommand}"
+                        Content="GUARDAR CAMBIOS"
+                        Foreground="White" />
+
+                    <Button
+                        Width="180"
+                        Height="40"
+                        Margin="0,15,0,0"
+                        Background="#FF5478"
+                        BorderBrush="Transparent"
+                        BorderThickness="0"
+                        Command="{Binding CancelarCommand}"
+                        Content="CANCELAR"
+                        Foreground="White" />
+                </StackPanel>
+            </StackPanel>
+
+            <!--  MOTIVO  -->
+            <StackPanel
+                Grid.Row="2"
+                Grid.Column="1"
+                Margin="0,0,0,20">
+                <TextBlock
+                    FontSize="11"
+                    Foreground="#666"
+                    Text="Motivo:" />
+                <TextBox
+                    Margin="0,5,0,0"
+                    md:HintAssist.Hint=""
+                    md:HintAssist.HintPaddingBrush="Transparent"
+                    md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                    md:TextFieldAssist.UnderlineBrush="#0078D7"
+                    BorderBrush="Gray"
+                    BorderThickness="0.3"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                    Text="{Binding Motivo}" />
+            </StackPanel>
+
+            <!--  OBSERVACIÓN  -->
+            <StackPanel
+                Grid.Row="3"
+                Grid.ColumnSpan="2"
+                Margin="0,0,0,20">
+                <TextBlock
+                    FontSize="11"
+                    Foreground="#666"
+                    Text="Observación:" />
+                <TextBox
+                    Height="329"
+                    Margin="0,5,0,0"
+                    md:HintAssist.Hint=""
+                    md:HintAssist.HintPaddingBrush="Transparent"
+                    md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
+                    md:TextFieldAssist.UnderlineBrush="#0078D7"
+                    AcceptsReturn="True"
+                    BorderBrush="Gray"
+                    BorderThickness="0.3"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                    Text="{Binding Observacion}"
+                    TextWrapping="Wrap" />
+            </StackPanel>
+
+        </Grid>
+    </Border>
+</Window>
