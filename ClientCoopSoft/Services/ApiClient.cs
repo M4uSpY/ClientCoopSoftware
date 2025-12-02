@@ -6,6 +6,7 @@ using ClientCoopSoft.DTO.Extras;
 using ClientCoopSoft.DTO.Faltas;
 using ClientCoopSoft.DTO.FormacionAcademica;
 using ClientCoopSoft.DTO.Historicos;
+using ClientCoopSoft.DTO.Huellas;
 using ClientCoopSoft.DTO.Licencias;
 using ClientCoopSoft.DTO.Personas;
 using ClientCoopSoft.DTO.Planillas;
@@ -14,6 +15,7 @@ using ClientCoopSoft.DTO.Vacaciones;
 using ClientCoopSoft.Models;
 using Newtonsoft.Json;
 using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -1094,6 +1096,68 @@ public class ApiClient
 
         var contenido = await response.Content.ReadAsStringAsync();
         return (false, string.IsNullOrWhiteSpace(contenido) ? response.ReasonPhrase : contenido);
+    }
+
+
+    public async Task<int?> CrearPersonaYObtenerIdAsync(PersonaCrearDTO dto)
+    {
+        try
+        {
+            SetBearer();
+            var json = JsonConvert.SerializeObject(dto);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _http.PostAsync("api/personas", content);
+            var raw = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+                return null;
+
+            // El backend devuelve un DTO con IdPersona; lo deserializamos a Persona
+            var personaCreada = JsonConvert.DeserializeObject<Persona>(raw);
+            return personaCreada?.IdPersona;
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    public async Task<bool> RegistrarHuellaAsync(int idPersona, int indiceDedo, string templateXml)
+    {
+        try
+        {
+            SetBearer();
+
+            var dto = new HuellaDTO
+            {
+                IdPersona = idPersona,
+                IndiceDedo = indiceDedo,
+                TemplateXml = templateXml
+            };
+
+            var json = JsonConvert.SerializeObject(dto);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await _http.PostAsync("api/huellas/registrar", content);
+            return response.IsSuccessStatusCode;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    public async Task<List<HuellaRespuestaDTO>?> ObtenerHuellasPersonaAsync(int idPersona)
+    {
+        var resp = await _http.GetAsync($"api/huellas/obtener/{idPersona}");
+
+        if (resp.StatusCode == HttpStatusCode.NotFound)
+            return new List<HuellaRespuestaDTO>();
+
+        resp.EnsureSuccessStatusCode();
+
+        var json = await resp.Content.ReadAsStringAsync();
+        return JsonConvert.DeserializeObject<List<HuellaRespuestaDTO>>(json);
     }
 
 

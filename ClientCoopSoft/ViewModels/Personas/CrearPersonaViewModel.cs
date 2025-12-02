@@ -32,8 +32,12 @@ namespace ClientCoopSoft.ViewModels.Personas
         [ObservableProperty] private byte[]? fotoBytes;
         [ObservableProperty] private BitmapImage? fotoPreview;
 
-        [ObservableProperty] private BitmapImage? imagenHuella;
-        [ObservableProperty] private string? huellaXml;
+        [ObservableProperty] private BitmapImage? imagenHuella1;
+        [ObservableProperty] private BitmapImage? imagenHuella2;
+
+        [ObservableProperty] private string? huella1Xml;
+        [ObservableProperty] private string? huella2Xml;
+
 
         public CrearPersonaViewModel(ApiClient apiCilent)
         {
@@ -165,38 +169,81 @@ namespace ClientCoopSoft.ViewModels.Personas
                 Direccion = Direccion,
                 Email = Email,
                 Foto = FotoBytes,
-                Huella = HuellaXml
             };
-            bool exito = await _apiClient.CrearPersonaAsync(personaDTO);
-            if (exito)
+            var idPersona = await _apiClient.CrearPersonaYObtenerIdAsync(personaDTO);
+
+            if (idPersona is null)
             {
-                MessageBox.Show("Usuario creado correctamente", "Exito", MessageBoxButton.OK, MessageBoxImage.Information);
-                window.DialogResult = true;
-                window.Close();
+                MessageBox.Show("Error al crear la persona.", "Error",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            bool okH1 = true, okH2 = true;
+
+            // Registrar huella 1 si existe
+            if (!string.IsNullOrWhiteSpace(Huella1Xml))
+                okH1 = await _apiClient.RegistrarHuellaAsync(idPersona.Value, 1, Huella1Xml);
+
+            // Registrar huella 2 si existe
+            if (!string.IsNullOrWhiteSpace(Huella2Xml))
+                okH2 = await _apiClient.RegistrarHuellaAsync(idPersona.Value, 2, Huella2Xml);
+
+            if (!okH1 || !okH2)
+            {
+                MessageBox.Show(
+                    "La persona se creó, pero hubo problemas al registrar alguna huella.",
+                    "Advertencia",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
             }
             else
             {
-                MessageBox.Show("Error al crear el usuario", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(
+                    "Persona y huellas registradas correctamente.",
+                    "Éxito",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information);
             }
+
+            window.DialogResult = true;
+            window.Close();
         }
 
         [RelayCommand]
-        private async Task CapturarHuellaAsync()
+        private async Task CapturarHuella1Async()
         {
             var resultado = await _lectorHuellaService.CapturarHuellaAsync();
             if (resultado != null)
             {
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    ImagenHuella = resultado.ImagenHuella; // Preview
+                    ImagenHuella1 = resultado.ImagenHuella;
                 });
 
-                // Antes: HuellaBytes = resultado.TemplateBytes;
-                HuellaXml = resultado.TemplateXml;
-
-                MessageBox.Show("Huella capturada correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+                Huella1Xml = resultado.TemplateXml;
+                MessageBox.Show("Huella 1 capturada correctamente.", "Éxito",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
+
+        [RelayCommand]
+        private async Task CapturarHuella2Async()
+        {
+            var resultado = await _lectorHuellaService.CapturarHuellaAsync();
+            if (resultado != null)
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    ImagenHuella2 = resultado.ImagenHuella;
+                });
+
+                Huella2Xml = resultado.TemplateXml;
+                MessageBox.Show("Huella 2 capturada correctamente.", "Éxito",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
 
 
         [RelayCommand]

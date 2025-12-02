@@ -384,37 +384,74 @@
             </StackPanel>
 
             <!--  AGREGAR Huella  -->
+            <!--  HUELLA 1 y HUELLA 2  -->
             <StackPanel
-                Grid.Row="4"
-                Grid.RowSpan="3"
-                Grid.Column="2"
-                Margin="0,46,0,0"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Top"
-                Orientation="Vertical">
+    Grid.Row="4"
+    Grid.RowSpan="3"
+    Grid.Column="2"
+    Margin="0,46,0,0"
+    HorizontalAlignment="Center"
+    VerticalAlignment="Top"
+    Orientation="Vertical">
+
+                <!-- Huella 1 -->
+                <TextBlock
+        Margin="0,0,0,5"
+        FontWeight="Bold"
+        Foreground="#666"
+        Text="Huella 1" />
 
                 <Image
-                    Width="150"
-                    Height="150"
-                    Margin="0,0,0,10"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    ClipToBounds="True"
-                    SnapsToDevicePixels="True"
-                    Source="{Binding ImagenHuella}"
-                    Stretch="UniformToFill"
-                    Visibility="{Binding ImagenHuella, Converter={StaticResource NullToVisibilityConverter}}" />
+        Width="120"
+        Height="120"
+        Margin="0,0,0,5"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
+        ClipToBounds="True"
+        SnapsToDevicePixels="True"
+        Source="{Binding ImagenHuella1}"
+        Stretch="UniformToFill" />
 
                 <Button
-                    Width="131"
-                    Background="Red"
-                    BorderBrush="Transparent"
-                    BorderThickness="0"
-                    Command="{Binding CapturarHuellaCommand}"
-                    Content="CapturarHuella"
-                    Foreground="White" />
+        Width="140"
+        Margin="0,0,0,10"
+        Background="Red"
+        BorderBrush="Transparent"
+        BorderThickness="0"
+        Command="{Binding CapturarHuella1Command}"
+        Content="Capturar Huella 1"
+        Foreground="White" />
 
+                <Separator Margin="0,5,0,10" />
+
+                <!-- Huella 2 -->
+                <TextBlock
+        Margin="0,0,0,5"
+        FontWeight="Bold"
+        Foreground="#666"
+        Text="Huella 2" />
+
+                <Image
+        Width="120"
+        Height="120"
+        Margin="0,0,0,5"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
+        ClipToBounds="True"
+        SnapsToDevicePixels="True"
+        Source="{Binding ImagenHuella2}"
+        Stretch="UniformToFill" />
+
+                <Button
+        Width="140"
+        Background="Red"
+        BorderBrush="Transparent"
+        BorderThickness="0"
+        Command="{Binding CapturarHuella2Command}"
+        Content="Capturar Huella 2"
+        Foreground="White" />
             </StackPanel>
+
 
 
 
