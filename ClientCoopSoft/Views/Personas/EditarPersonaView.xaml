@@ -24,8 +24,8 @@
 
     <Border
         x:Name="borde"
-        Width="1200"
-        Height="761"
+        Width="1000"
+        Height="755"
         Background="White"
         BorderBrush="Gray"
         BorderThickness="1"
@@ -364,7 +364,7 @@
                 Grid.Row="2"
                 Grid.RowSpan="3"
                 Grid.Column="2"
-                Margin="0,26,0,0"
+                Margin="20"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Top"
                 Orientation="Vertical">
@@ -396,84 +396,86 @@
 
             <!--  HUELLA 1 y HUELLA 2 en edición  -->
             <StackPanel
-    Grid.Row="4"
-    Grid.RowSpan="2"
-    Grid.Column="2"
-    Margin="95,36,0,0"
-    HorizontalAlignment="Left"
-    VerticalAlignment="Top"
-    Orientation="Horizontal">
+                Grid.Row="4"
+                Grid.RowSpan="2"
+                Grid.Column="2"
+                Margin="0,36,0,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Orientation="Horizontal">
                 <StackPanel Orientation="Vertical">
-                    <!-- Huella 1 -->
+                    <!--  Huella 1  -->
                     <TextBlock
-Margin="0,0,0,5"
-FontWeight="Bold"
-Text="Huella 1" />
+                        Margin="0,0,0,5"
+                        HorizontalAlignment="Center"
+                        FontWeight="Bold"
+                        Text="Huella 1" />
 
                     <Image
-Width="120"
-Height="120"
-Margin="0,0,0,5"
-HorizontalAlignment="Center"
-VerticalAlignment="Center"
-ClipToBounds="True"
-SnapsToDevicePixels="True"
-Source="{Binding ImagenHuella1}"
-Stretch="UniformToFill" />
+                        Width="120"
+                        Height="120"
+                        Margin="0,0,0,5"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        ClipToBounds="True"
+                        SnapsToDevicePixels="True"
+                        Source="{Binding ImagenHuella1}"
+                        Stretch="UniformToFill" />
                     <TextBlock
-Margin="0,0,0,5"
-HorizontalAlignment="Center"
-FontWeight="Bold"
-Foreground="{Binding Huella1Registrada, Converter={StaticResource BoolToColorConverter}}"
-Text="{Binding MensajeHuella1}" />
+                        Margin="0,0,0,5"
+                        HorizontalAlignment="Center"
+                        FontWeight="Bold"
+                        Foreground="{Binding Huella1Registrada, Converter={StaticResource BoolToColorConverter}}"
+                        Text="{Binding MensajeHuella1}" />
 
                     <Button
-Width="140"
-Margin="0,0,0,10"
-Background="#111827"
-BorderThickness="0"
-Command="{Binding CapturarHuella1Command}"
-Content="Actualizar Huella 1"
-Foreground="White" />
+                        Width="140"
+                        Margin="0,0,0,10"
+                        Background="#111827"
+                        BorderThickness="0"
+                        Command="{Binding CapturarHuella1Command}"
+                        Content="Actualizar Huella 1"
+                        Foreground="White" />
                 </StackPanel>
 
-                <StackPanel>
-                    <!-- Huella 2 -->
+                <StackPanel Margin="10,0,0,0">
+                    <!--  Huella 2  -->
                     <TextBlock
-Margin="0,0,0,5"
-FontWeight="Bold"
-Text="Huella 2" />
+                        Margin="0,0,0,5"
+                        HorizontalAlignment="Center"
+                        FontWeight="Bold"
+                        Text="Huella 2" />
 
                     <Image
-Width="120"
-Height="120"
-Margin="0,0,0,5"
-HorizontalAlignment="Center"
-VerticalAlignment="Center"
-ClipToBounds="True"
-SnapsToDevicePixels="True"
-Source="{Binding ImagenHuella2}"
-Stretch="UniformToFill" />
+                        Width="120"
+                        Height="120"
+                        Margin="0,0,0,5"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        ClipToBounds="True"
+                        SnapsToDevicePixels="True"
+                        Source="{Binding ImagenHuella2}"
+                        Stretch="UniformToFill" />
 
                     <TextBlock
-Margin="0,0,0,5"
-HorizontalAlignment="Center"
-FontWeight="Bold"
-Foreground="{Binding Huella2Registrada, Converter={StaticResource BoolToColorConverter}}"
-Text="{Binding MensajeHuella2}" />
+                        Margin="0,0,0,5"
+                        HorizontalAlignment="Center"
+                        FontWeight="Bold"
+                        Foreground="{Binding Huella2Registrada, Converter={StaticResource BoolToColorConverter}}"
+                        Text="{Binding MensajeHuella2}" />
 
                     <Button
-Width="140"
-Background="#111827"
-BorderThickness="0"
-Command="{Binding CapturarHuella2Command}"
-Content="Actualizar Huella 2"
-Foreground="White" />
+                        Width="140"
+                        Background="#111827"
+                        BorderThickness="0"
+                        Command="{Binding CapturarHuella2Command}"
+                        Content="Actualizar Huella 2"
+                        Foreground="White" />
                 </StackPanel>
             </StackPanel>
-                
 
-                
+
+
 
 
 
