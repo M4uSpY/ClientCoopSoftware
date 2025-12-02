@@ -14,6 +14,8 @@ namespace ClientCoopSoft.DTO.FormacionAcademica
         public string Institucion { get; set; } = string.Empty;
         public int AnioGraduacion { get; set; }
         public string? NroRegistroProfesional { get; set; }
+
+        public byte[]? ArchivoPdf { get; set; }
     }
 
 }

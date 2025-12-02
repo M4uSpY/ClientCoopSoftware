@@ -61,6 +61,8 @@
                     <TextBox
                         Width="463"
                         Margin="0,5,0,0"
+                        md:HintAssist.Hint=""
+                        md:HintAssist.HintPaddingBrush="Transparent"
                         md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
                         md:TextFieldAssist.UnderlineBrush="#0078D7"
                         BorderBrush="Gray"
@@ -82,6 +84,8 @@
                     <TextBox
                         Width="463"
                         Margin="0,5,0,0"
+                        md:HintAssist.Hint=""
+                        md:HintAssist.HintPaddingBrush="Transparent"
                         md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
                         md:TextFieldAssist.UnderlineBrush="#0078D7"
                         BorderBrush="Gray"
@@ -103,6 +107,8 @@
                     <TextBox
                         Width="463"
                         Margin="0,5,0,0"
+                        md:HintAssist.Hint=""
+                        md:HintAssist.HintPaddingBrush="Transparent"
                         md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
                         md:TextFieldAssist.UnderlineBrush="#0078D7"
                         BorderBrush="Gray"
@@ -124,6 +130,8 @@
                     <TextBox
                         Width="463"
                         Margin="0,5,0,0"
+                        md:HintAssist.Hint=""
+                        md:HintAssist.HintPaddingBrush="Transparent"
                         md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
                         md:TextFieldAssist.UnderlineBrush="#0078D7"
                         BorderBrush="Gray"
@@ -145,6 +153,8 @@
                     <TextBox
                         Width="463"
                         Margin="0,5,0,0"
+                        md:HintAssist.Hint=""
+                        md:HintAssist.HintPaddingBrush="Transparent"
                         md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
                         md:TextFieldAssist.UnderlineBrush="#0078D7"
                         BorderBrush="Gray"
@@ -153,10 +163,7 @@
                         Text="{Binding NroRegistroProfesional, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
             </StackPanel>
-            <Image
-                Grid.Row="1"
-                Grid.Column="1"
-                Source="/Assets/imgFormAcademicaAdd.png" />
+
             <!--  Botones  -->
             <StackPanel
                 Grid.Row="2"
@@ -194,6 +201,33 @@
                     Command="{Binding GuardarCommand}"
                     Content="Guardar"
                     Foreground="White" />
+            </StackPanel>
+            <StackPanel
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="10,0,0,0"
+                VerticalAlignment="Center"
+                Orientation="Vertical">
+                <Image
+                    Width="450"
+                    Height="250"
+                    RenderOptions.BitmapScalingMode="HighQuality"
+                    Source="{Binding FotoBytes}" />
+                <Button
+                    Width="250"
+                    Margin="0,10,0,0"
+                    Background="#303048"
+                    BorderBrush="Transparent"
+                    BorderThickness="0"
+                    Command="{Binding SubirFotoCommand}"
+                    Content="Subir Foto"
+                    Foreground="White" />
+                <TextBlock
+                    Margin="0,10,0,0"
+                    HorizontalAlignment="Center"
+                    Foreground="#FF214F"
+                    Text="Limite de tamanio de foto: 2 MB" />
+
             </StackPanel>
         </Grid>
     </Border>

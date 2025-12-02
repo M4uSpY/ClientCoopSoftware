@@ -2,6 +2,7 @@
     x:Class="ClientCoopSoft.Views.FormacionAcademica.FormacionAcademicaCrearView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:ClientCoopSoft.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:ClientCoopSoft.Views.FormacionAcademica"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -14,6 +15,9 @@
     WindowStartupLocation="CenterOwner"
     WindowStyle="None"
     mc:Ignorable="d">
+    <Window.Resources>
+        <converters:BytesToImageConverter x:Key="BytesToImageConverter" />
+    </Window.Resources>
     <Border
         Width="1000"
         Height="650"
@@ -196,6 +200,32 @@
                     Command="{Binding GuardarCommand}"
                     Content="Guardar"
                     Foreground="White" />
+            </StackPanel>
+
+            <StackPanel
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="10,0,0,0"
+                VerticalAlignment="Center"
+                Orientation="Vertical">
+                <Image
+                    Width="250"
+                    Height="250"
+                    Source="{Binding FotoBytes, Converter={StaticResource BytesToImageConverter}}" />
+                <Button
+                    Width="180"
+                    Margin="0,10,0,0"
+                    Background="#303048"
+                    BorderBrush="Transparent"
+                    BorderThickness="0"
+                    Command="{Binding SubirFotoCommand}"
+                    Content="Subir Foto"
+                    Foreground="#FFFFFF" />
+                <TextBlock
+                    Margin="0,10,0,0"
+                    HorizontalAlignment="Center"
+                    Foreground="#FF214F"
+                    Text="Limite de tamanio de foto: 2 MB" />
             </StackPanel>
         </Grid>
     </Border>
