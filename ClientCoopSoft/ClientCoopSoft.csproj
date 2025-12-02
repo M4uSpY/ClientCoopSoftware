@@ -124,7 +124,9 @@
     <Resource Include="Assets\imgDefaultCapacitacion.png" />
     <Resource Include="Assets\imgFormAcademicaAdd.png" />
     <Resource Include="Assets\Login_Fondo.png" />
-    <Resource Include="Assets\Logo_Cooperativa.png" />
+    <Content Include="Assets\Logo_Cooperativa.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Assets\sujeto.jpg" />
     <Resource Include="Assets\WallMain.png" />
   </ItemGroup>

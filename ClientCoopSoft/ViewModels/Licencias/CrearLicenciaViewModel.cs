@@ -24,9 +24,9 @@ namespace ClientCoopSoft.ViewModels.Licencias
         private DateTime fechaFin = DateTime.Today;
 
         // HORAS como TEXTO (para evitar que WPF cambie la fecha)
-        [ObservableProperty] private TimeSpan horaInicio = TimeSpan.FromHours(8.5);
+        [ObservableProperty] private TimeSpan horaInicio = TimeSpan.FromHours(8);
 
-        [ObservableProperty] private TimeSpan horaFin = TimeSpan.FromHours(16.5);
+        [ObservableProperty] private TimeSpan horaFin = TimeSpan.FromHours(16);
 
         [ObservableProperty]
         private ObservableCollection<TipoLicencia> tiposLicencia = new();

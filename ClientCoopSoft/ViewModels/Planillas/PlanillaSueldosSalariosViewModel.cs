@@ -323,70 +323,181 @@ namespace ClientCoopSoft.ViewModels.Planillas
                 var ws = wb.Worksheets.Add("Planilla");
 
                 int fila = 1;
+                int colMax = 22;
 
-                // Título
-                ws.Cell(fila, 1).Value = "PLANILLA DE SUELDOS Y SALARIOS";
-                ws.Range(fila, 1, fila, 19).Merge();
-                ws.Cell(fila, 1).Style
-                    .Font.SetBold()
-                    .Font.SetFontSize(14);
-                ws.Cell(fila, 1).Style.Alignment
-                    .SetHorizontal(XLAlignmentHorizontalValues.Center);
+                string nombreMes = MesSeleccionado?.Nombre ?? Mes.ToString("00");
+
+                // =========================
+                // LOGO
+                // =========================
+                string logoPath = System.IO.Path.Combine(
+                    AppDomain.CurrentDomain.BaseDirectory,
+                    "Assets",
+                    "Logo_Cooperativa.png"
+                );
+
+                if (File.Exists(logoPath))
+                {
+                    var picture = ws.AddPicture(logoPath)
+                                    .MoveTo(ws.Cell(2, 1)) // un poco más abajo
+                                    .Scale(0.35);         // ajusta si quieres más grande/chico
+                }
+
+                // Dejamos la fila 1 vacía (solo estética)
+                fila = 2;
+
+                // =========================
+                // ENCABEZADO SUPERIOR
+                // =========================
+
+                // Nombre de la cooperativa (centrado, un poco más a la derecha)
+                ws.Cell(fila, 4).Value =
+                    "COOPERATIVA DE AHORRO Y CREDITO DE VINCULO LABORAL \"LA CONFIANZA R.L.\"";
+                ws.Range(fila, 4, fila, 18).Merge();
+                ws.Cell(fila, 4).Style.Font.SetBold().Font.SetFontSize(14);
+                ws.Cell(fila, 4).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
                 fila++;
 
-                // Subtítulo: Gestión / Mes
-                string nombreMes = MesSeleccionado?.Nombre ?? Mes.ToString("00");
-                ws.Cell(fila, 1).Value = $"Gestión: {Gestion}   Mes: {nombreMes}";
-                ws.Range(fila, 1, fila, 19).Merge();
-                ws.Cell(fila, 1).Style
-                    .Font.SetFontSize(11);
-                ws.Cell(fila, 1).Style.Alignment
-                    .SetHorizontal(XLAlignmentHorizontalValues.Center);
+                // Fila: No. EMPLEADOR y PAG. 1 DE 1
+                ws.Cell(fila, 4).Value = "No. EMPLEADOR MINISTERIO DE TRABAJO:";
+                ws.Range(fila, 4, fila, 12).Merge();
+                ws.Cell(fila, 13).Value = "123-1";   // puedes sacar de config/bd
+                ws.Range(fila, 13, fila, 16).Merge();
+
+                ws.Cell(fila, 19).Value = "PAG. 1 DE 1";
+                ws.Range(fila, 19, fila, colMax).Merge();
+                ws.Cell(fila, 19).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Right);
+                fila++;
+
+                // Fila: NIT
+                ws.Cell(fila, 4).Value = "No. NIT:";
+                ws.Range(fila, 4, fila, 12).Merge();
+                ws.Cell(fila, 13).Value = "123";    // idem, de config
+                ws.Range(fila, 13, fila, 16).Merge();
+                fila++;
+
+                // Fila: Empleador Caja de Salud
+                ws.Cell(fila, 4).Value = "No. de EMPLEADOR CAJA DE SALUD:";
+                ws.Range(fila, 4, fila, 12).Merge();
+                ws.Cell(fila, 13).Value = "123-1";
+                ws.Range(fila, 13, fila, 16).Merge();
+                fila++;
+
+                // Fila: Corresponde al mes... (arriba a la derecha, como en la segunda imagen)
+                ws.Cell(fila, 16).Value = $"CORRESPONDE AL MES DE {nombreMes} {Gestion}";
+                ws.Range(fila, 16, fila, colMax).Merge();
+                ws.Cell(fila, 16).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Right);
                 fila += 2;
 
-                // Encabezados (mismos que el DataGrid)
-                int col = 1;
-                ws.Cell(fila, col++).Value = "No";
-                ws.Cell(fila, col++).Value = "CI";
-                ws.Cell(fila, col++).Value = "Apellidos y Nombres";
-                ws.Cell(fila, col++).Value = "Nac.";
-                ws.Cell(fila, col++).Value = "F. Nac.";
-                ws.Cell(fila, col++).Value = "Sexo";
-                ws.Cell(fila, col++).Value = "Ocupación";
-                ws.Cell(fila, col++).Value = "F. Ingreso";
-                ws.Cell(fila, col++).Value = "Días pagados";
+                // Título central
+                ws.Cell(fila, 4).Value = "PLANILLA DE SUELDOS Y SALARIOS";
+                ws.Range(fila, 4, fila, 18).Merge();
+                ws.Cell(fila, 4).Style.Font.SetBold().Font.SetFontSize(13);
+                ws.Cell(fila, 4).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                fila++;
 
-                ws.Cell(fila, col++).Value = "Haber Básico";
-                ws.Cell(fila, col++).Value = "Bono Antig.";
-                ws.Cell(fila, col++).Value = "Bono Prod.";
-                ws.Cell(fila, col++).Value = "Aporte Coop 3.34%";
-                ws.Cell(fila, col++).Value = "Total Ganado";
+                ws.Cell(fila, 4).Value = "PERSONAL PERMANENTE";
+                ws.Range(fila, 4, fila, 18).Merge();
+                ws.Cell(fila, 4).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                fila++;
 
-                ws.Cell(fila, col++).Value = "Gestora 12.21%";
-                ws.Cell(fila, col++).Value = "RC-IVA 13%";
-                ws.Cell(fila, col++).Value = "Ap. Solid. 0.5%";
-                ws.Cell(fila, col++).Value = "Otros 6.68%";
-                ws.Cell(fila, col++).Value = "Otros Desc.";
-                ws.Cell(fila, col++).Value = "Total Desc.";
-                ws.Cell(fila, col++).Value = "Líquido Pagable";
+                ws.Cell(fila, 4).Value = "EN BOLIVIANOS";
+                ws.Range(fila, 4, fila, 18).Merge();
+                ws.Cell(fila, 4).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                fila += 3; // unas filas en blanco para bajar la tabla
 
-                // Estilo encabezados
-                var headerRange = ws.Range(fila, 1, fila, col - 1);
+                // =========================
+                // CABECERAS DE COLUMNAS
+                // =========================
+                int filaCabeceraGrupo = fila;
+                int filaCabeceraDetalle = filaCabeceraGrupo + 1;
+
+                void HeaderSimple(int col, string texto)
+                {
+                    ws.Cell(filaCabeceraGrupo, col).Value = texto;
+                    ws.Range(filaCabeceraGrupo, col, filaCabeceraDetalle, col).Merge();
+                    ws.Range(filaCabeceraGrupo, col, filaCabeceraDetalle, col)
+                      .Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center)
+                      .Alignment.SetVertical(XLAlignmentVerticalValues.Center);
+                }
+
+                int c = 1;
+                HeaderSimple(c++, "No");
+                HeaderSimple(c++, "CARNET DE IDENTIDAD");
+                HeaderSimple(c++, "APELLIDOS Y NOMBRE");
+                HeaderSimple(c++, "NACIONALIDAD");
+                HeaderSimple(c++, "FECHA DE NACIMIENTO");
+                HeaderSimple(c++, "SEXO");
+                HeaderSimple(c++, "OCUPACIÓN QUE DESEMPEÑA");
+                HeaderSimple(c++, "FECHA DE INGRESO");
+                HeaderSimple(c++, "DÍAS PAGADOS");
+                HeaderSimple(c++, "HABER BÁSICO");
+                HeaderSimple(c++, "BONO DE ANTIGÜEDAD");
+
+                // OTROS PAGOS
+                int colBonoProduccion = c;
+                int colAporteCoop = c + 1;
+                ws.Cell(filaCabeceraGrupo, colBonoProduccion).Value = "OTROS PAGOS";
+                ws.Range(filaCabeceraGrupo, colBonoProduccion, filaCabeceraGrupo, colAporteCoop).Merge();
+                ws.Range(filaCabeceraGrupo, colBonoProduccion, filaCabeceraGrupo, colAporteCoop)
+                  .Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center)
+                  .Alignment.SetVertical(XLAlignmentVerticalValues.Center);
+
+                ws.Cell(filaCabeceraDetalle, colBonoProduccion).Value = "BONO DE PRODUCCIÓN";
+                ws.Cell(filaCabeceraDetalle, colAporteCoop).Value = "APORTE COOP 3.34%";
+                c = colAporteCoop + 1;
+
+                HeaderSimple(c++, "TOTAL GANADO");
+
+                // DESCUENTOS
+                int colGestora = c;
+                int colRcIva = c + 1;
+                int colApSolid = c + 2;
+                int colOtros668 = c + 3;
+                int colOtrosDesc = c + 4;
+                int colTotalDesc = c + 5;
+
+                ws.Cell(filaCabeceraGrupo, colGestora).Value = "DESCUENTOS";
+                ws.Range(filaCabeceraGrupo, colGestora, filaCabeceraGrupo, colTotalDesc).Merge();
+                ws.Range(filaCabeceraGrupo, colGestora, filaCabeceraGrupo, colTotalDesc)
+                  .Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center)
+                  .Alignment.SetVertical(XLAlignmentVerticalValues.Center);
+
+                ws.Cell(filaCabeceraDetalle, colGestora).Value = "GESTORA 12.21%";
+                ws.Cell(filaCabeceraDetalle, colRcIva).Value = "RC-IVA 13%";
+                ws.Cell(filaCabeceraDetalle, colApSolid).Value = "APORTE SOLIDARIO 0.5%";
+                ws.Cell(filaCabeceraDetalle, colOtros668).Value = "OTROS DESCT. 6.68%";
+                ws.Cell(filaCabeceraDetalle, colOtrosDesc).Value = "OTROS DESCT.";
+                ws.Cell(filaCabeceraDetalle, colTotalDesc).Value = "TOTAL DESCT.";
+
+                c = colTotalDesc + 1;
+                HeaderSimple(c++, "LÍQUIDO PAGABLE");
+                HeaderSimple(c++, "FIRMA DEL EMPLEADO");
+
+                // Estilo general cabeceras
+                var headerRange = ws.Range(filaCabeceraGrupo, 1, filaCabeceraDetalle, colMax);
                 headerRange.Style.Font.SetBold();
                 headerRange.Style.Fill.SetBackgroundColor(XLColor.FromHtml("#D9E1F2"));
-                // Alineación
-                headerRange.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-                headerRange.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
                 headerRange.Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
                 headerRange.Style.Border.InsideBorder = XLBorderStyleValues.Thin;
 
-                fila++;
+                // columnas amarillas
+                ws.Range(filaCabeceraGrupo, colAporteCoop, filaCabeceraDetalle, colAporteCoop)
+                  .Style.Fill.SetBackgroundColor(XLColor.FromHtml("#FFF2CC"));
+                ws.Range(filaCabeceraGrupo, colOtros668, filaCabeceraDetalle, colOtros668)
+                  .Style.Fill.SetBackgroundColor(XLColor.FromHtml("#FFF2CC"));
+                ws.Range(filaCabeceraGrupo, colOtrosDesc, filaCabeceraDetalle, colOtrosDesc)
+                  .Style.Fill.SetBackgroundColor(XLColor.FromHtml("#FFF2CC"));
 
-                // Filas de datos
+                // =========================
+                // DATOS
+                // =========================
+                int filaInicioDatos = filaCabeceraDetalle + 1;
+                fila = filaInicioDatos;
+
                 foreach (var item in PlanillaSueldos)
                 {
-                    col = 1;
-
+                    int col = 1;
                     ws.Cell(fila, col++).Value = item.Id;
                     ws.Cell(fila, col++).Value = item.CarnetIdentidad;
                     ws.Cell(fila, col++).Value = item.ApellidosNombres;
@@ -411,21 +522,84 @@ namespace ClientCoopSoft.ViewModels.Planillas
                     ws.Cell(fila, col++).Value = item.TotalDescuentos;
                     ws.Cell(fila, col++).Value = item.LiquidoPagable;
 
+                    ws.Cell(fila, col++).Value = string.Empty; // firma
+
                     fila++;
                 }
 
-                // Formato numérico a columnas de montos
-                // (ajusta índices si cambias columnas)
-                int filaInicioDatos = 5; // donde empiezan los datos (calculado arriba)
                 int filaFinDatos = fila - 1;
 
-                // Haber Básico..Líquido Pagable → columnas 10 a 21
+                // Formato numérico
                 var rangeMontos = ws.Range(filaInicioDatos, 10, filaFinDatos, 21);
                 rangeMontos.Style.NumberFormat.Format = "#,##0.00";
-                rangeMontos.Style.Alignment
+                rangeMontos.Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Right);
+
+                // Bordes de toda la tabla (como caja)
+                var dataRange = ws.Range(filaCabeceraGrupo, 1, filaFinDatos, colMax);
+                dataRange.Style.Border.OutsideBorder = XLBorderStyleValues.Thick;
+                dataRange.Style.Border.InsideBorder = XLBorderStyleValues.Thin;
+
+                // =========================
+                // TOTALES
+                // =========================
+                int filaTotales = fila;
+
+                ws.Cell(filaTotales, 1).Value = "TOTALES";
+                ws.Range(filaTotales, 1, filaTotales, 9).Merge();
+                ws.Cell(filaTotales, 1).Style.Font.SetBold();
+                ws.Cell(filaTotales, 1).Style.Alignment
                     .SetHorizontal(XLAlignmentHorizontalValues.Right);
 
-                // Ajuste de anchos de columna
+                decimal Total_HaberBasico = PlanillaSueldos.Sum(p => p.HaberBasico);
+                decimal Total_BonoAnt = PlanillaSueldos.Sum(p => p.BonoAntiguedad);
+                decimal Total_BonoProd = PlanillaSueldos.Sum(p => p.BonoProduccion);
+                decimal Total_ApCoop = PlanillaSueldos.Sum(p => p.AporteCoop334);
+                decimal Total_TGanado = PlanillaSueldos.Sum(p => p.TotalGanado);
+                decimal Total_Gestora = PlanillaSueldos.Sum(p => p.Gestora1221);
+                decimal Total_RcIva = PlanillaSueldos.Sum(p => p.RcIva13);
+                decimal Total_ApSolid = PlanillaSueldos.Sum(p => p.AporteSolidario05);
+                decimal Total_Otros668 = PlanillaSueldos.Sum(p => p.OtrosDesc668);
+                decimal Total_OtrosDesc = PlanillaSueldos.Sum(p => p.OtrosDescuentos);
+                decimal Total_Desc = PlanillaSueldos.Sum(p => p.TotalDescuentos);
+                decimal Total_Liquido = PlanillaSueldos.Sum(p => p.LiquidoPagable);
+
+                ws.Cell(filaTotales, 10).Value = Total_HaberBasico;
+                ws.Cell(filaTotales, 11).Value = Total_BonoAnt;
+                ws.Cell(filaTotales, 12).Value = Total_BonoProd;
+                ws.Cell(filaTotales, 13).Value = Total_ApCoop;
+                ws.Cell(filaTotales, 14).Value = Total_TGanado;
+                ws.Cell(filaTotales, 15).Value = Total_Gestora;
+                ws.Cell(filaTotales, 16).Value = Total_RcIva;
+                ws.Cell(filaTotales, 17).Value = Total_ApSolid;
+                ws.Cell(filaTotales, 18).Value = Total_Otros668;
+                ws.Cell(filaTotales, 19).Value = Total_OtrosDesc;
+                ws.Cell(filaTotales, 20).Value = Total_Desc;
+                ws.Cell(filaTotales, 21).Value = Total_Liquido;
+
+                var totRange = ws.Range(filaTotales, 1, filaTotales, 21);
+                totRange.Style.Font.SetBold();
+                totRange.Style.Fill.SetBackgroundColor(XLColor.FromHtml("#FFF2CC"));
+                totRange.Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+
+                // =========================
+                // PIE: REPRESENTANTE LEGAL + FECHA
+                // =========================
+                fila = filaTotales + 3;
+
+                ws.Cell(fila, 8).Value = "REPRESENTANTE LEGAL";
+                ws.Range(fila, 8, fila, 11).Merge();
+                ws.Cell(fila, 12).Value = "asdf"; // aquí puedes poner el nombre real
+                ws.Range(fila, 12, fila, 15).Merge();
+
+                fila += 2;
+
+                ws.Cell(fila, 12).Value = $"La Paz, {DateTime.Now:dd 'de' MMMM 'de' yyyy}";
+                ws.Range(fila, 12, fila, 20).Merge();
+                ws.Cell(fila, 12).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Left);
+
+                // =========================
+                // AJUSTES FINALES
+                // =========================
                 ws.Columns().AdjustToContents();
 
                 wb.SaveAs(dlg.FileName);
@@ -445,6 +619,8 @@ namespace ClientCoopSoft.ViewModels.Planillas
                     MessageBoxImage.Error);
             }
         }
+
+
 
 
         [RelayCommand]
