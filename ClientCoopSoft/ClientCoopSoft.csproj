@@ -62,6 +62,7 @@
     <None Remove="Assets\imgDefaultCapacitacion.png" />
     <None Remove="Assets\imgFormAcademicaAdd.png" />
     <None Remove="Assets\Login_Fondo.png" />
+    <None Remove="Assets\LogoCooperativaFinal.png" />
     <None Remove="Assets\Logo_Cooperativa.png" />
     <None Remove="Assets\sujeto.jpg" />
     <None Remove="Assets\WallMain.png" />
@@ -127,6 +128,9 @@
     <Content Include="Assets\Logo_Cooperativa.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Assets\LogoCooperativaFinal.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Assets\sujeto.jpg" />
     <Resource Include="Assets\WallMain.png" />
   </ItemGroup>

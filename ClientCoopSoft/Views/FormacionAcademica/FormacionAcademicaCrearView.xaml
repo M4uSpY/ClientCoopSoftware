@@ -168,10 +168,6 @@
                         Text="{Binding NroRegistroProfesional, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
             </StackPanel>
-            <Image
-                Grid.Row="1"
-                Grid.Column="1"
-                Source="/Assets/imgFormAcademicaAdd.png" />
 
             <!--  Botones  -->
             <StackPanel

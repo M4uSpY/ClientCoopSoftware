@@ -49,10 +49,14 @@
         <Grid Grid.Column="0" Background="#232A33">
             <StackPanel Margin="0,15,0,0">
                 <Image
-                    Width="125"
                     Height="130"
                     RenderOptions.BitmapScalingMode="HighQuality"
-                    Source="/Assets/Logo_Cooperativa.png" />
+                    Source="/Assets/LogoCooperativaFinal.png">
+                    <Image.LayoutTransform>
+                        <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                    </Image.LayoutTransform>
+                </Image>
+
                 <Separator
                     Height="0.09"
                     Margin="0,15,0,0"
