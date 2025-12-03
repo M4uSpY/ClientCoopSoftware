@@ -98,6 +98,18 @@
                     Style="{StaticResource MaterialDesignOutlinedButton}">
                     <TextBlock Text="Limpiar" />
                 </Button>
+
+                <Button
+                    Width="40"
+                    Height="40"
+                    Margin="16,16,0,0"
+                    Background="#1D9942"
+                    BorderBrush="Transparent"
+                    Command="{Binding ExportarExcelCommand}"
+                    Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                    ToolTip="Exportar a Excel (.xlsx)">
+                    <md:PackIcon Foreground="White" Kind="FileExcel" />
+                </Button>
             </StackPanel>
 
             <!--  Instrucciones  -->
