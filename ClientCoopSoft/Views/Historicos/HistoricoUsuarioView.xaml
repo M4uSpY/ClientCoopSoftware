@@ -45,6 +45,28 @@
                 Text="Historial de Modificaciones (Usuarios)" />
         </StackPanel>
 
+        <Button
+            Grid.Row="0"
+            Grid.Column="2"
+            Margin="10,0,0,10"
+            Padding="10,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Center"
+            Background="#22B14C"
+            BorderBrush="Transparent"
+            Command="{Binding ExportarExcelCommand}"
+            Foreground="White"
+            Style="{StaticResource MaterialDesignRaisedButton}">
+            <StackPanel Orientation="Horizontal">
+                <md:PackIcon
+                    Width="20"
+                    Height="20"
+                    Margin="0,0,5,0"
+                    Kind="FileExcel" />
+                <TextBlock Text="Exportar Excel" />
+            </StackPanel>
+        </Button>
+
         <DataGrid
             Grid.Row="1"
             Grid.ColumnSpan="3"
