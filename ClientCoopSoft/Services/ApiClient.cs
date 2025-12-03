@@ -421,15 +421,16 @@ public class ApiClient
     public async Task<ContratoDTO?> ObtenerContratoUltimoPorTrabajadorAsync(int idTrabajador)
     {
         SetBearer();
-        var response = await _http.GetAsync($"api/Contratos/trabajador/ultimoContrato/{idTrabajador}");
+        var response = await _http.GetAsync($"api/Contratos/trabajador/ultimo/{idTrabajador}");
         var raw = await response.Content.ReadAsStringAsync();
 
         if (response.IsSuccessStatusCode)
         {
-            return JsonConvert.DeserializeObject<ContratoDTO> (raw);
+            return JsonConvert.DeserializeObject<ContratoDTO>(raw);
         }
         return null;
     }
+
 
 
     // OBTENER UNA FORMACION POR ID (para editar en el modal)
@@ -1158,6 +1159,18 @@ public class ApiClient
 
         var json = await resp.Content.ReadAsStringAsync();
         return JsonConvert.DeserializeObject<List<HuellaRespuestaDTO>>(json);
+    }
+
+
+    public async Task<bool> CrearContratoAsync(ContratoCrearDTO dto)
+    {
+        SetBearer();
+
+        var json = JsonConvert.SerializeObject(dto);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+        var response = await _http.PostAsync("api/Contratos", content);
+        return response.IsSuccessStatusCode;
     }
 
 

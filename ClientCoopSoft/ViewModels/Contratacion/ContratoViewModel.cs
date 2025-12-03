@@ -22,6 +22,7 @@ namespace ClientCoopSoft.ViewModels.Contratacion
         private readonly int _idTrabajador;
 
         private ContratoDTO? _contrato;
+        private bool _esNuevoContrato = false;
 
         [ObservableProperty] private string numeroContrato = string.Empty;
         [ObservableProperty] private ObservableCollection<TipoContrato> tipoContratos = new();
@@ -58,15 +59,31 @@ namespace ClientCoopSoft.ViewModels.Contratacion
 
         private async Task CargarDatosAsync()
         {
-            var contrato = await ObtenerTrabajador(_idTrabajador);
+            // 1) Siempre cargar catálogos
+            await CargarTiposContrato(null);
+            await CargarPeriodoPagos(null);
+
+            // 2) Intentar obtener último contrato del trabajador
+            var contrato = await ObtenerUltimoContratoTrabajador(_idTrabajador);
+
             if (contrato is null)
             {
-                MensajeArchivo = "No hay archivo cargado.";
-                MessageBox.Show("No se encontró información de contrato para este trabajador.",
-                                "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                // No hay contrato → modo creación
+                _esNuevoContrato = true;
+                _contrato = null;
+
+                MensajeArchivo = "No hay contrato registrado para este trabajador.";
+
+                NumeroContrato = string.Empty;
+                FechaInicioContrato = DateTime.Today;
+                FechaFinContrato = DateTime.Today;
+                FotoBytes = null;
+                FotoPreview = null;
                 return;
             }
 
+            // Hay contrato → modo edición
+            _esNuevoContrato = false;
             _contrato = contrato;
 
             NumeroContrato = contrato.NumeroContrato;
@@ -74,44 +91,50 @@ namespace ClientCoopSoft.ViewModels.Contratacion
             FechaFinContrato = contrato.FechaFin;
             FotoBytes = contrato.ArchivoPdf;
 
-            // Mensaje según si hay archivo desde la API
-            if (FotoBytes is not null && FotoBytes.Length > 0)
-            {
-                MensajeArchivo = "Archivo de contrato registrado.";
-            }
-            else
-            {
-                MensajeArchivo = "No hay archivo cargado.";
-            }
+            MensajeArchivo = (FotoBytes is not null && FotoBytes.Length > 0)
+                ? "Archivo de contrato registrado."
+                : "No hay archivo cargado.";
 
-            // Como ahora solo manejamos PDF, no usamos preview de imagen
-            FotoPreview = null;
+            FotoPreview = null; // Es PDF
 
+            // Seleccionar valores en combos
+            if (TipoContratos.Any())
+                TipoContratoSeleccionado = TipoContratos
+                    .FirstOrDefault(t => t.IdClasificador == contrato.IdTipoContrato);
 
-            await CargarTiposContrato(contrato.IdTipoContrato);
-            await CargarPeriodoPagos(contrato.IdPeriodoPago);
+            if (PeriodosPagos.Any())
+                PeriodosPagoSeleccionado = PeriodosPagos
+                    .FirstOrDefault(p => p.IdClasificador == contrato.IdPeriodoPago);
         }
 
-        private async Task<ContratoDTO?> ObtenerTrabajador(int idTrabajador)
+        private async Task<ContratoDTO?> ObtenerUltimoContratoTrabajador(int idTrabajador)
         {
-            var contratoTrab = await _apiClient.ObtenerContratoUltimoPorTrabajadorAsync(idTrabajador);
-            return contratoTrab;
+            return await _apiClient.ObtenerContratoUltimoPorTrabajadorAsync(idTrabajador);
         }
 
-        private async Task CargarTiposContrato(int idTipoContrato)
+        private async Task CargarTiposContrato(int? idTipoContrato)
         {
             var listaContratos = await _apiClient.ObtenerTipoContratosAsync() ?? new List<TipoContrato>();
             TipoContratos = new ObservableCollection<TipoContrato>(listaContratos);
-            TipoContratoSeleccionado = TipoContratos.FirstOrDefault(t => t.IdClasificador == idTipoContrato);
+
+            if (idTipoContrato.HasValue)
+            {
+                TipoContratoSeleccionado = TipoContratos
+                    .FirstOrDefault(t => t.IdClasificador == idTipoContrato.Value);
+            }
         }
 
-        private async Task CargarPeriodoPagos(int idPeriodoPago)
+        private async Task CargarPeriodoPagos(int? idPeriodoPago)
         {
             var listaPeriodosPago = await _apiClient.ObtenerPeriodosPagoAsync() ?? new List<PeriodoPago>();
             PeriodosPagos = new ObservableCollection<PeriodoPago>(listaPeriodosPago);
-            PeriodosPagoSeleccionado = PeriodosPagos.FirstOrDefault(t => t.IdClasificador == idPeriodoPago);
-        }
 
+            if (idPeriodoPago.HasValue)
+            {
+                PeriodosPagoSeleccionado = PeriodosPagos
+                    .FirstOrDefault(p => p.IdClasificador == idPeriodoPago.Value);
+            }
+        }
         [RelayCommand]
         private void SubirFoto()
         {
@@ -129,10 +152,8 @@ namespace ClientCoopSoft.ViewModels.Contratacion
 
                     FotoBytes = File.ReadAllBytes(filePath);
 
-                    // Mostrar mensaje de éxito
                     MensajeArchivo = $"Archivo cargado: {Path.GetFileName(filePath)}";
 
-                    // No preview porque es PDF
                     FotoPreview = null;
                 }
             }
@@ -151,13 +172,6 @@ namespace ClientCoopSoft.ViewModels.Contratacion
         [RelayCommand]
         private async Task GuardarAsync()
         {
-            if (_contrato is null)
-            {
-                MessageBox.Show("No se ha cargado la información del contrato.", "Error",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
             if (PeriodosPagoSeleccionado is null ||
                 TipoContratoSeleccionado is null ||
                 string.IsNullOrWhiteSpace(NumeroContrato))
@@ -167,34 +181,77 @@ namespace ClientCoopSoft.ViewModels.Contratacion
                 return;
             }
 
-            if (FotoBytes is null || FotoBytes.Length == 0)
+            if (FechaFinContrato < FechaInicioContrato)
             {
-                MessageBox.Show("Debe adjuntar el archivo del contrato.",
+                MessageBox.Show("La fecha de finalización no puede ser menor a la fecha de inicio.",
                     "Advertencia", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            var contratoDTO = new ContratoActualizarDTO
+            if (FotoBytes is null || FotoBytes.Length == 0)
             {
-                IdContrato = _contrato.IdContrato,
-                NumeroContrato = NumeroContrato,
-                IdTipoContrato = TipoContratoSeleccionado.IdClasificador,
-                IdPeriodoPago = PeriodosPagoSeleccionado.IdClasificador,
-                FechaInicio = FechaInicioContrato,
-                FechaFin = FechaFinContrato,
-                ArchivoPdf = FotoBytes
-            };
+                MessageBox.Show("Debe adjuntar el archivo del contrato (PDF).",
+                    "Advertencia", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
-            bool exito = await _apiClient.ActualizarContratoAsync(_contrato.IdContrato, contratoDTO);
+            bool exito;
 
-            MessageBox.Show(
-                exito ? "Información del contrato actualizada correctamente" : "Error al actualizar el contrato",
-                exito ? "Éxito" : "Error",
-                MessageBoxButton.OK,
-                exito ? MessageBoxImage.Information : MessageBoxImage.Warning
-            );
+            // 👉 CREAR NUEVO
+            if (_esNuevoContrato || _contrato is null)
+            {
+                var contratoCrear = new ContratoCrearDTO
+                {
+                    IdTrabajador = _idTrabajador,
+                    NumeroContrato = NumeroContrato,
+                    IdTipoContrato = TipoContratoSeleccionado.IdClasificador,
+                    IdPeriodoPago = PeriodosPagoSeleccionado.IdClasificador,
+                    FechaInicio = FechaInicioContrato,
+                    FechaFin = FechaFinContrato,
+                    ArchivoPdf = FotoBytes
+                };
 
+                exito = await _apiClient.CrearContratoAsync(contratoCrear);
+
+                if (exito)
+                {
+                    MessageBox.Show("Contrato creado correctamente.",
+                        "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    await CargarDatosAsync(); // recarga y pasa a modo edición
+                }
+                else
+                {
+                    MessageBox.Show("Error al crear el contrato.",
+                        "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            else
+            {
+                var contratoDTO = new ContratoActualizarDTO
+                {
+                    IdContrato = _contrato.IdContrato,
+                    NumeroContrato = NumeroContrato,
+                    IdTipoContrato = TipoContratoSeleccionado.IdClasificador,
+                    IdPeriodoPago = PeriodosPagoSeleccionado.IdClasificador,
+                    FechaInicio = FechaInicioContrato,
+                    FechaFin = FechaFinContrato,
+                    ArchivoPdf = FotoBytes
+                };
+
+                exito = await _apiClient.ActualizarContratoAsync(_contrato.IdContrato, contratoDTO);
+
+                MessageBox.Show(
+                    exito ? "Información del contrato actualizada correctamente"
+                          : "Error al actualizar el contrato",
+                    exito ? "Éxito" : "Error",
+                    MessageBoxButton.OK,
+                    exito ? MessageBoxImage.Information : MessageBoxImage.Warning
+                );
+            }
         }
+
+
         [RelayCommand]
         private void DescargarContrato()
         {
