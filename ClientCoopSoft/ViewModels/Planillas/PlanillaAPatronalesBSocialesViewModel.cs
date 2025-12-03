@@ -146,7 +146,7 @@ namespace ClientCoopSoft.ViewModels.Planillas
 
                 // Nombre de la cooperativa
                 ws.Cell(fila, 4).Value =
-                    "COOPERATIVA DE AHORRO Y CREDITO DE VINCULO LABORAL \"LA CONFIANZA R.L.\"";
+                    "COOPERATIVA DE AHORRO Y CREDITO DE VINCULO LABORAL \"LA CONFIANZA\" R.L.";
                 ws.Range(fila, 4, fila, 14).Merge();
                 ws.Cell(fila, 4).Style.Font.SetBold().Font.SetFontSize(14);
                 ws.Cell(fila, 4).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
@@ -155,7 +155,7 @@ namespace ClientCoopSoft.ViewModels.Planillas
                 // Fila: No. EMPLEADOR y PAG. 1 DE 1
                 ws.Cell(fila, 4).Value = "No. EMPLEADOR MINISTERIO DE TRABAJO:";
                 ws.Range(fila, 4, fila, 10).Merge();
-                ws.Cell(fila, 11).Value = "123-1"; // TODO: sacar de config/bd
+                ws.Cell(fila, 11).Value = "215110027-1"; // TODO: sacar de config/bd
                 ws.Range(fila, 11, fila, 13).Merge();
 
                 ws.Cell(fila, 14).Value = "PAG. 1 DE 1";
@@ -166,14 +166,14 @@ namespace ClientCoopSoft.ViewModels.Planillas
                 // Fila: NIT
                 ws.Cell(fila, 4).Value = "No. NIT:";
                 ws.Range(fila, 4, fila, 10).Merge();
-                ws.Cell(fila, 11).Value = "12345601"; // TODO: NIT real
+                ws.Cell(fila, 11).Value = "215110027"; // TODO: NIT real
                 ws.Range(fila, 11, fila, 13).Merge();
                 fila++;
 
                 // Fila: Empleador Caja de Salud
                 ws.Cell(fila, 4).Value = "No. de EMPLEADOR CAJA DE SALUD:";
                 ws.Range(fila, 4, fila, 10).Merge();
-                ws.Cell(fila, 11).Value = "123-1"; // TODO
+                ws.Cell(fila, 11).Value = "710-1-1988"; // TODO
                 ws.Range(fila, 11, fila, 13).Merge();
                 fila++;
 
@@ -335,7 +335,7 @@ namespace ClientCoopSoft.ViewModels.Planillas
 
                 ws.Cell(fila, 6).Value = "REPRESENTANTE LEGAL";
                 ws.Range(fila, 6, fila, 8).Merge();
-                ws.Cell(fila, 9).Value = "asdf"; // TODO: nombre real
+                ws.Cell(fila, 9).Value = ""; // TODO: nombre real
                 ws.Range(fila, 9, fila, 12).Merge();
 
                 fila += 2;
