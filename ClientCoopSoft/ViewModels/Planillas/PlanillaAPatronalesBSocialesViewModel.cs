@@ -27,10 +27,11 @@ namespace ClientCoopSoft.ViewModels.Planillas
             Aportes = new ObservableCollection<PlanillaAportesFilaModel>();
 
             Instrucciones =
-                "1) Primero genere y calcule la Planilla de Sueldos y Salarios.\n" +
-                "2) Tome el Id de esa planilla.\n" +
-                "3) Ingréselo en 'Id Planilla Sueldos' y presione 'Cargar aportes'.";
+                "1) Genere y calcule la Planilla de Sueldos y Salarios.\n" +
+                "2) Seleccione la misma gestión y mes en esta pantalla.\n" +
+                "3) Presione 'Cargar aportes' para obtener los datos.";
         }
+
 
         // ====== PROPIEDADES ======
         [ObservableProperty] private int gestion;
@@ -44,22 +45,31 @@ namespace ClientCoopSoft.ViewModels.Planillas
         [RelayCommand]
         private async Task CargarAportesAsync()
         {
-            if (IdPlanillaSueldos <= 0)
+            // 1) Buscar el Id de la planilla de Sueldos y Salarios según Gestión + Mes
+            var idPlanilla = await ObtenerIdPlanillaSueldosAsync();
+            if (idPlanilla is null)
             {
-                MessageBox.Show("Indique un Id de planilla de sueldos válido.",
-                    "Aviso", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(
+                    $"No se encontró una Planilla de Sueldos y Salarios para la gestión {Gestion} y mes {Mes}.",
+                    "Planilla no encontrada",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
                 return;
             }
 
+            // 2) Cargar los aportes patronales usando ese Id de planilla
             try
             {
-                var lista = await _api.ObtenerDatosPlanillaAportesAsync(IdPlanillaSueldos);
+                var lista = await _api.ObtenerDatosPlanillaAportesAsync(idPlanilla.Value);
 
-                if (lista == null)
+                if (lista == null || !lista.Any())
                 {
-                    MessageBox.Show("No se pudieron obtener los datos de aportes. " +
-                                    "Verifique que la planilla de sueldos exista y esté calculada.",
-                        "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(
+                        "No se pudieron obtener los datos de aportes. " +
+                        "Verifique que la planilla de sueldos exista y esté calculada.",
+                        "Sin datos",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Information);
                     return;
                 }
 
@@ -67,16 +77,58 @@ namespace ClientCoopSoft.ViewModels.Planillas
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al cargar la planilla de aportes: {ex.Message}",
-                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(
+                    $"Error al cargar la planilla de aportes: {ex.Message}",
+                    "Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
             }
         }
+
+        public List<int> ListaGestiones { get; } = Enumerable.Range(2020, 10).ToList(); // 2020–2029
+
+        public List<MesItem> ListaMeses { get; } = new()
+        {
+            new MesItem(1, "Enero"),
+            new MesItem(2, "Febrero"),
+            new MesItem(3, "Marzo"),
+            new MesItem(4, "Abril"),
+            new MesItem(5, "Mayo"),
+            new MesItem(6, "Junio"),
+            new MesItem(7, "Julio"),
+            new MesItem(8, "Agosto"),
+            new MesItem(9, "Septiembre"),
+            new MesItem(10, "Octubre"),
+            new MesItem(11, "Noviembre"),
+            new MesItem(12, "Diciembre"),
+        };
+
+        public record MesItem(int Numero, string Nombre);
+
 
         [RelayCommand]
         private void Limpiar()
         {
             Aportes.Clear();
         }
+
+        // =======================
+        // MÉTODO AUXILIAR: BUSCAR PLANILLA SUELDOS POR GESTIÓN/MES
+        // =======================
+        private async Task<int?> ObtenerIdPlanillaSueldosAsync()
+        {
+            try
+            {
+                // Usa el mismo endpoint que ya usas en PlanillaSueldosSalariosViewModel
+                var resumen = await _api.BuscarPlanillaSueldosPorPeriodoAsync(Gestion, Mes);
+                return resumen?.IdPlanilla;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
 
         [RelayCommand]
         private void ExportarExcel()

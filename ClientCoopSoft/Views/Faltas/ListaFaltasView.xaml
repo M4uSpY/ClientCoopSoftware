@@ -25,7 +25,7 @@
             FontSize="24"
             FontWeight="SemiBold"
             Foreground="#303048"
-            Text="Control de atrasos" />
+            Text="Control de faltas" />
         <Button
             Grid.Row="0"
             Grid.Column="2"

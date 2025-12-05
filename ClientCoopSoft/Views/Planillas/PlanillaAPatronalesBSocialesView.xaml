@@ -24,60 +24,51 @@
             Text="Planilla de Aportes Patronales y Beneficios Sociales" />
 
         <!--  Filtros e instrucciones  -->
+        <!--  Filtros e instrucciones  -->
         <DockPanel Grid.Row="1" Margin="0,0,0,10">
             <!--  Controles  -->
             <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
+
+                <!--  Gestión  -->
                 <StackPanel Margin="0,0,16,0">
                     <TextBlock
                         FontSize="11"
                         Foreground="#666"
                         Text="Gestión" />
-                    <TextBox
-                        Width="80"
+
+                    <ComboBox
+                        Width="100"
                         Margin="0,5,0,0"
-                        md:HintAssist.Hint=""
-                        md:HintAssist.HintPaddingBrush="Transparent"
                         md:TextFieldAssist.DecorationVisibility="Hidden"
                         md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
                         BorderBrush="#CCC"
-                        Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                        Text="{Binding Gestion, UpdateSourceTrigger=PropertyChanged}" />
+                        ItemsSource="{Binding ListaGestiones}"
+                        SelectedItem="{Binding Gestion}"
+                        Style="{StaticResource MaterialDesignOutlinedComboBox}" />
                 </StackPanel>
 
+                <!--  Mes  -->
                 <StackPanel Margin="0,0,16,0">
                     <TextBlock
                         FontSize="11"
                         Foreground="#666"
                         Text="Mes" />
-                    <TextBox
-                        Width="50"
+
+                    <ComboBox
+                        Width="150"
                         Margin="0,5,0,0"
-                        md:HintAssist.Hint=""
-                        md:HintAssist.HintPaddingBrush="Transparent"
                         md:TextFieldAssist.DecorationVisibility="Hidden"
                         md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
                         BorderBrush="#CCC"
-                        Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                        Text="{Binding Mes, UpdateSourceTrigger=PropertyChanged}" />
+                        DisplayMemberPath="Nombre"
+                        ItemsSource="{Binding ListaMeses}"
+                        SelectedValue="{Binding Mes}"
+                        SelectedValuePath="Numero"
+                        Style="{StaticResource MaterialDesignOutlinedComboBox}" />
                 </StackPanel>
 
-                <StackPanel Margin="0,0,16,0">
-                    <TextBlock
-                        FontSize="11"
-                        Foreground="#666"
-                        Text="Id Planilla Sueldos" />
-                    <TextBox
-                        Width="90"
-                        Margin="0,5,0,0"
-                        md:HintAssist.Hint=""
-                        md:HintAssist.HintPaddingBrush="Transparent"
-                        md:TextFieldAssist.DecorationVisibility="Hidden"
-                        md:TextFieldAssist.OutlinedBorderActiveThickness="1.5"
-                        BorderBrush="#CCC"
-                        Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                        Text="{Binding IdPlanillaSueldos, UpdateSourceTrigger=PropertyChanged}" />
-                </StackPanel>
 
+                <!--  Botón Cargar aportes  -->
                 <Button
                     Margin="8,16,0,0"
                     Padding="12,4"
@@ -91,6 +82,7 @@
                     </StackPanel>
                 </Button>
 
+                <!--  Botón Limpiar  -->
                 <Button
                     Margin="8,16,0,0"
                     Padding="12,4"
@@ -99,6 +91,7 @@
                     <TextBlock Text="Limpiar" />
                 </Button>
 
+                <!--  Botón Exportar Excel  -->
                 <Button
                     Width="40"
                     Height="40"
@@ -120,6 +113,7 @@
                 Text="{Binding Instrucciones}"
                 TextWrapping="Wrap" />
         </DockPanel>
+
 
         <!--  DataGrid  -->
         <DataGrid

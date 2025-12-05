@@ -131,19 +131,22 @@
                         Style="{StaticResource MaterialDesignOutlinedComboBox}" />
                 </StackPanel>
 
-                <!--  Id Planilla (solo lectura, opcional)  -->
-                <StackPanel Margin="0,0,16,0">
-                    <TextBlock
-                        FontSize="11"
-                        Foreground="#666"
-                        Text="Id Planilla" />
-                    <TextBlock
-                        Margin="0,5,0,0"
-                        FontSize="13"
-                        FontWeight="SemiBold"
-                        Foreground="#303048"
-                        Text="{Binding IdPlanillaActual}" />
-                </StackPanel>
+                <!--  Id Planilla (solo lectura, opcional)
+
+                                    <StackPanel Margin="0,0,16,0">
+                                <TextBlock
+                                    FontSize="11"
+                                    Foreground="#666"
+                                    Text="Id Planilla" />
+                                <TextBlock
+                                    Margin="0,5,0,0"
+                                    FontSize="13"
+                                    FontWeight="SemiBold"
+                                    Foreground="#303048"
+                                    Text="{Binding IdPlanillaActual}" />
+                            </StackPanel>
+                -->
+
 
                 <!--  Estado cerrada / abierta  -->
                 <StackPanel Margin="0,0,16,0" VerticalAlignment="Center">

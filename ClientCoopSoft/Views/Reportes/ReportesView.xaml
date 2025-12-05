@@ -45,7 +45,7 @@
                     FontSize="30"
                     FontWeight="ExtraLight"
                     Foreground="#303048"
-                    Text="Historico Atrasos" />
+                    Text="Historico Faltas" />
             </StackPanel>
         </Button>
         <Button

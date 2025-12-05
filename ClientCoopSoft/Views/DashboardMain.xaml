@@ -630,7 +630,7 @@
                             <TextBlock
                                 Grid.Column="1"
                                 VerticalAlignment="Center"
-                                Text="Atrasos registrados" />
+                                Text="Faltas registradas" />
                         </Grid>
                     </Button>
 

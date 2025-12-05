@@ -12,7 +12,7 @@ namespace ClientCoopSoft
 
         public App()
         {
-            SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1JFaF1cX2hIfEx3QXxbf1x1ZFRMZFVbRnRPIiBoS35Rc0RiWHtfc3FVQ2NbUEBzVEFc");
+            SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1JFaF1cXGFCf0x/WmFZfVhgdVRMYFtbRHNPIiBoS35Rc0RhWH9cc3VQRmJZVUN/VEFc");
             InitializeComponent();
         }
 
