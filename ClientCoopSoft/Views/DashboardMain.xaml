@@ -61,7 +61,7 @@
                     Height="0.09"
                     Margin="0,15,0,0"
                     Background="WhiteSmoke" />
-                <StackPanel Margin="10,0,10,10" Orientation="Vertical">
+                <StackPanel Margin="10,0,10,0" Orientation="Vertical">
                     <TextBlock
                         Margin="0,15,0,15"
                         Foreground="White"
@@ -97,7 +97,7 @@
                 </StackPanel>
                 <Separator
                     Height="0.2"
-                    Margin="0,15,0,15"
+                    Margin="0,15,0,0"
                     Background="WhiteSmoke" />
 
                 <!--  INICIO  -->

@@ -63,7 +63,17 @@ namespace ClientCoopSoft.ViewModels
             }
             catch (Exception ex)
             {
-                ErrorMessage = "No se pudo conectar al servidor: " + ex.Message;
+                ErrorMessage = "No se pudo conectar al servidorffadsf";
+
+                // Ventana emergente con el detalle
+                System.Windows.MessageBox.Show(
+                    $"No se pudo conectar al servidor:\n\n{ex.Message}",
+                    "Error de conexión",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+
+                // Si quieres ver TODO el stack:
+                System.Diagnostics.Debug.WriteLine("ERROR LOGIN: " + ex);
             }
         }
 
