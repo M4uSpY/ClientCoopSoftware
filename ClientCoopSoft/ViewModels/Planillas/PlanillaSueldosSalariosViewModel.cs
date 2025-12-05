@@ -1,11 +1,18 @@
 ﻿using ClientCoopSoft.DTO.Planillas;
 using ClientCoopSoft.Models;
+using ClosedXML.Excel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
+using iText.Kernel.Geom;
+using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Element;
+using iText.Layout.Properties;
+using Microsoft.Win32;
+using System.IO;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 using System.Windows;
+using TextAlignment = iText.Layout.Properties.TextAlignment;
 
 namespace ClientCoopSoft.ViewModels.Planillas
 {
@@ -290,18 +297,155 @@ namespace ClientCoopSoft.ViewModels.Planillas
         [RelayCommand]
         private void ExportarExcel()
         {
-            // TODO: implementación real de exportación
-            MessageBox.Show("Exportar a Excel aún no está implementado.", "Info",
-                MessageBoxButton.OK, MessageBoxImage.Information);
+            if (PlanillaSueldos == null || PlanillaSueldos.Count == 0)
+            {
+                MessageBox.Show(
+                    "No hay datos de planilla para exportar.",
+                    "Aviso",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+                return;
+            }
+
+            var dlg = new SaveFileDialog
+            {
+                Title = "Exportar Planilla de Sueldos y Salarios a Excel",
+                Filter = "Archivo Excel (*.xlsx)|*.xlsx",
+                FileName = $"Planilla_Sueldos_{Gestion}_{Mes:00}.xlsx"
+            };
+
+            if (dlg.ShowDialog() != true)
+                return;
+
+            try
+            {
+                using var wb = new XLWorkbook();
+                var ws = wb.Worksheets.Add("Planilla");
+
+                int fila = 1;
+
+                // Título
+                ws.Cell(fila, 1).Value = "PLANILLA DE SUELDOS Y SALARIOS";
+                ws.Range(fila, 1, fila, 19).Merge();
+                ws.Cell(fila, 1).Style
+                    .Font.SetBold()
+                    .Font.SetFontSize(14);
+                ws.Cell(fila, 1).Style.Alignment
+                    .SetHorizontal(XLAlignmentHorizontalValues.Center);
+                fila++;
+
+                // Subtítulo: Gestión / Mes
+                string nombreMes = MesSeleccionado?.Nombre ?? Mes.ToString("00");
+                ws.Cell(fila, 1).Value = $"Gestión: {Gestion}   Mes: {nombreMes}";
+                ws.Range(fila, 1, fila, 19).Merge();
+                ws.Cell(fila, 1).Style
+                    .Font.SetFontSize(11);
+                ws.Cell(fila, 1).Style.Alignment
+                    .SetHorizontal(XLAlignmentHorizontalValues.Center);
+                fila += 2;
+
+                // Encabezados (mismos que el DataGrid)
+                int col = 1;
+                ws.Cell(fila, col++).Value = "No";
+                ws.Cell(fila, col++).Value = "CI";
+                ws.Cell(fila, col++).Value = "Apellidos y Nombres";
+                ws.Cell(fila, col++).Value = "Nac.";
+                ws.Cell(fila, col++).Value = "F. Nac.";
+                ws.Cell(fila, col++).Value = "Sexo";
+                ws.Cell(fila, col++).Value = "Ocupación";
+                ws.Cell(fila, col++).Value = "F. Ingreso";
+                ws.Cell(fila, col++).Value = "Días pagados";
+
+                ws.Cell(fila, col++).Value = "Haber Básico";
+                ws.Cell(fila, col++).Value = "Bono Antig.";
+                ws.Cell(fila, col++).Value = "Bono Prod.";
+                ws.Cell(fila, col++).Value = "Aporte Coop 3.34%";
+                ws.Cell(fila, col++).Value = "Total Ganado";
+
+                ws.Cell(fila, col++).Value = "Gestora 12.21%";
+                ws.Cell(fila, col++).Value = "RC-IVA 13%";
+                ws.Cell(fila, col++).Value = "Ap. Solid. 0.5%";
+                ws.Cell(fila, col++).Value = "Otros 6.68%";
+                ws.Cell(fila, col++).Value = "Otros Desc.";
+                ws.Cell(fila, col++).Value = "Total Desc.";
+                ws.Cell(fila, col++).Value = "Líquido Pagable";
+
+                // Estilo encabezados
+                var headerRange = ws.Range(fila, 1, fila, col - 1);
+                headerRange.Style.Font.SetBold();
+                headerRange.Style.Fill.SetBackgroundColor(XLColor.FromHtml("#D9E1F2"));
+                // Alineación
+                headerRange.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                headerRange.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
+                headerRange.Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                headerRange.Style.Border.InsideBorder = XLBorderStyleValues.Thin;
+
+                fila++;
+
+                // Filas de datos
+                foreach (var item in PlanillaSueldos)
+                {
+                    col = 1;
+
+                    ws.Cell(fila, col++).Value = item.Id;
+                    ws.Cell(fila, col++).Value = item.CarnetIdentidad;
+                    ws.Cell(fila, col++).Value = item.ApellidosNombres;
+                    ws.Cell(fila, col++).Value = item.Nacionalidad;
+                    ws.Cell(fila, col++).Value = item.FechaNacimiento.ToShortDateString();
+                    ws.Cell(fila, col++).Value = item.Sexo;
+                    ws.Cell(fila, col++).Value = item.Ocupacion;
+                    ws.Cell(fila, col++).Value = item.FechaIngreso.ToShortDateString();
+                    ws.Cell(fila, col++).Value = item.DiasPagados;
+
+                    ws.Cell(fila, col++).Value = item.HaberBasico;
+                    ws.Cell(fila, col++).Value = item.BonoAntiguedad;
+                    ws.Cell(fila, col++).Value = item.BonoProduccion;
+                    ws.Cell(fila, col++).Value = item.AporteCoop334;
+                    ws.Cell(fila, col++).Value = item.TotalGanado;
+
+                    ws.Cell(fila, col++).Value = item.Gestora1221;
+                    ws.Cell(fila, col++).Value = item.RcIva13;
+                    ws.Cell(fila, col++).Value = item.AporteSolidario05;
+                    ws.Cell(fila, col++).Value = item.OtrosDesc668;
+                    ws.Cell(fila, col++).Value = item.OtrosDescuentos;
+                    ws.Cell(fila, col++).Value = item.TotalDescuentos;
+                    ws.Cell(fila, col++).Value = item.LiquidoPagable;
+
+                    fila++;
+                }
+
+                // Formato numérico a columnas de montos
+                // (ajusta índices si cambias columnas)
+                int filaInicioDatos = 5; // donde empiezan los datos (calculado arriba)
+                int filaFinDatos = fila - 1;
+
+                // Haber Básico..Líquido Pagable → columnas 10 a 21
+                var rangeMontos = ws.Range(filaInicioDatos, 10, filaFinDatos, 21);
+                rangeMontos.Style.NumberFormat.Format = "#,##0.00";
+                rangeMontos.Style.Alignment
+                    .SetHorizontal(XLAlignmentHorizontalValues.Right);
+
+                // Ajuste de anchos de columna
+                ws.Columns().AdjustToContents();
+
+                wb.SaveAs(dlg.FileName);
+
+                MessageBox.Show(
+                    "Planilla exportada correctamente a Excel.",
+                    "Éxito",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Error al exportar a Excel: {ex.Message}",
+                    "Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
         }
 
-        [RelayCommand]
-        private void ExportarPdf()
-        {
-            // TODO: implementación real de exportación
-            MessageBox.Show("Exportar a PDF aún no está implementado.", "Info",
-                MessageBoxButton.OK, MessageBoxImage.Information);
-        }
 
         [RelayCommand]
         private async Task GuardarRcIvaAsync()
