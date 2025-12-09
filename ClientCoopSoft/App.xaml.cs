@@ -18,7 +18,7 @@ namespace ClientCoopSoft
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            _apiClient = new ApiClient("http://localhost:5000/");
+            _apiClient = new ApiClient("https://localhost:7084/");
 
             var loginVm = new LoginViewModel(_apiClient);
             var loginView = new MainWindow { DataContext = loginVm };

@@ -12,8 +12,7 @@ namespace ClientCoopSoft
         {
             InitializeComponent();
 
-            // Crear la instancia única para esta sesión (mismo ApiClient que usará Login y luego Dashboard)
-            _apiClient = new ApiClient("http://localhost:5000/");
+            _apiClient = new ApiClient("https://localhost:7084/");
 
             // Pasar la misma instancia al LoginViewModel
             DataContext = new LoginViewModel(_apiClient);
