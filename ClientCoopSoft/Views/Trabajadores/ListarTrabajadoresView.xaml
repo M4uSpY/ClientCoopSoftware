@@ -10,6 +10,9 @@
     mc:Ignorable="d">
     <UserControl.Resources>
         <conv:BoolToGeneroConverter x:Key="BoolToGeneroConverter" />
+        <conv:EstadoToIconConverter x:Key="EstadoToIconConverter" />
+        <conv:EstadoToColorConverter x:Key="EstadoToColorConverter" />
+        <conv:EstadoToTextConverter x:Key="EstadoToTextConverter" />
         <conv:IndexToNumeroConverter x:Key="IndexToNumeroConverter" />
     </UserControl.Resources>
     <Grid Margin="20">
@@ -46,7 +49,19 @@
             HorizontalAlignment="Right"
             VerticalAlignment="Top"
             Orientation="Horizontal">
-            <!--  Botón Agregar (tu original)  -->
+
+            <Button
+                Width="40"
+                Height="40"
+                Margin="0,0,8,0"
+                Background="#D9534F"
+                BorderBrush="Transparent"
+                Command="{Binding ExportarPdfCommand}"
+                Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                ToolTip="Exportar a PDF">
+                <md:PackIcon Foreground="White" Kind="FilePdfBox" />
+            </Button>
+
             <Button
                 Width="40"
                 Height="40"
@@ -145,10 +160,25 @@
                     Width="*"
                     Binding="{Binding NombreOficina}"
                     Header="Oficina" />
-                <DataGridTextColumn
-                    Width="*"
-                    Binding="{Binding Activo}"
-                    Header="Estado" />
+                <DataGridTemplateColumn Width="130" Header="Estado">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                <md:PackIcon
+                    Width="20"
+                    Height="20"
+                    Margin="0,0,6,0"
+                    Foreground="{Binding Activo, Converter={StaticResource EstadoToColorConverter}}"
+                    Kind="{Binding Activo, Converter={StaticResource EstadoToIconConverter}}" />
+
+                                <TextBlock
+                    VerticalAlignment="Center"
+                    FontWeight="SemiBold"
+                    Text="{Binding Activo, Converter={StaticResource EstadoToTextConverter}}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTemplateColumn Width="150" Header="Acciones">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

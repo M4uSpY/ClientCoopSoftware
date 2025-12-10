@@ -1150,6 +1150,7 @@ public class ApiClient
 
     public async Task<List<HuellaRespuestaDTO>?> ObtenerHuellasPersonaAsync(int idPersona)
     {
+        SetBearer();
         var resp = await _http.GetAsync($"api/huellas/obtener/{idPersona}");
 
         if (resp.StatusCode == HttpStatusCode.NotFound)

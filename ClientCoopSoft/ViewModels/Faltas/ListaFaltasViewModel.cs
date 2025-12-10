@@ -3,6 +3,8 @@ using ClientCoopSoft.DTO.Faltas;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Win32;
+using PdfSharpCore.Drawing;
+using PdfSharpCore.Pdf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -180,5 +182,92 @@ namespace ClientCoopSoft.ViewModels.Faltas
                 MessageBox.Show("No se pudo eliminar la falta.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        // =================== EXPORTAR A PDF ===================
+        [RelayCommand]
+        private async Task ExportarPdfAsync()
+        {
+            try
+            {
+                var dlg = new SaveFileDialog
+                {
+                    Filter = "PDF document|*.pdf",
+                    FileName = "ControlFaltas.pdf"
+                };
+                if (dlg.ShowDialog() != true) return;
+
+                // Puedes usar Faltas (toda la lista) o FaltasView filtrada.
+                await Task.Run(() => ExportToPdf(dlg.FileName, Faltas));
+
+                MessageBox.Show("Exportado a PDF correctamente.", "Éxito",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+
+                Process.Start(new ProcessStartInfo(dlg.FileName) { UseShellExecute = true });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error exportando a PDF: {ex.Message}", "Error",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void ExportToPdf(string path, IList<ListarFaltasDTO> items)
+        {
+            using var doc = new PdfDocument();
+            var page = doc.AddPage();
+            var gfx = XGraphics.FromPdfPage(page);
+
+            var titleFont = new XFont("Arial", 14.0, XFontStyle.Bold);
+            var headerFont = new XFont("Arial", 12.0, XFontStyle.Bold);
+            var font = new XFont("Arial", 10.0, XFontStyle.Regular);
+
+            double margin = 40;
+            double y = margin;
+            double lineHeight = 14;
+            double pageWidth = page.Width.Point;
+
+            void DibujarEncabezado()
+            {
+                y = margin;
+
+                // Título
+                gfx.DrawString("Control de Faltas", titleFont, XBrushes.Black,
+                    new XRect(0, 10, pageWidth, 20), XStringFormats.TopCenter);
+                y += 30;
+
+                // Cabecera
+                string header = "No | CI | Apellidos y Nombres | Tipo | Fecha | Descripción | Estado archivo";
+                gfx.DrawString(header, headerFont, XBrushes.Black, new XPoint(margin, y));
+                y += lineHeight;
+            }
+
+            DibujarEncabezado();
+
+            int contador = 1;
+
+            foreach (var f in items)
+            {
+                if (y + lineHeight > page.Height - margin)
+                {
+                    page = doc.AddPage();
+                    gfx = XGraphics.FromPdfPage(page);
+                    pageWidth = page.Width.Point;
+                    DibujarEncabezado();
+                }
+
+                string fecha = f.Fecha.ToString("yyyy-MM-dd");
+                string estadoArchivo = f.EstadoArchivoJustificativo ?? "";
+                string line =
+                    $"{contador} | {f.CI} | {f.ApellidosNombres} | {f.Tipo} | {fecha} | {f.Descripcion} | {estadoArchivo}";
+
+                gfx.DrawString(line, font, XBrushes.Black, new XPoint(margin, y));
+                y += lineHeight;
+                contador++;
+            }
+
+            using var stream = File.Create(path);
+            doc.Save(stream);
+        }
+
     }
 }

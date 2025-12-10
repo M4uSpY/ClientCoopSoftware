@@ -25,7 +25,24 @@
             FontSize="24"
             FontWeight="SemiBold"
             Foreground="#303048"
-            Text="Control de faltas" />
+            Text="Control de atrasos" />
+        <Button
+            Grid.Row="0"
+            Grid.Column="2"
+            Width="45"
+            Height="40"
+            Margin="8,0,0,0"
+            Padding="4"
+            Background="#D9534F"
+            BorderBrush="Transparent"
+            Command="{Binding ExportarPdfCommand}"
+            Style="{StaticResource MaterialDesignRaisedButton}"
+            ToolTip="Exportar a PDF">
+            <Viewbox Stretch="Uniform">
+                <md:PackIcon Foreground="White" Kind="FilePdfBox" />
+            </Viewbox>
+        </Button>
+
 
         <Border
             Grid.Row="1"

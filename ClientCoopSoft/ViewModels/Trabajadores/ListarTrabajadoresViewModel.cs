@@ -2,10 +2,15 @@
 using ClientCoopSoft.Views.Trabajadores;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Win32;
+using PdfSharpCore.Drawing;
+using PdfSharpCore.Pdf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -149,5 +154,90 @@ namespace ClientCoopSoft.ViewModels.Trabajadores
                 MessageBox.Show("Ocurrió un error al eliminar el usuario.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        // =================== EXPORTAR A PDF ===================
+        [RelayCommand]
+        private async Task ExportarPdfAsync()
+        {
+            try
+            {
+                var dlg = new SaveFileDialog
+                {
+                    Filter = "PDF document|*.pdf",
+                    FileName = "ListaTrabajadores.pdf"
+                };
+                if (dlg.ShowDialog() != true) return;
+
+                await Task.Run(() => ExportToPdf(dlg.FileName, Trabajadores));
+
+                MessageBox.Show("Exportado a PDF correctamente.", "Éxito",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+
+                Process.Start(new ProcessStartInfo(dlg.FileName) { UseShellExecute = true });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error exportando a PDF: {ex.Message}", "Error",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void ExportToPdf(string path, IList<Trabajador> items)
+        {
+            using var doc = new PdfDocument();
+            var page = doc.AddPage();
+            var gfx = XGraphics.FromPdfPage(page);
+
+            var titleFont = new XFont("Arial", 14.0, XFontStyle.Bold);
+            var headerFont = new XFont("Arial", 12.0, XFontStyle.Bold);
+            var font = new XFont("Arial", 10.0, XFontStyle.Regular);
+
+            double margin = 40;
+            double y = margin;
+            double lineHeight = 14;
+            double pageWidth = page.Width.Point;
+
+            void DibujarEncabezado()
+            {
+                y = margin;
+
+                gfx.DrawString("Lista de Trabajadores", titleFont, XBrushes.Black,
+                    new XRect(0, 10, pageWidth, 20), XStringFormats.TopCenter);
+                y += 30;
+
+                string header = "No | CI | Apellidos | Nombres | Nacionalidad | Género | Cargo | Oficina | Estado";
+                gfx.DrawString(header, headerFont, XBrushes.Black, new XPoint(margin, y));
+                y += lineHeight;
+            }
+
+            DibujarEncabezado();
+
+            int contador = 1;
+
+            foreach (var t in items)
+            {
+                if (y + lineHeight > page.Height - margin)
+                {
+                    page = doc.AddPage();
+                    gfx = XGraphics.FromPdfPage(page);
+                    pageWidth = page.Width.Point;
+                    DibujarEncabezado();
+                }
+
+                string genero = t.Genero ? "Masculino" : "Femenino";
+                string estado = t.Activo ? "Activo" : "Inactivo";
+
+                string line =
+                    $"{contador} | {t.CI} | {t.Apellidos} | {t.Nombres} | {t.Nacionalidad} | {genero} | {t.Cargo} | {t.NombreOficina} | {estado}";
+
+                gfx.DrawString(line, font, XBrushes.Black, new XPoint(margin, y));
+                y += lineHeight;
+                contador++;
+            }
+
+            using var stream = File.Create(path);
+            doc.Save(stream);
+        }
+
     }
 }
