@@ -202,7 +202,7 @@
                                     Command="{Binding DataContext.EliminarUsuarioCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                     CommandParameter="{Binding}">
                                     <Viewbox Stretch="Uniform">
-                                        <md:PackIcon Foreground="#D9534F" Kind="AirplanemodeInactive" />
+                                        <md:PackIcon Foreground="#D9534F" Kind="MinusCircle" />
                                     </Viewbox>
                                 </Button>
                             </StackPanel>

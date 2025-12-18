@@ -142,12 +142,23 @@
                                     BorderThickness="0"
                                     Command="{Binding DataContext.AprobarLicenciaCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                     CommandParameter="{Binding}">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="IsEnabled" Value="False" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Estado}" Value="Pendiente">
+                                                    <Setter Property="IsEnabled" Value="True" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
                                     <md:PackIcon
                                         Width="16"
                                         Height="16"
                                         Foreground="#22B14C"
                                         Kind="Check" />
                                 </Button>
+
 
                                 <!--  RECHAZAR  -->
                                 <Button
@@ -156,13 +167,23 @@
                                     BorderThickness="0"
                                     Command="{Binding DataContext.RechazarLicenciaCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                     CommandParameter="{Binding}">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="IsEnabled" Value="False" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Estado}" Value="Pendiente">
+                                                    <Setter Property="IsEnabled" Value="True" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
                                     <md:PackIcon
                                         Width="16"
                                         Height="16"
                                         Foreground="#D9534F"
-                                        Kind="Delete" />
-
+                                        Kind="Close" />
                                 </Button>
+
 
                                 <!--  ELIMINAR  -->
                                 <Button
@@ -171,12 +192,25 @@
                                     BorderThickness="0"
                                     Command="{Binding DataContext.EliminarLicenciaCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                     CommandParameter="{Binding}">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="IsEnabled" Value="False" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Estado}" Value="Pendiente">
+                                                    <Setter Property="IsEnabled" Value="True" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
                                     <md:PackIcon
                                         Width="16"
                                         Height="16"
                                         Foreground="#B71C1C"
                                         Kind="TrashCan" />
                                 </Button>
+
+
+
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
