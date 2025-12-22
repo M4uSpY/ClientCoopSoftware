@@ -82,6 +82,13 @@ namespace ClientCoopSoft.ViewModels.Planillas
         private int anioSeleccionado;
 
         [ObservableProperty]
+        private DateTime periodoDesde;
+
+        [ObservableProperty]
+        private DateTime periodoHasta;
+
+
+        [ObservableProperty]
         private ObservableCollection<MesItemModel> meses = new();
 
         [ObservableProperty]
@@ -115,6 +122,9 @@ namespace ClientCoopSoft.ViewModels.Planillas
                 Gestion = resumen.Gestion;
                 Mes = resumen.Mes;
                 EstaCerrada = resumen.EstaCerrada;
+
+                PeriodoDesde = resumen.PeriodoDesde;
+                PeriodoHasta = resumen.PeriodoHasta;
             }
         }
 
@@ -138,6 +148,9 @@ namespace ClientCoopSoft.ViewModels.Planillas
                 IdPlanillaActual = resumen.IdPlanilla;
                 EstaCerrada = resumen.EstaCerrada;
 
+                PeriodoDesde = resumen.PeriodoDesde;
+                PeriodoHasta = resumen.PeriodoHasta;
+
                 // 2) Generar Trabajador_Planilla
                 var genOk = await _api.GenerarTrabajadoresPlanillaAsync(IdPlanillaActual);
                 if (!genOk)
@@ -147,6 +160,15 @@ namespace ClientCoopSoft.ViewModels.Planillas
                         "Revise que existan trabajadores activos.",
                         "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
+                }
+                var inaOk = await _api.GenerarInasistenciasAsync(PeriodoDesde, PeriodoHasta);
+                if (!inaOk)
+                {
+                    MessageBox.Show(
+                        "No se pudieron generar las inasistencias laborales para el periodo.\n" +
+                        "Revise que el servicio de Faltas esté disponible.",
+                        "Advertencia", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    // opcional: puedes seguir igual, solo que no descontará días
                 }
 
                 // 3) Calcular planilla
@@ -190,6 +212,8 @@ namespace ClientCoopSoft.ViewModels.Planillas
                     IdPlanillaActual = 0;
                     EstaCerrada = false;
                     PlanillaSueldos = new ObservableCollection<PlanillaSueldosFilaModel>();
+                    PeriodoDesde = default;
+                    PeriodoHasta = default;
 
                     MessageBox.Show(
                         $"No se encontró ninguna planilla de Sueldos y Salarios para " +
@@ -201,6 +225,9 @@ namespace ClientCoopSoft.ViewModels.Planillas
                 // 2) Actualizamos IdPlanillaActual y estado con el resultado del backend
                 IdPlanillaActual = resumen.IdPlanilla;
                 EstaCerrada = resumen.EstaCerrada;
+
+                PeriodoDesde = resumen.PeriodoDesde;
+                PeriodoHasta = resumen.PeriodoHasta;
 
                 // 3) Cargamos filas de la planilla encontrada
                 var lista = await _api.ObtenerDatosPlanillaSueldosAsync(IdPlanillaActual);
@@ -241,6 +268,21 @@ namespace ClientCoopSoft.ViewModels.Planillas
 
             try
             {
+                // 1) Refrescar resumen, por si algo cambió en el backend
+                await ActualizarResumenPlanillaAsync();
+
+                // 2) Volver a generar inasistencias en TODO el periodo de la planilla
+                var inaOk = await _api.GenerarInasistenciasAsync(PeriodoDesde, PeriodoHasta);
+                if (!inaOk)
+                {
+                    MessageBox.Show(
+                        "No se pudieron generar las inasistencias laborales para el periodo.\n" +
+                        "Revise que el servicio de Faltas esté disponible.",
+                        "Advertencia", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    // puedes seguir igual, pero no actualizará días por nuevas inasistencias
+                }
+
+                // 3) Recalcular planilla con las faltas actualizadas
                 var ok = await _api.CalcularPlanillaSueldosAsync(IdPlanillaActual);
                 if (!ok)
                 {
@@ -249,9 +291,12 @@ namespace ClientCoopSoft.ViewModels.Planillas
                     return;
                 }
 
+                // 4) Recargar datos en la grilla
                 await CargarPlanillaAsync();
-                MessageBox.Show("Planilla recalculada correctamente.", "Éxito",
-                    MessageBoxButton.OK, MessageBoxImage.Information);
+
+                MessageBox.Show(
+                    "Planilla recalculada correctamente (se reagruparon inasistencias y montos).",
+                    "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {
@@ -259,6 +304,7 @@ namespace ClientCoopSoft.ViewModels.Planillas
                     MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
 
         // Cerrar planilla (no más modificaciones)
         [RelayCommand]

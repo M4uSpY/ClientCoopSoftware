@@ -1174,6 +1174,16 @@ public class ApiClient
         return response.IsSuccessStatusCode;
     }
 
+    public async Task<bool> GenerarInasistenciasAsync(DateTime desde, DateTime hasta)
+    {
+        SetBearer();
+
+        // POST api/Faltas/generar-inasistencias?desde=2025-03-01&hasta=2025-03-31
+        string url = $"api/Faltas/generar-inasistencias?desde={desde:yyyy-MM-dd}&hasta={hasta:yyyy-MM-dd}";
+
+        var response = await _http.PostAsync(url, null);
+        return response.IsSuccessStatusCode;
+    }
 
 
 }
